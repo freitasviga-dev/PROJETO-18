@@ -135,7 +135,7 @@ button:active{ transform:scale(0.95); }
   color:gold;
 }
 
-/* DESTAQUE VIP */
+/* VIP */
 @keyframes vip{
   0%{ background:#1a1a1a; box-shadow:0 0 10px gold; transform:scale(1); }
   50%{ background:#2a2a2a; box-shadow:0 0 45px gold; transform:scale(1.07); }
@@ -144,6 +144,18 @@ button:active{ transform:scale(0.95); }
 .destaque{
   font-weight:bold;
   animation:vip 1.2s infinite;
+  position:relative;
+}
+.destaque::after{
+  content:"🥇 TOP APOIADOR";
+  position:absolute;
+  top:-12px;
+  right:-10px;
+  background:gold;
+  color:black;
+  font-size:10px;
+  padding:3px 6px;
+  border-radius:6px;
 }
 
 /* RANKING */
@@ -158,6 +170,8 @@ button:active{ transform:scale(0.95); }
   border-radius:12px;
   border:1px solid gold;
   background:#111;
+}
+.rank-item span{
   font-weight:bold;
 }
 .ouro{ background:linear-gradient(90deg,#332200,#000); }
@@ -221,17 +235,17 @@ for(let i=0;i<25;i++){
 </script>
 
 <div class="container">
-
 <img class="foto" src="minha-foto.jpg">
 
 <h1>PROJETO 18 –<br>MAIORIDADE</h1>
 
 <div class="texto">
-Mesmo que você esteja longe, sua presença ainda faz parte desse momento 💛
+Mesmo que você esteja longe e não possamos comemorar juntos,
+sua presença ainda pode fazer parte desse momento tão especial 💛
 </div>
 
 <div class="card">
-🎂 <strong>22 de Julho de 2026</strong>
+🎂 <strong>22 de Julho de 2026</strong> 🎉
 <br><br>
 <div id="contador"></div>
 </div>
@@ -242,18 +256,10 @@ Mesmo que você esteja longe, sua presença ainda faz parte desse momento 💛
 <button onclick="copiar()">Copiar chave Pix</button>
 <br>
 <img class="qr" src="qrcode.png">
-
-<h3 style="color:gold; margin-top:22px;">💛 Formas de participar</h3>
-<table class="tabela">
-<tr><th>Valor</th><th>Significado</th></tr>
-<tr><td>R$ 5 – R$ 10</td><td>Apoio simbólico 🤍</td></tr>
-<tr><td>R$ 15 – R$ 25</td><td>Apoio especial 🎉</td></tr>
-<tr class="destaque"><td>R$ 50+</td><td>Gratidão VIP ✨</td></tr>
-</table>
 </div>
 
 <div class="card">
-<h3 style="color:gold; margin-top:0;">🏆 Top Apoiadores</h3>
+<h3 style="color:gold;">🏆 Top Apoiadores</h3>
 <div class="ranking">
   <div class="rank-item ouro lider">🥇 1º Lugar — Nome <span>R$ 0</span></div>
   <div class="rank-item prata">🥈 2º Lugar — Nome <span>R$ 0</span></div>
@@ -270,7 +276,7 @@ function copiar(){
 }
 
 const aniversario = new Date("2026-07-22T00:00:00").getTime();
-let fogosAtivos=false;
+let fogosAtivos = false;
 
 function soltarFogos(){
   for(let i=0;i<12;i++){
@@ -288,7 +294,7 @@ setInterval(()=>{
   const d=aniversario-agora;
 
   if(d<=0){
-    document.getElementById("contador").innerHTML=
+    document.getElementById("contador").innerHTML =
       "<div class='aniversario-msg'>🎉 FELIZ 18 ANOS! 🎆</div>";
     if(!fogosAtivos){
       fogosAtivos=true;
@@ -297,7 +303,7 @@ setInterval(()=>{
     return;
   }
 
-  document.getElementById("contador").innerHTML=
+  document.getElementById("contador").innerHTML =
     Math.floor(d/86400000)+" dias "+
     Math.floor((d%86400000)/3600000)+"h "+
     Math.floor((d%3600000)/60000)+"m "+
