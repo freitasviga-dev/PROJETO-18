@@ -207,22 +207,31 @@ button:active{ transform:scale(0.95); }
   font-weight:bold;
 }
 
+/* layout padrão (2º e 3º NÃO mudam) */
 .rank-item{
-  position:relative;
-  padding-left:95px; /* espaço reservado para a foto */
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
+/* SOMENTE o líder tem espaço pra foto */
+.rank-item.lider{
+  position:relative;
+  padding-left:90px;
+}
+
+/* foto do líder */
 .foto-lider{
   position:absolute;
-  left:20px;
+  left:18px;
   top:50%;
   transform:translateY(-50%);
-  width:65px;
-  height:65px;
+  width:55px;
+  height:55px;
   border-radius:50%;
   object-fit:cover;
   border:2px solid gold;
-  box-shadow:0 0 15px gold;
+  box-shadow:0 0 12px gold;
   background:#000;
 }
 </style>
