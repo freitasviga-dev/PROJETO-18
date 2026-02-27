@@ -254,54 +254,70 @@ button:active{ transform:scale(0.95); }
 </head>
 
 
-<!-- BOTÃO DE MÚSICA -->
-<button id="musicToggle" aria-label="Ativar música">🎵</button>
-
-<audio id="bgMusic" loop>
-  <source src="https://www.youtube.com/embed/HWjCStB6k4o" type="audio/mpeg">
-</audio>
+<!-- BOTÃO FLUTUANTE DE MÚSICA -->
+<button id="musicToggle" aria-label="Controle de música">
+  <span id="musicIcon">🎵</span>
+</button>
 
 <style>
 #musicToggle{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  border:none;
-  font-size:26px;
-  cursor:pointer;
-  z-index:9999;
-  background:#b00000; /* vermelho desligado */
-  color:white;
-  box-shadow:0 0 20px rgba(0,0,0,0.6);
-  transition:0.3s;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #b00000; /* desligado */
+  cursor: pointer;
+  z-index: 9999;
+
+  box-shadow: 0 0 18px rgba(0,0,0,0.6);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+#musicToggle:hover{
+  transform: scale(1.05);
 }
 
 #musicToggle.active{
-  background:#0bb300; /* verde ligado */
-  box-shadow:0 0 25px #0bb300;
+  background: #0bb300; /* ligado */
+  box-shadow: 0 0 25px #0bb300;
+}
+
+#musicIcon{
+  font-size: 26px;
+  line-height: 1;
+  pointer-events: none;
 }
 </style>
 
 <script>
-const botao = document.getElementById("musicToggle");
-const musica = new Audio("https://freitasviga-dev.github.io/PROJETO-18/musica.mp3");
+const botaoMusica = document.getElementById("musicToggle");
+const iconeMusica = document.getElementById("musicIcon");
+
+/* MP3 LOCAL — arquivo precisa estar na mesma pasta do index.html */
+const musica = new Audio("musica.mp3");
 musica.loop = true;
 
 let tocando = false;
 
-botao.addEventListener("click", () => {
-  if(!tocando){
+botaoMusica.addEventListener("click", () => {
+  if (!tocando) {
     musica.play();
-    botao.classList.add("active");
-    botao.innerHTML = "🔊";
+    botaoMusica.classList.add("active");
+    iconeMusica.textContent = "🔊";
     tocando = true;
-  }else{
+  } else {
     musica.pause();
-    botao.classList.remove("active");
-    botao.innerHTML = "🎵";
+    botaoMusica.classList.remove("active");
+    iconeMusica.textContent = "🎵";
     tocando = false;
   }
 });
