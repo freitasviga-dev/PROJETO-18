@@ -199,6 +199,19 @@ button:active{ transform:scale(0.95); }
   font-weight:bold;
 }
 
+/* layout padrão (2º e 3º NÃO mudam) */
+.rank-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* SOMENTE o líder tem espaço pra foto */
+.rank-item.lider{
+  position:relative;
+  padding-left:90px;
+}
+
 .foto-lider{
   position:absolute;
   left:18px;
@@ -213,9 +226,20 @@ button:active{ transform:scale(0.95); }
   background:#000;
 }
 
+/* AJUSTE FINAL DO 1º LUGAR */
+.rank-item.lider{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:70px;
+}
+
+.rank-item.lider span{
+  white-space:nowrap;
+}
+/* afastar o nome do valor no 1º lugar */
 .rank-item.lider .nome{
   margin-right:20px;
-  white-space:nowrap;
 }
 </style>
 </head>
