@@ -305,11 +305,20 @@ function copiar(){
   .then(()=>alert("Chave Pix copiada!"));
 }
 
+<script>
 const aniversario = new Date("2026-07-22T00:00:00").getTime();
+let contadorInterval;
 
-setInterval(()=>{
+contadorInterval = setInterval(()=>{
   const agora = new Date().getTime();
   const d = aniversario - agora;
+
+  if(d <= 0){
+    clearInterval(contadorInterval);
+    document.getElementById("contador").innerHTML =
+      "🎉 DEZOITO ANOS CHEGOU! 🎂✨";
+    return;
+  }
 
   document.getElementById("contador").innerHTML =
     Math.floor(d/86400000)+" dias "+
