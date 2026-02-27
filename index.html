@@ -254,41 +254,18 @@ button:active{ transform:scale(0.95); }
 </head>
 
 
-<!-- PLAYER YOUTUBE OCULTO -->
-<div id="player" style="display:none;"></div>
+<!-- 🎵 MÚSICA DE FUNDO -->
+<audio id="musica" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-let player;
-let musicStarted = false;
-
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '0',
-    width: '0',
-    videoId: 'HWjCStB6k4o',
-    playerVars: {
-      autoplay: 1,
-      loop: 1,
-      playlist: 'HWjCStB6k4o'
-    },
-    events: {
-      onReady: (event) => {
-        event.target.setVolume(40); // volume
-      }
-    }
-  });
+function tocarMusica(){
+  const audio = document.getElementById("musica");
+  audio.volume = 0.4;
+  audio.play();
 }
-
-// toca a música no primeiro clique do site
-document.addEventListener("click", () => {
-  if (!musicStarted && player) {
-    player.playVideo();
-    musicStarted = true;
-  }
-});
 </script>
-
-<script src="https://www.youtube.com/iframe_api"></script>
 <body>
 
 <script>
