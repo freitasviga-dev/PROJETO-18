@@ -206,6 +206,23 @@ button:active{ transform:scale(0.95); }
   border-radius:8px;
   font-weight:bold;
 }
+/* FOTO DO LÍDER */
+.foto-lider{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid gold;
+  margin-left:10px;
+  box-shadow:0 0 12px gold;
+  animation: glowLider 2s infinite;
+}
+
+@keyframes glowLider{
+  0%{ box-shadow:0 0 8px gold; }
+  50%{ box-shadow:0 0 22px gold; }
+  100%{ box-shadow:0 0 8px gold; }
+}
 </style>
 </head>
 
