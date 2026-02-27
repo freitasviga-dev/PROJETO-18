@@ -207,26 +207,23 @@ button:active{ transform:scale(0.95); }
   font-weight:bold;
 }
 
+.rank-item{
+  position:relative;
+  padding-left:95px; /* espaço reservado para a foto */
+}
+
 .foto-lider{
-  width:55px;
-  height:55px;
+  position:absolute;
+  left:20px;
+  top:50%;
+  transform:translateY(-50%);
+  width:65px;
+  height:65px;
   border-radius:50%;
   object-fit:cover;
   border:2px solid gold;
-  box-shadow:0 0 12px gold;
-}
-
-.lider-info{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.lider-texto{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  font-size:15px;
+  box-shadow:0 0 15px gold;
+  background:#000;
 }
 </style>
 </head>
