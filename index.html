@@ -253,6 +253,59 @@ button:active{ transform:scale(0.95); }
 </style>
 </head>
 
+
+<!-- BOTÃO DE MÚSICA -->
+<button id="musicToggle" aria-label="Ativar música">🎵</button>
+
+<audio id="bgMusic" loop>
+  <source src="https://www.youtube.com/embed/HWjCStB6k4o" type="audio/mpeg">
+</audio>
+
+<style>
+#musicToggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:none;
+  font-size:26px;
+  cursor:pointer;
+  z-index:9999;
+  background:#b00000; /* vermelho desligado */
+  color:white;
+  box-shadow:0 0 20px rgba(0,0,0,0.6);
+  transition:0.3s;
+}
+
+#musicToggle.active{
+  background:#0bb300; /* verde ligado */
+  box-shadow:0 0 25px #0bb300;
+}
+</style>
+
+<script>
+const botao = document.getElementById("musicToggle");
+const musica = new Audio("https://freitasviga-dev.github.io/PROJETO-18/musica.mp3");
+musica.loop = true;
+
+let tocando = false;
+
+botao.addEventListener("click", () => {
+  if(!tocando){
+    musica.play();
+    botao.classList.add("active");
+    botao.innerHTML = "🔊";
+    tocando = true;
+  }else{
+    musica.pause();
+    botao.classList.remove("active");
+    botao.innerHTML = "🎵";
+    tocando = false;
+  }
+});
+</script>
 <body>
 
 <script>
