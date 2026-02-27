@@ -217,6 +217,22 @@ button:active{ transform:scale(0.95); }
   margin-right:20px;
   white-space:nowrap;
 }
+/* CORREÇÃO: texto não estourar no 1º lugar */
+.rank-item.lider{
+  overflow:hidden;
+}
+
+.rank-item.lider .nome{
+  max-width: calc(100% - 80px);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.rank-item.lider span{
+  flex-shrink:0;
+  margin-left:12px;
+}
 </style>
 </head>
 
