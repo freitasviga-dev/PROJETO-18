@@ -146,6 +146,46 @@ button:active{ transform:scale(0.95); }
   animation:vip 1.2s infinite;
 }
 
+/* RANKING */
+.ranking{
+  margin-top:15px;
+}
+.rank-item{
+  display:flex;
+  justify-content:space-between;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid gold;
+  background:#111;
+  font-weight:bold;
+}
+.ouro{ background:linear-gradient(90deg,#332200,#000); }
+.prata{ background:#1a1a1a; }
+.bronze{ background:#1a1a1a; }
+
+/* LÍDER */
+@keyframes liderGlow{
+  0%{ box-shadow:0 0 15px gold; transform:scale(1); }
+  50%{ box-shadow:0 0 60px gold; transform:scale(1.08); }
+  100%{ box-shadow:0 0 15px gold; transform:scale(1); }
+}
+.lider{
+  animation:liderGlow 1.3s infinite;
+  position:relative;
+}
+.lider::after{
+  content:"🔥 Líder atual";
+  position:absolute;
+  top:-14px;
+  right:-12px;
+  background:gold;
+  color:black;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:8px;
+}
+
 /* FOGOS */
 .fogo{
   position:fixed;
@@ -160,12 +200,10 @@ button:active{ transform:scale(0.95); }
   0%{ transform:scale(0); opacity:1; }
   100%{ transform:scale(1.8) translateY(-140px); opacity:0; }
 }
-
 .aniversario-msg{
   font-size:26px;
   color:gold;
   margin-top:20px;
-  animation:brilhoTitulo 2s infinite;
 }
 </style>
 </head>
@@ -189,42 +227,38 @@ for(let i=0;i<25;i++){
 <h1>PROJETO 18 –<br>MAIORIDADE</h1>
 
 <div class="texto">
-Mesmo que você esteja longe e não possamos comemorar juntos,
-sua presença ainda pode fazer parte desse momento tão especial 💛
-<br><br>
-Este projeto representa meus 18 anos — o início de uma nova fase,
-cheia de sonhos, responsabilidades e conquistas.
-<br><br>
-Cada apoio, de qualquer valor, é um gesto de carinho e incentivo,
-e faz parte dessa história que estou construindo.
-<br><br>
-<strong style="color:gold;">Obrigado por estar comigo 🙏✨</strong>
+Mesmo que você esteja longe, sua presença ainda faz parte desse momento 💛
 </div>
 
 <div class="card">
-🎂 <strong>22 de Julho de 2026</strong> 🎉
+🎂 <strong>22 de Julho de 2026</strong>
 <br><br>
 <div id="contador"></div>
 </div>
 
 <div class="card">
 💸 <strong>Pix para contribuição</strong>
-
 <div class="pix-numero">(83) 9 9672-1410</div>
-
 <button onclick="copiar()">Copiar chave Pix</button>
-
 <br>
 <img class="qr" src="qrcode.png">
 
 <h3 style="color:gold; margin-top:22px;">💛 Formas de participar</h3>
-
 <table class="tabela">
 <tr><th>Valor</th><th>Significado</th></tr>
 <tr><td>R$ 5 – R$ 10</td><td>Apoio simbólico 🤍</td></tr>
 <tr><td>R$ 15 – R$ 25</td><td>Apoio especial 🎉</td></tr>
 <tr class="destaque"><td>R$ 50+</td><td>Gratidão VIP ✨</td></tr>
 </table>
+</div>
+
+<div class="card">
+<h3 style="color:gold; margin-top:0;">🏆 Top Apoiadores</h3>
+<div class="ranking">
+  <div class="rank-item ouro lider">🥇 1º Lugar — Nome <span>R$ 0</span></div>
+  <div class="rank-item prata">🥈 2º Lugar — Nome <span>R$ 0</span></div>
+  <div class="rank-item bronze">🥉 3º Lugar — Nome <span>R$ 0</span></div>
+</div>
 </div>
 
 </div>
@@ -236,7 +270,7 @@ function copiar(){
 }
 
 const aniversario = new Date("2026-07-22T00:00:00").getTime();
-let fogosAtivos = false;
+let fogosAtivos=false;
 
 function soltarFogos(){
   for(let i=0;i<12;i++){
@@ -255,8 +289,7 @@ setInterval(()=>{
 
   if(d<=0){
     document.getElementById("contador").innerHTML=
-      "<div class='aniversario-msg'>🎉 FELIZ 18 ANOS! 🎂🎆</div>";
-
+      "<div class='aniversario-msg'>🎉 FELIZ 18 ANOS! 🎆</div>";
     if(!fogosAtivos){
       fogosAtivos=true;
       setInterval(soltarFogos,700);
