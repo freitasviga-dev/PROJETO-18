@@ -206,22 +206,27 @@ button:active{ transform:scale(0.95); }
   border-radius:8px;
   font-weight:bold;
 }
-/* FOTO DO LÍDER */
+
 .foto-lider{
-  width:70px;
-  height:70px;
+  width:55px;
+  height:55px;
   border-radius:50%;
   object-fit:cover;
-  border:3px solid gold;
-  margin-left:10px;
-  box-shadow:0 0 18px gold;
-  animation: glowLider 2s infinite;
+  border:2px solid gold;
+  box-shadow:0 0 12px gold;
 }
 
-@keyframes glowLider{
-  0%{ box-shadow:0 0 8px gold; }
-  50%{ box-shadow:0 0 22px gold; }
-  100%{ box-shadow:0 0 8px gold; }
+.lider-info{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.lider-texto{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  font-size:15px;
 }
 </style>
 </head>
