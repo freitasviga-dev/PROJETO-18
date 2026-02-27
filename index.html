@@ -383,7 +383,10 @@ const checarData = setInterval(()=>{
 
   if(agora >= dataAlvo){
     clearInterval(checarData);
-
+    
+// trava o contador
+  window.contadorAtivo = false;
+  
     const contador=document.getElementById("contador");
     if(contador){
       contador.innerHTML="🎉 HOJE É O GRANDE DIA! 🎂✨";
