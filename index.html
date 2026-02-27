@@ -135,7 +135,7 @@ button:active{ transform:scale(0.95); }
   color:gold;
 }
 
-/* VIP */
+/* DESTAQUE VIP */
 @keyframes vip{
   0%{ background:#1a1a1a; box-shadow:0 0 10px gold; transform:scale(1); }
   50%{ background:#2a2a2a; box-shadow:0 0 45px gold; transform:scale(1.07); }
@@ -144,67 +144,28 @@ button:active{ transform:scale(0.95); }
 .destaque{
   font-weight:bold;
   animation:vip 1.2s infinite;
-  position:relative;
-}
-.destaque::after{
-  content:"🥇 TOP APOIADOR";
-  position:absolute;
-  top:-12px;
-  right:-10px;
-  background:gold;
-  color:black;
-  font-size:10px;
-  padding:3px 6px;
-  border-radius:6px;
 }
 
-/* RANKING */
-.ranking{
-  margin-top:15px;
+/* FOGOS */
+.fogo{
+  position:fixed;
+  width:6px;
+  height:6px;
+  background:gold;
+  border-radius:50%;
+  pointer-events:none;
+  animation:explodir 1.5s ease-out forwards;
 }
-.rank-item{
-  display:flex;
-  justify-content:space-between;
-  padding:12px;
-  margin-top:10px;
-  border-radius:12px;
-  border:1px solid gold;
-  background:#111;
-}
-.rank-item span{
-  font-weight:bold;
-}
-.ouro{
-  background:linear-gradient(90deg,#332200,#000);
-}
-.prata{
-  background:#1a1a1a;
-}
-.bronze{
-  background:#1a1a1a;
+@keyframes explodir{
+  0%{ transform:scale(0); opacity:1; }
+  100%{ transform:scale(1.8) translateY(-140px); opacity:0; }
 }
 
-/* LÍDER */
-@keyframes liderGlow{
-  0%{ box-shadow:0 0 15px gold; transform:scale(1); }
-  50%{ box-shadow:0 0 60px gold; transform:scale(1.08); }
-  100%{ box-shadow:0 0 15px gold; transform:scale(1); }
-}
-.lider{
-  animation:liderGlow 1.3s infinite;
-  position:relative;
-}
-.lider::after{
-  content:"🔥 Líder atual";
-  position:absolute;
-  top:-14px;
-  right:-12px;
-  background:gold;
-  color:black;
-  font-size:11px;
-  padding:4px 8px;
-  border-radius:8px;
-  font-weight:bold;
+.aniversario-msg{
+  font-size:26px;
+  color:gold;
+  margin-top:20px;
+  animation:brilhoTitulo 2s infinite;
 }
 </style>
 </head>
@@ -222,23 +183,22 @@ for(let i=0;i<25;i++){
 </script>
 
 <div class="container">
+
 <img class="foto" src="minha-foto.jpg">
 
 <h1>PROJETO 18 –<br>MAIORIDADE</h1>
 
 <div class="texto">
-  Mesmo que você esteja longe e não possamos comemorar juntos,
-  sua presença ainda pode fazer parte desse momento tão especial 💛
-  <br><br>
-  Este projeto representa meus 18 anos — o início de uma nova fase,
-  cheia de sonhos, responsabilidades e conquistas.
-  <br><br>
-  Cada apoio, de qualquer valor, é um gesto de carinho e incentivo,
-  e faz parte dessa história que estou construindo.
-  <br><br>
-  <strong style="color:gold;">
-    Obrigado por estar comigo, mesmo à distância 🙏✨
-  </strong>
+Mesmo que você esteja longe e não possamos comemorar juntos,
+sua presença ainda pode fazer parte desse momento tão especial 💛
+<br><br>
+Este projeto representa meus 18 anos — o início de uma nova fase,
+cheia de sonhos, responsabilidades e conquistas.
+<br><br>
+Cada apoio, de qualquer valor, é um gesto de carinho e incentivo,
+e faz parte dessa história que estou construindo.
+<br><br>
+<strong style="color:gold;">Obrigado por estar comigo 🙏✨</strong>
 </div>
 
 <div class="card">
@@ -250,9 +210,7 @@ for(let i=0;i<25;i++){
 <div class="card">
 💸 <strong>Pix para contribuição</strong>
 
-<div class="pix-numero">
-(83) 9 9672-1410
-</div>
+<div class="pix-numero">(83) 9 9672-1410</div>
 
 <button onclick="copiar()">Copiar chave Pix</button>
 
@@ -267,34 +225,6 @@ for(let i=0;i<25;i++){
 <tr><td>R$ 15 – R$ 25</td><td>Apoio especial 🎉</td></tr>
 <tr class="destaque"><td>R$ 50+</td><td>Gratidão VIP ✨</td></tr>
 </table>
-
-<p style="margin-top:16px;">
-🏆 <strong style="color:gold;">Destaque especial:</strong><br>
-Quem enviar o <strong>maior valor</strong> será mencionado
-no <span style="color:gold;">grupo da família</span>
-</p>
-
-</div>
-
-<div class="card">
-<h3 style="color:gold; margin-top:0;">🏆 Top Apoiadores</h3>
-
-<div class="ranking">
-  <div class="rank-item ouro lider">
-    🥇 1º Lugar — Nome da Pessoa
-    <span>R$ 0</span>
-  </div>
-
-  <div class="rank-item prata">
-    🥈 2º Lugar — Nome da Pessoa
-    <span>R$ 0</span>
-  </div>
-
-  <div class="rank-item bronze">
-    🥉 3º Lugar — Nome da Pessoa
-    <span>R$ 0</span>
-  </div>
-</div>
 </div>
 
 </div>
@@ -306,12 +236,35 @@ function copiar(){
 }
 
 const aniversario = new Date("2026-07-22T00:00:00").getTime();
+let fogosAtivos = false;
+
+function soltarFogos(){
+  for(let i=0;i<12;i++){
+    const f=document.createElement("div");
+    f.className="fogo";
+    f.style.left=Math.random()*100+"vw";
+    f.style.top=Math.random()*80+"vh";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1500);
+  }
+}
 
 setInterval(()=>{
-  const agora = new Date().getTime();
-  const d = aniversario - agora;
+  const agora=new Date().getTime();
+  const d=aniversario-agora;
 
-  document.getElementById("contador").innerHTML =
+  if(d<=0){
+    document.getElementById("contador").innerHTML=
+      "<div class='aniversario-msg'>🎉 FELIZ 18 ANOS! 🎂🎆</div>";
+
+    if(!fogosAtivos){
+      fogosAtivos=true;
+      setInterval(soltarFogos,700);
+    }
+    return;
+  }
+
+  document.getElementById("contador").innerHTML=
     Math.floor(d/86400000)+" dias "+
     Math.floor((d%86400000)/3600000)+"h "+
     Math.floor((d%3600000)/60000)+"m "+
@@ -321,21 +274,3 @@ setInterval(()=>{
 
 </body>
 </html>
-
-<p style="
-  margin-top:18px;
-  font-size:15px;
-  line-height:1.6;
-  color:#ddd;
-  background:rgba(255,215,0,0.08);
-  border:1px dashed gold;
-  padding:14px;
-  border-radius:12px;
-">
-👑 <strong style="color:gold;">Como se tornar o Líder:</strong><br>
-Para assumir o <strong>1º lugar</strong>, basta enviar um valor
-<strong>maior que o atual líder</strong> via Pix 💸.<br><br>
-O novo líder terá seu nome destacado aqui 🥇 e será
-<strong style="color:gold;">mencionado com honra no grupo da família</strong>
-como o maior apoiador do projeto 💛🔥
-</p>
