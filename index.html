@@ -339,3 +339,57 @@ O novo líder terá seu nome destacado aqui 🥇 e será
 <strong style="color:gold;">mencionado com honra no grupo da família</strong>
 como o maior apoiador do projeto 💛🔥
 </p>
+
+<script>
+/* =========================
+   FOGOS DE ARTIFÍCIO
+   ATIVAM NO DIA 22/07/2026
+   ========================= */
+
+function fogosArtificio(){
+  for(let i=0;i<45;i++){
+    const fogo=document.createElement("div");
+    fogo.style.position="fixed";
+    fogo.style.width="6px";
+    fogo.style.height="6px";
+    fogo.style.borderRadius="50%";
+    fogo.style.background=["gold","#ffcc00","white","orange"][Math.floor(Math.random()*4)];
+    fogo.style.left=Math.random()*100+"vw";
+    fogo.style.top=Math.random()*100+"vh";
+    fogo.style.opacity=1;
+    fogo.style.zIndex=9999;
+
+    document.body.appendChild(fogo);
+
+    const x=(Math.random()-0.5)*500;
+    const y=(Math.random()-0.5)*500;
+
+    fogo.animate([
+      { transform:"translate(0,0)", opacity:1 },
+      { transform:`translate(${x}px,${y}px)`, opacity:0 }
+    ],{
+      duration:1600,
+      easing:"ease-out"
+    });
+
+    setTimeout(()=>fogo.remove(),1600);
+  }
+}
+
+const dataAlvo = new Date("2026-07-22T00:00:00").getTime();
+
+const checarData = setInterval(()=>{
+  const agora = new Date().getTime();
+
+  if(agora >= dataAlvo){
+    clearInterval(checarData);
+
+    const contador=document.getElementById("contador");
+    if(contador){
+      contador.innerHTML="🎉 HOJE É O GRANDE DIA! 🎂✨";
+    }
+
+    setInterval(fogosArtificio,2000);
+  }
+},1000);
+</script>
