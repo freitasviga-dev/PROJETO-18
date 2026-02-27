@@ -174,9 +174,15 @@ button:active{ transform:scale(0.95); }
 .rank-item span{
   font-weight:bold;
 }
-.ouro{ background:linear-gradient(90deg,#332200,#000); }
-.prata{ background:#1a1a1a; }
-.bronze{ background:#1a1a1a; }
+.ouro{
+  background:linear-gradient(90deg,#332200,#000);
+}
+.prata{
+  background:#1a1a1a;
+}
+.bronze{
+  background:#1a1a1a;
+}
 
 /* LÍDER */
 @keyframes liderGlow{
@@ -198,26 +204,7 @@ button:active{ transform:scale(0.95); }
   font-size:11px;
   padding:4px 8px;
   border-radius:8px;
-}
-
-/* FOGOS */
-.fogo{
-  position:fixed;
-  width:6px;
-  height:6px;
-  background:gold;
-  border-radius:50%;
-  pointer-events:none;
-  animation:explodir 1.5s ease-out forwards;
-}
-@keyframes explodir{
-  0%{ transform:scale(0); opacity:1; }
-  100%{ transform:scale(1.8) translateY(-140px); opacity:0; }
-}
-.aniversario-msg{
-  font-size:26px;
-  color:gold;
-  margin-top:20px;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -240,8 +227,18 @@ for(let i=0;i<25;i++){
 <h1>PROJETO 18 –<br>MAIORIDADE</h1>
 
 <div class="texto">
-Mesmo que você esteja longe e não possamos comemorar juntos,
-sua presença ainda pode fazer parte desse momento tão especial 💛
+  Mesmo que você esteja longe e não possamos comemorar juntos,
+  sua presença ainda pode fazer parte desse momento tão especial 💛
+  <br><br>
+  Este projeto representa meus 18 anos — o início de uma nova fase,
+  cheia de sonhos, responsabilidades e conquistas.
+  <br><br>
+  Cada apoio, de qualquer valor, é um gesto de carinho e incentivo,
+  e faz parte dessa história que estou construindo.
+  <br><br>
+  <strong style="color:gold;">
+    Obrigado por estar comigo, mesmo à distância 🙏✨
+  </strong>
 </div>
 
 <div class="card">
@@ -252,18 +249,51 @@ sua presença ainda pode fazer parte desse momento tão especial 💛
 
 <div class="card">
 💸 <strong>Pix para contribuição</strong>
-<div class="pix-numero">(83) 9 9672-1410</div>
+
+<div class="pix-numero">
+(83) 9 9672-1410
+</div>
+
 <button onclick="copiar()">Copiar chave Pix</button>
+
 <br>
 <img class="qr" src="qrcode.png">
+
+<h3 style="color:gold; margin-top:22px;">💛 Formas de participar</h3>
+
+<table class="tabela">
+<tr><th>Valor</th><th>Significado</th></tr>
+<tr><td>R$ 5 – R$ 10</td><td>Apoio simbólico 🤍</td></tr>
+<tr><td>R$ 15 – R$ 25</td><td>Apoio especial 🎉</td></tr>
+<tr class="destaque"><td>R$ 50+</td><td>Gratidão VIP ✨</td></tr>
+</table>
+
+<p style="margin-top:16px;">
+🏆 <strong style="color:gold;">Destaque especial:</strong><br>
+Quem enviar o <strong>maior valor</strong> será mencionado
+no <span style="color:gold;">grupo da família</span>
+</p>
+
 </div>
 
 <div class="card">
-<h3 style="color:gold;">🏆 Top Apoiadores</h3>
+<h3 style="color:gold; margin-top:0;">🏆 Top Apoiadores</h3>
+
 <div class="ranking">
-  <div class="rank-item ouro lider">🥇 1º Lugar — Nome <span>R$ 0</span></div>
-  <div class="rank-item prata">🥈 2º Lugar — Nome <span>R$ 0</span></div>
-  <div class="rank-item bronze">🥉 3º Lugar — Nome <span>R$ 0</span></div>
+  <div class="rank-item ouro lider">
+    🥇 1º Lugar — Nome da Pessoa
+    <span>R$ 0</span>
+  </div>
+
+  <div class="rank-item prata">
+    🥈 2º Lugar — Nome da Pessoa
+    <span>R$ 0</span>
+  </div>
+
+  <div class="rank-item bronze">
+    🥉 3º Lugar — Nome da Pessoa
+    <span>R$ 0</span>
+  </div>
 </div>
 </div>
 
@@ -276,32 +306,10 @@ function copiar(){
 }
 
 const aniversario = new Date("2026-07-22T00:00:00").getTime();
-let fogosAtivos = false;
-
-function soltarFogos(){
-  for(let i=0;i<12;i++){
-    const f=document.createElement("div");
-    f.className="fogo";
-    f.style.left=Math.random()*100+"vw";
-    f.style.top=Math.random()*80+"vh";
-    document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1500);
-  }
-}
 
 setInterval(()=>{
-  const agora=new Date().getTime();
-  const d=aniversario-agora;
-
-  if(d<=0){
-    document.getElementById("contador").innerHTML =
-      "<div class='aniversario-msg'>🎉 FELIZ 18 ANOS! 🎆</div>";
-    if(!fogosAtivos){
-      fogosAtivos=true;
-      setInterval(soltarFogos,700);
-    }
-    return;
-  }
+  const agora = new Date().getTime();
+  const d = aniversario - agora;
 
   document.getElementById("contador").innerHTML =
     Math.floor(d/86400000)+" dias "+
@@ -313,3 +321,21 @@ setInterval(()=>{
 
 </body>
 </html>
+
+<p style="
+  margin-top:18px;
+  font-size:15px;
+  line-height:1.6;
+  color:#ddd;
+  background:rgba(255,215,0,0.08);
+  border:1px dashed gold;
+  padding:14px;
+  border-radius:12px;
+">
+👑 <strong style="color:gold;">Como se tornar o Líder:</strong><br>
+Para assumir o <strong>1º lugar</strong>, basta enviar um valor
+<strong>maior que o atual líder</strong> via Pix 💸.<br><br>
+O novo líder terá seu nome destacado aqui 🥇 e será
+<strong style="color:gold;">mencionado com honra no grupo da família</strong>
+como o maior apoiador do projeto 💛🔥
+</p>
