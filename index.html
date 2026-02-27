@@ -159,11 +159,9 @@ button:active{ transform:scale(0.95); }
 }
 
 /* RANKING */
-.ranking{
-  margin-top:15px;
-}
 .rank-item{
   display:flex;
+  align-items:center;
   justify-content:space-between;
   padding:12px;
   margin-top:10px;
@@ -171,18 +169,10 @@ button:active{ transform:scale(0.95); }
   border:1px solid gold;
   background:#111;
 }
-.rank-item span{
-  font-weight:bold;
-}
-.ouro{
-  background:linear-gradient(90deg,#332200,#000);
-}
-.prata{
-  background:#1a1a1a;
-}
-.bronze{
-  background:#1a1a1a;
-}
+
+.ouro{ background:linear-gradient(90deg,#332200,#000); }
+.prata{ background:#1a1a1a; }
+.bronze{ background:#1a1a1a; }
 
 /* LÍDER */
 @keyframes liderGlow{
@@ -193,6 +183,8 @@ button:active{ transform:scale(0.95); }
 .lider{
   animation:liderGlow 1.3s infinite;
   position:relative;
+  padding-left:90px;
+  min-height:70px;
 }
 .lider::after{
   content:"🔥 Líder atual";
@@ -205,19 +197,6 @@ button:active{ transform:scale(0.95); }
   padding:4px 8px;
   border-radius:8px;
   font-weight:bold;
-}
-
-/* layout padrão (2º e 3º NÃO mudam) */
-.rank-item{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-/* SOMENTE o líder tem espaço pra foto */
-.rank-item.lider{
-  position:relative;
-  padding-left:90px;
 }
 
 .foto-lider{
@@ -234,22 +213,10 @@ button:active{ transform:scale(0.95); }
   background:#000;
 }
 
-/* AJUSTE FINAL DO 1º LUGAR */
-.rank-item.lider{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  min-height:70px;
-}
-
-.rank-item.lider span{
-  white-space:nowrap;
-}
-/* afastar o nome do valor no 1º lugar */
 .rank-item.lider .nome{
   margin-right:20px;
+  white-space:nowrap;
 }
-</style>
 </style>
 </head>
 
@@ -266,23 +233,22 @@ for(let i=0;i<25;i++){
 </script>
 
 <div class="container">
-<img class="foto" src="minha-foto.jpg">
+
+<img class="foto" src="minha-foto.jpg" alt="Foto do aniversariante">
 
 <h1>PROJETO 18 –<br>MAIORIDADE</h1>
 
 <div class="texto">
-  Mesmo que você esteja longe e não possamos comemorar juntos,
-  sua presença ainda pode fazer parte desse momento tão especial 💛
-  <br><br>
-  Este projeto representa meus 18 anos — o início de uma nova fase,
-  cheia de sonhos, responsabilidades e conquistas.
-  <br><br>
-  Cada apoio é um gesto de carinho e incentivo,
-  e faz parte dessa história que estou construindo.
-  <br><br>
-  <strong style="color:gold;">
-    Obrigado por estar comigo, mesmo à distância 🙏✨
-  </strong>
+Mesmo que você esteja longe e não possamos comemorar juntos,
+sua presença ainda pode fazer parte desse momento tão especial 💛
+<br><br>
+Este projeto representa meus 18 anos — o início de uma nova fase,
+cheia de sonhos, responsabilidades e conquistas.
+<br><br>
+Cada apoio é um gesto de carinho e incentivo,
+e faz parte dessa história que estou construindo.
+<br><br>
+<strong style="color:gold;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
 </div>
 
 <div class="card">
@@ -294,14 +260,12 @@ for(let i=0;i<25;i++){
 <div class="card">
 💸 <strong>Pix para contribuição</strong>
 
-<div class="pix-numero">
-(83) 9 9672-1410
-</div>
+<div class="pix-numero">(83) 9 9672-1410</div>
 
 <button onclick="copiar()">Copiar chave Pix</button>
 
 <br>
-<img class="qr" src="qrcode.png">
+<img class="qr" src="qrcode.png" alt="QR Code Pix">
 
 <h3 style="color:gold; margin-top:22px;">💛 Formas de participar</h3>
 
@@ -317,58 +281,27 @@ for(let i=0;i<25;i++){
 Quem enviar o <strong>maior valor</strong> será mencionado
 no <span style="color:gold;">grupo da família</span>
 </p>
-
 </div>
 
 <div class="card">
-<h3 style="color:gold; margin-top:0;">🏆 Top Apoiadores</h3>
+<h3 style="color:gold;">🏆 Top Apoiadores</h3>
 
 <div class="rank-item ouro lider">
-  <img src="foto-lider.jpg" class="foto-lider">
-
-  <div class="nome">
-    🥇 1º Lugar — Nome da Pessoa
-  </div>
-
+  <img src="foto-lider.jpg" class="foto-lider" alt="Foto do líder">
+  <div class="nome">🥇 1º Lugar — Nome da Pessoa</div>
   <span>R$ 0</span>
 </div>
 
-  <div class="rank-item prata">
-    🥈 2º Lugar — Nome da Pessoa
-    <span>R$ 0</span>
-  </div>
-
-  <div class="rank-item bronze">
-    🥉 3º Lugar — Nome da Pessoa
-    <span>R$ 0</span>
-  </div>
-</div>
+<div class="rank-item prata">
+  🥈 2º Lugar — Nome da Pessoa
+  <span>R$ 0</span>
 </div>
 
+<div class="rank-item bronze">
+  🥉 3º Lugar — Nome da Pessoa
+  <span>R$ 0</span>
 </div>
-
-<script>
-function copiar(){
-  navigator.clipboard.writeText("83996721410")
-  .then(()=>alert("Chave Pix copiada!"));
-}
-
-const aniversario = new Date("2026-07-22T00:00:00").getTime();
-
-setInterval(()=>{
-  const agora = new Date().getTime();
-  const d = aniversario - agora;
-
-  document.getElementById("contador").innerHTML =
-    Math.floor(d/86400000)+" dias "+
-    Math.floor((d%86400000)/3600000)+"h "+
-    Math.floor((d%3600000)/60000)+"m "+
-    Math.floor((d%60000)/1000)+"s";
-},1000);
-</script>
-
-</body>
-</html>
+</div>
 
 <p style="
   margin-top:18px;
@@ -384,28 +317,35 @@ setInterval(()=>{
 Para assumir o <strong>1º lugar</strong>, basta enviar um valor
 <strong>maior que o atual líder</strong> via Pix 💸.<br><br>
 O novo líder terá seu nome destacado aqui 🥇 e será
-<strong style="color:gold;">mencionado com honra no grupo da família</strong>
-como o maior apoiador do projeto 💛🔥
+<strong style="color:gold;">mencionado com honra no grupo da família</strong>.
 </p>
 
+</div>
+
 <script>
-/* =========================
-   TRAVA DO CONTADOR
-   MOSTRA "18 ANOS CHEGOU"
-   ========================= */
+function copiar(){
+  navigator.clipboard.writeText("83996721410")
+  .then(()=>alert("Chave Pix copiada!"));
+}
 
-(function(){
-  const dataAlvo = new Date("2026-07-22T00:00:00").getTime();
+const aniversario = new Date("2026-07-22T00:00:00").getTime();
 
-  setInterval(()=>{
-    const agora = new Date().getTime();
+setInterval(()=>{
+  const agora = new Date().getTime();
+  const d = aniversario - agora;
+  const contador = document.getElementById("contador");
 
-    if(agora >= dataAlvo){
-      const contador = document.getElementById("contador");
-      if(contador){
-        contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨";
-      }
-    }
-  },1000);
-})();
+  if(d <= 0){
+    contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨";
+  }else{
+    contador.innerHTML =
+      Math.floor(d/86400000)+" dias "+
+      Math.floor((d%86400000)/3600000)+"h "+
+      Math.floor((d%3600000)/60000)+"m "+
+      Math.floor((d%60000)/1000)+"s";
+  }
+},1000);
 </script>
+
+</body>
+</html>
