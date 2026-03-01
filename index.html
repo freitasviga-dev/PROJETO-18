@@ -371,7 +371,6 @@ button:active{ transform:scale(0.95); }
 const botaoMusica = document.getElementById("musicToggle");
 const iconeMusica = document.getElementById("musicIcon");
 
-/* MP3 LOCAL — arquivo precisa estar na mesma pasta do index.html */
 const musica = new Audio("musica.mp3");
 musica.loop = true;
 
@@ -379,7 +378,9 @@ let tocando = false;
 
 botaoMusica.addEventListener("click", () => {
   if (!tocando) {
-    musica.play();
+    musica.play().catch(err => {
+      console.log("Erro ao tocar música:", err);
+    });
     botaoMusica.classList.add("active");
     iconeMusica.textContent = "🔊";
     tocando = true;
@@ -390,6 +391,7 @@ botaoMusica.addEventListener("click", () => {
     tocando = false;
   }
 });
+</script>
 
 .ajuda-overlay{
   position: fixed;
