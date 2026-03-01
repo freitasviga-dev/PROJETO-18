@@ -95,7 +95,7 @@ h1{
   margin:15px 0;
 }
 
-/* BOTÃO PADRÃO */
+/* BOTÃO */
 @keyframes pulsarBotao{
   0%{ box-shadow:0 0 10px gold; }
   50%{ box-shadow:0 0 35px gold; }
@@ -129,16 +129,13 @@ button:active{ transform:scale(0.95); }
 .tabela th, .tabela td{
   border:1px solid gold;
   padding:12px;
-  white-space:nowrap;
-  vertical-align:middle;
-  height:55px;
 }
 .tabela th{
   background:#111;
   color:gold;
 }
 
-/* DESTAQUE */
+/* VIP */
 @keyframes vip{
   0%{ background:#1a1a1a; box-shadow:0 0 10px gold; transform:scale(1); }
   50%{ background:#2a2a2a; box-shadow:0 0 45px gold; transform:scale(1.07); }
@@ -173,7 +170,18 @@ button:active{ transform:scale(0.95); }
   background:#111;
 }
 
+.ouro{ background:linear-gradient(90deg,#332200,#000); }
+.prata{ background:#1a1a1a; }
+.bronze{ background:#1a1a1a; }
+
+/* LÍDER */
+@keyframes liderGlow{
+  0%{ box-shadow:0 0 15px gold; transform:scale(1); }
+  50%{ box-shadow:0 0 60px gold; transform:scale(1.08); }
+  100%{ box-shadow:0 0 15px gold; transform:scale(1); }
+}
 .lider{
+  animation:liderGlow 1.3s infinite;
   position:relative;
   padding-left:90px;
   min-height:70px;
@@ -191,6 +199,19 @@ button:active{ transform:scale(0.95); }
   font-weight:bold;
 }
 
+/* layout padrão (2º e 3º NÃO mudam) */
+.rank-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* SOMENTE o líder tem espaço pra foto */
+.rank-item.lider{
+  position:relative;
+  padding-left:90px;
+}
+
 .foto-lider{
   position:absolute;
   left:18px;
@@ -202,100 +223,108 @@ button:active{ transform:scale(0.95); }
   object-fit:cover;
   border:2px solid gold;
   box-shadow:0 0 12px gold;
+  background:#000;
 }
 
-/* BOTÃO MÚSICA */
-#musicToggle{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:#b00000;
+/* AJUSTE FINAL DO 1º LUGAR */
+.rank-item.lider{
   display:flex;
   align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-#musicToggle.active{
-  background:#0bb300;
-}
-#musicIcon{
-  font-size:26px;
+  justify-content:space-between;
+  min-height:70px;
 }
 
-/* WHATSAPP */
-#whatsapp-float{
-  position:fixed;
-  bottom:20px;
-  right:100px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:gold;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:26px;
-  z-index:9999;
+.rank-item.lider span{
+  white-space:nowrap;
+}
+/* afastar o nome do valor no 1º lugar */
+.rank-item.lider .nome{
+  margin-right:20px;
 }
 
-/* AJUDA */
-.ajuda-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:20000;
+/* PADRONIZAR ALTURA E FORMATO DA TABELA */
+.tabela td,
+.tabela th {
+  white-space: nowrap;       /* impede quebrar linha */
+  vertical-align: middle;    /* centraliza vertical */
+  height: 55px;              /* altura fixa igual */
+  font-size: 16px;           /* tamanho uniforme */
 }
-.ajuda-box{
-  background:#111;
-  border:2px solid gold;
-  border-radius:16px;
-  padding:22px;
-  width:90%;
-  max-width:340px;
-}
-.ajuda-box h3{ color:gold; }
-.ajuda-box p{ color:#ddd; }
 </style>
 </head>
 
-<body>
 
-<button id="musicToggle"><span id="musicIcon">🎵</span></button>
-<a id="whatsapp-float" href="https://wa.me/5583996469538" target="_blank">💬</a>
+<!-- BOTÃO FLUTUANTE DE MÚSICA -->
+<button id="musicToggle" aria-label="Controle de música">
+  <span id="musicIcon">🎵</span>
+</button>
 
-<div class="ajuda-overlay" id="ajuda">
-  <div class="ajuda-box">
-    <h3>Ajuda rápida</h3>
-    <p>🎵 Botão da música liga/desliga o som.</p>
-    <p>💬 Botão do WhatsApp fala comigo.</p>
-    <button onclick="fecharAjuda()">Entendi</button>
-  </div>
-</div>
+<style>
+#musicToggle{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 
-<div class="container">
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
 
-<img class="foto" src="minha-foto.jpg">
-<h1>PROJETO 18 –<br>MAIORIDADE</h1>
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-<div class="texto">
-Mesmo que você esteja longe e não possamos comemorar juntos,
-sua presença ainda pode fazer parte desse momento tão especial 💛
-</div>
+  background: #b00000; /* desligado */
+  cursor: pointer;
+  z-index: 9999;
 
-<div class="card">
-<div id="contador"></div>
-</div>
+  box-shadow: 0 0 18px rgba(0,0,0,0.6);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+}
 
-</div>
+#musicToggle:hover{
+  transform: scale(1.05);
+}
+
+#musicToggle.active{
+  background: #0bb300; /* ligado */
+  box-shadow: 0 0 25px #0bb300;
+}
+
+#musicIcon{
+  font-size: 26px;
+  line-height: 1;
+  pointer-events: none;
+}
+</style>
 
 <script>
-/* PARTÍCULAS */
+const botaoMusica = document.getElementById("musicToggle");
+const iconeMusica = document.getElementById("musicIcon");
+
+/* MP3 LOCAL — arquivo precisa estar na mesma pasta do index.html */
+const musica = new Audio("musica.mp3");
+musica.loop = true;
+
+let tocando = false;
+
+botaoMusica.addEventListener("click", () => {
+  if (!tocando) {
+    musica.play();
+    botaoMusica.classList.add("active");
+    iconeMusica.textContent = "🔊";
+    tocando = true;
+  } else {
+    musica.pause();
+    botaoMusica.classList.remove("active");
+    iconeMusica.textContent = "🎵";
+    tocando = false;
+  }
+});
+</script>
+<body>
+
+<script>
 for(let i=0;i<25;i++){
   const p=document.createElement("div");
   p.className="particula";
@@ -303,37 +332,121 @@ for(let i=0;i<25;i++){
   p.style.animationDelay=Math.random()*10+"s";
   document.body.appendChild(p);
 }
+</script>
 
-/* CONTADOR */
-const aniversario=new Date("2026-07-22").getTime();
-setInterval(()=>{
-  const d=aniversario-new Date().getTime();
-  document.getElementById("contador").innerHTML =
-    d<=0?"🎉 CHEGOU!":
-    Math.floor(d/86400000)+" dias";
-},1000);
+<div class="container">
 
-/* MÚSICA */
-const musica=new Audio("musica.mp3");
-musica.loop=true;
-let tocando=false;
-musicToggle.onclick=()=>{
-  tocando?musica.pause():musica.play();
-  musicToggle.classList.toggle("active");
-  musicIcon.textContent=tocando?"🎵":"🔊";
-  tocando=!tocando;
-};
+<img class="foto" src="minha-foto.jpg" alt="Foto do aniversariante">
 
-/* AJUDA */
-function fecharAjuda(){
-  ajuda.style.display="none";
-  localStorage.setItem("ajudaVista","1");
+<h1>PROJETO 18 –<br>MAIORIDADE</h1>
+
+<div class="texto">
+Mesmo que você esteja longe e não possamos comemorar juntos,
+sua presença ainda pode fazer parte desse momento tão especial 💛
+<br><br>
+Este projeto representa meus 18 anos — o início de uma nova fase,
+cheia de sonhos, responsabilidades e conquistas.
+<br><br>
+Cada apoio é um gesto de carinho e incentivo,
+e faz parte dessa história que estou construindo.
+<br><br>
+<strong style="color:gold;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
+</div>
+
+<div class="card">
+🎂 <strong>22 de Julho de 2026</strong> 🎉
+<br><br>
+<div id="contador"></div>
+</div>
+
+<div class="card">
+💸 <strong>Pix para contribuição</strong>
+
+<div class="pix-numero">(83) 9 9672-1410</div>
+
+<button onclick="copiar()">Copiar chave Pix</button>
+
+<br>
+<img class="qr" src="qrcode.png" alt="QR Code Pix">
+
+<h3 style="color:gold; margin-top:22px;">💛 Formas de participar</h3>
+
+<table class="tabela">
+<tr><th>Valor</th><th>Significado</th></tr>
+<tr><td>R$ 15 – R$ 30</td><td>Presença e carinho 🤍</td></tr>
+<tr><td>R$ 50 – R$ 100</td><td>Participação especial 🎉</td></tr>
+<tr class="destaque"><td>R$ 100+</td><td>Apoiador VIP ✨</td></tr>
+</table>
+
+<p style="margin-top:16px;">
+🏆 <strong style="color:gold;">Destaque especial:</strong><br>
+Quem enviar o <strong>maior valor</strong> será mencionado
+no <span style="color:gold;">grupo da família</span>
+</p>
+</div>
+
+<div class="card">
+<h3 style="color:gold;">🏆 Top Apoiadores</h3>
+
+<div class="rank-item ouro lider">
+  <img src="foto-lider.jpg" class="foto-lider" alt="Foto do líder">
+  <div class="nome">🥇 1º Lugar — MARIANNE</div>
+  <span>R$ 0,01</span>
+</div>
+
+<div class="rank-item prata">
+  🥈 2º Lugar — Nome da Pessoa
+  <span>R$ 0</span>
+</div>
+
+<div class="rank-item bronze">
+  🥉 3º Lugar — Nome da Pessoa
+  <span>R$ 0</span>
+</div>
+</div>
+
+<p style="
+  margin-top:18px;
+  font-size:15px;
+  line-height:1.6;
+  color:#ddd;
+  background:rgba(255,215,0,0.08);
+  border:1px dashed gold;
+  padding:14px;
+  border-radius:12px;
+">
+👑 <strong style="color:gold;">Como se tornar o Líder:</strong><br>
+Para assumir o <strong>1º lugar</strong>, basta enviar um valor
+<strong>maior que o atual líder</strong> via Pix 💸.<br><br>
+O novo líder terá seu nome destacado aqui 🥇 e será
+<strong style="color:gold;">mencionado com honra no grupo da família</strong>.
+</p>
+
+</div>
+
+<script>
+function copiar(){
+  navigator.clipboard.writeText("83996721410")
+  .then(()=>alert("Chave Pix copiada!"));
 }
-window.onload=()=>{
-  if(!localStorage.getItem("ajudaVista")){
-    ajuda.style.display="flex";
+
+const aniversario = new Date("2026-07-22T00:00:00").getTime();
+
+setInterval(()=>{
+  const agora = new Date().getTime();
+  const d = aniversario - agora;
+  const contador = document.getElementById("contador");
+
+  if(d <= 0){
+    contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨";
+  }else{
+    contador.innerHTML =
+      Math.floor(d/86400000)+" dias "+
+      Math.floor((d%86400000)/3600000)+"h "+
+      Math.floor((d%3600000)/60000)+"m "+
+      Math.floor((d%60000)/1000)+"s";
   }
-};
+},1000);
 </script>
 
 </body>
