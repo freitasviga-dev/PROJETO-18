@@ -479,6 +479,84 @@ window.addEventListener("load", () => {
 </script>
 
 
+<!-- ===== JANELA DE AJUDA ===== -->
+<style>
+.ajuda-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+
+.ajuda-box{
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 16px;
+  padding: 22px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 0 30px gold;
+}
+
+.ajuda-box h3{
+  color: gold;
+  margin-bottom: 14px;
+}
+
+.ajuda-box p{
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #ddd;
+}
+
+.ajuda-box button{
+  margin-top: 10px;
+  background: gold;
+  color: #000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
+
+<div class="ajuda-overlay" id="ajuda">
+  <div class="ajuda-box">
+    <h3>Como funciona</h3>
+
+    <p>
+      🟢 <b>Botão do WhatsApp</b><br>
+      Serve para falar comigo diretamente e tirar dúvidas.
+    </p>
+
+    <p>
+      🔊 <b>Botão da música</b><br>
+      Liga ou desliga a música do site.
+    </p>
+
+    <button onclick="fecharAjuda()">Entendi</button>
+  </div>
+</div>
+
+<script>
+function fecharAjuda(){
+  document.getElementById('ajuda').style.display = 'none';
+  localStorage.setItem('ajudaVista', 'sim');
+}
+
+window.addEventListener('load', function(){
+  if(!localStorage.getItem('ajudaVista')){
+    document.getElementById('ajuda').style.display = 'flex';
+  }
+});
+</script>
+<!-- ===== FIM JANELA DE AJUDA ===== -->
 <body>
 
 <script>
