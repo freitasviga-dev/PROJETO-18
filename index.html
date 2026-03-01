@@ -297,11 +297,10 @@ button:active{ transform:scale(0.95); }
   pointer-events: none;
 }
 
-/* BOTÃO FLUTUANTE WHATSAPP */
 #whatsapp-float{
   position: fixed;
-  right: 20px;
-  bottom: 100px; /* fica em cima da música */
+  right: 100px;   /* lado esquerdo do botão da música */
+  bottom: 20px;   /* mesma altura */
 
   width: 60px;
   height: 60px;
@@ -320,18 +319,7 @@ button:active{ transform:scale(0.95); }
   z-index: 10000;
   box-shadow: 0 0 25px rgba(255,215,0,0.9);
 
-  animation: zapFloat 2.5s ease-in-out infinite;
-}
-
-@keyframes zapFloat{
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
-
-#whatsapp-float:hover{
-  transform: scale(1.1);
-  box-shadow: 0 0 40px gold;
+  /* SEM animação → botão totalmente fixo */
 }
 </style>
 
