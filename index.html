@@ -321,6 +321,50 @@ button:active{ transform:scale(0.95); }
 
   /* SEM animação → botão totalmente fixo */
 }
+
+.ajuda-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+
+.ajuda-box{
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 16px;
+  padding: 22px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 0 30px gold;
+}
+
+.ajuda-box h3{
+  color: gold;
+  margin-bottom: 14px;
+}
+
+.ajuda-box p{
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #ddd;
+}
+
+.ajuda-box button{
+  margin-top: 10px;
+  background: gold;
+  color: #000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
 </style>
 
 <script>
@@ -346,6 +390,50 @@ botaoMusica.addEventListener("click", () => {
     tocando = false;
   }
 });
+
+.ajuda-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+
+.ajuda-box{
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 16px;
+  padding: 22px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 0 30px gold;
+}
+
+.ajuda-box h3{
+  color: gold;
+  margin-bottom: 14px;
+}
+
+.ajuda-box p{
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #ddd;
+}
+
+.ajuda-box button{
+  margin-top: 10px;
+  background: gold;
+  color: #000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
 </script>
 
 <!-- BOTÃO FLUTUANTE WHATSAPP -->
@@ -356,6 +444,24 @@ botaoMusica.addEventListener("click", () => {
   aria-label="Falar no WhatsApp">
   💬
 </a>
+
+<div id="ajuda-botoes" class="ajuda-overlay">
+  <div class="ajuda-box">
+    <h3>ℹ️ Ajuda rápida</h3>
+
+    <p>
+      🎵 <strong>Botão da Música</strong><br>
+      Liga ou desliga a música de fundo do site.
+    </p>
+
+    <p>
+      💬 <strong>Botão do WhatsApp</strong><br>
+      Abre uma conversa direta comigo para tirar dúvidas.
+    </p>
+
+    <button onclick="fecharAjuda()">Entendi</button>
+  </div>
+</div>
 <body>
 
 <script>
