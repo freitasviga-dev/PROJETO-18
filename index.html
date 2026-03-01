@@ -89,7 +89,18 @@ h1{
   font-weight:bold;
 }
 
-/* BOTÃO PIX */
+/* PIX */
+.pix-numero{
+  font-size:20px;
+  margin:15px 0;
+}
+
+/* BOTÃO */
+@keyframes pulsarBotao{
+  0%{ box-shadow:0 0 10px gold; }
+  50%{ box-shadow:0 0 35px gold; }
+  100%{ box-shadow:0 0 10px gold; }
+}
 button{
   background:gold;
   border:none;
@@ -97,6 +108,7 @@ button{
   border-radius:12px;
   font-weight:bold;
   cursor:pointer;
+  animation:pulsarBotao 2s infinite;
 }
 button:active{ transform:scale(0.95); }
 
@@ -107,9 +119,209 @@ button:active{ transform:scale(0.95); }
   border-radius:12px;
   box-shadow:0 0 25px gold;
 }
+
+/* TABELA */
+.tabela{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:18px;
+}
+.tabela th, .tabela td{
+  border:1px solid gold;
+  padding:12px;
+}
+.tabela th{
+  background:#111;
+  color:gold;
+}
+
+/* VIP */
+@keyframes vip{
+  0%{ background:#1a1a1a; box-shadow:0 0 10px gold; transform:scale(1); }
+  50%{ background:#2a2a2a; box-shadow:0 0 45px gold; transform:scale(1.07); }
+  100%{ background:#1a1a1a; box-shadow:0 0 10px gold; transform:scale(1); }
+}
+.destaque{
+  font-weight:bold;
+  animation:vip 1.2s infinite;
+  position:relative;
+}
+.destaque::after{
+  content:"🥇 TOP APOIADOR";
+  position:absolute;
+  top:-12px;
+  right:-10px;
+  background:gold;
+  color:black;
+  font-size:10px;
+  padding:3px 6px;
+  border-radius:6px;
+}
+
+/* RANKING */
+.rank-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid gold;
+  background:#111;
+}
+
+.ouro{ background:linear-gradient(90deg,#332200,#000); }
+.prata{ background:#1a1a1a; }
+.bronze{ background:#1a1a1a; }
+
+/* LÍDER */
+@keyframes liderGlow{
+  0%{ box-shadow:0 0 15px gold; transform:scale(1); }
+  50%{ box-shadow:0 0 60px gold; transform:scale(1.08); }
+  100%{ box-shadow:0 0 15px gold; transform:scale(1); }
+}
+.lider{
+  animation:liderGlow 1.3s infinite;
+  position:relative;
+  padding-left:90px;
+  min-height:70px;
+}
+.lider::after{
+  content:"🔥 Líder atual";
+  position:absolute;
+  top:-14px;
+  right:-12px;
+  background:gold;
+  color:black;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+/* layout padrão (2º e 3º NÃO mudam) */
+.rank-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* SOMENTE o líder tem espaço pra foto */
+.rank-item.lider{
+  position:relative;
+  padding-left:90px;
+}
+
+.foto-lider{
+  position:absolute;
+  left:18px;
+  top:50%;
+  transform:translateY(-50%);
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid gold;
+  box-shadow:0 0 12px gold;
+  background:#000;
+}
+
+/* AJUSTE FINAL DO 1º LUGAR */
+.rank-item.lider{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:70px;
+}
+
+.rank-item.lider span{
+  white-space:nowrap;
+}
+/* afastar o nome do valor no 1º lugar */
+.rank-item.lider .nome{
+  margin-right:20px;
+}
+
+/* PADRONIZAR ALTURA E FORMATO DA TABELA */
+.tabela td,
+.tabela th {
+  white-space: nowrap;       /* impede quebrar linha */
+  vertical-align: middle;    /* centraliza vertical */
+  height: 55px;              /* altura fixa igual */
+  font-size: 16px;           /* tamanho uniforme */
+}
 </style>
 </head>
 
+
+<!-- BOTÃO FLUTUANTE DE MÚSICA -->
+<button id="musicToggle" aria-label="Controle de música">
+  <span id="musicIcon">🎵</span>
+</button>
+
+<style>
+#musicToggle{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #b00000; /* desligado */
+  cursor: pointer;
+  z-index: 9999;
+
+  box-shadow: 0 0 18px rgba(0,0,0,0.6);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+#musicToggle:hover{
+  transform: scale(1.05);
+}
+
+#musicToggle.active{
+  background: #0bb300; /* ligado */
+  box-shadow: 0 0 25px #0bb300;
+}
+
+#musicIcon{
+  font-size: 26px;
+  line-height: 1;
+  pointer-events: none;
+}
+</style>
+
+<script>
+const botaoMusica = document.getElementById("musicToggle");
+const iconeMusica = document.getElementById("musicIcon");
+
+/* MP3 LOCAL — arquivo precisa estar na mesma pasta do index.html */
+const musica = new Audio("musica.mp3");
+musica.loop = true;
+
+let tocando = false;
+
+botaoMusica.addEventListener("click", () => {
+  if (!tocando) {
+    musica.play();
+    botaoMusica.classList.add("active");
+    iconeMusica.textContent = "🔊";
+    tocando = true;
+  } else {
+    musica.pause();
+    botaoMusica.classList.remove("active");
+    iconeMusica.textContent = "🎵";
+    tocando = false;
+  }
+});
+</script>
 <body>
 
 <script>
@@ -124,28 +336,91 @@ for(let i=0;i<25;i++){
 
 <div class="container">
 
-<img class="foto" src="minha-foto.jpg" alt="Foto">
+<img class="foto" src="minha-foto.jpg" alt="Foto do aniversariante">
 
 <h1>PROJETO 18 –<br>MAIORIDADE</h1>
 
 <div class="texto">
 Mesmo que você esteja longe e não possamos comemorar juntos,
 sua presença ainda pode fazer parte desse momento tão especial 💛
+<br><br>
+Este projeto representa meus 18 anos — o início de uma nova fase,
+cheia de sonhos, responsabilidades e conquistas.
+<br><br>
+Cada apoio é um gesto de carinho e incentivo,
+e faz parte dessa história que estou construindo.
+<br><br>
+<strong style="color:gold;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
 </div>
 
 <div class="card">
-🎂 <strong>22 de Julho de 2026</strong>
+🎂 <strong>22 de Julho de 2026</strong> 🎉
 <br><br>
 <div id="contador"></div>
 </div>
 
 <div class="card">
 💸 <strong>Pix para contribuição</strong>
-<br><br>
+
+<div class="pix-numero">(83) 9 9672-1410</div>
+
 <button onclick="copiar()">Copiar chave Pix</button>
-<br><br>
+
+<br>
 <img class="qr" src="qrcode.png" alt="QR Code Pix">
+
+<h3 style="color:gold; margin-top:22px;">💛 Formas de participar</h3>
+
+<table class="tabela">
+<tr><th>Valor</th><th>Significado</th></tr>
+<tr><td>R$ 15 – R$ 30</td><td>Presença e carinho 🤍</td></tr>
+<tr><td>R$ 50 – R$ 100</td><td>Participação especial 🎉</td></tr>
+<tr class="destaque"><td>R$ 100+</td><td>Apoiador VIP ✨</td></tr>
+</table>
+
+<p style="margin-top:16px;">
+🏆 <strong style="color:gold;">Destaque especial:</strong><br>
+Quem enviar o <strong>maior valor</strong> será mencionado
+no <span style="color:gold;">grupo da família</span>
+</p>
 </div>
+
+<div class="card">
+<h3 style="color:gold;">🏆 Top Apoiadores</h3>
+
+<div class="rank-item ouro lider">
+  <img src="foto-lider.jpg" class="foto-lider" alt="Foto do líder">
+  <div class="nome">🥇 1º Lugar — Nome da Pessoa</div>
+  <span>R$ 0</span>
+</div>
+
+<div class="rank-item prata">
+  🥈 2º Lugar — Nome da Pessoa
+  <span>R$ 0</span>
+</div>
+
+<div class="rank-item bronze">
+  🥉 3º Lugar — Nome da Pessoa
+  <span>R$ 0</span>
+</div>
+</div>
+
+<p style="
+  margin-top:18px;
+  font-size:15px;
+  line-height:1.6;
+  color:#ddd;
+  background:rgba(255,215,0,0.08);
+  border:1px dashed gold;
+  padding:14px;
+  border-radius:12px;
+">
+👑 <strong style="color:gold;">Como se tornar o Líder:</strong><br>
+Para assumir o <strong>1º lugar</strong>, basta enviar um valor
+<strong>maior que o atual líder</strong> via Pix 💸.<br><br>
+O novo líder terá seu nome destacado aqui 🥇 e será
+<strong style="color:gold;">mencionado com honra no grupo da família</strong>.
+</p>
 
 </div>
 
@@ -156,20 +431,23 @@ function copiar(){
 }
 
 const aniversario = new Date("2026-07-22T00:00:00").getTime();
+
 setInterval(()=>{
   const agora = new Date().getTime();
   const d = aniversario - agora;
-  document.getElementById("contador").innerHTML =
-    d <= 0 ? "🎉 18 ANOS CHEGOU!" :
-    Math.floor(d/86400000)+" dias "+
-    Math.floor((d%86400000)/3600000)+"h "+
-    Math.floor((d%3600000)/60000)+"m "+
-    Math.floor((d%60000)/1000)+"s";
+  const contador = document.getElementById("contador");
+
+  if(d <= 0){
+    contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨";
+  }else{
+    contador.innerHTML =
+      Math.floor(d/86400000)+" dias "+
+      Math.floor((d%86400000)/3600000)+"h "+
+      Math.floor((d%3600000)/60000)+"m "+
+      Math.floor((d%60000)/1000)+"s";
+  }
 },1000);
 </script>
-
-<!-- FLUTUANTE -->
-<script src="flutuante.js"></script>
 
 </body>
 </html>
