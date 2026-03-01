@@ -462,6 +462,21 @@ botaoMusica.addEventListener("click", () => {
     <button onclick="fecharAjuda()">Entendi</button>
   </div>
 </div>
+
+<script>
+function fecharAjuda(){
+  document.getElementById("ajuda-botoes").style.display = "none";
+  localStorage.setItem("ajudaVista", "true");
+}
+
+window.addEventListener("load", () => {
+  if(localStorage.getItem("ajudaVista")){
+    document.getElementById("ajuda-botoes").style.display = "none";
+  }
+});
+</script>
+
+
 <body>
 
 <script>
