@@ -321,7 +321,55 @@ botaoMusica.addEventListener("click", () => {
     tocando = false;
   }
 });
+
+/* BOTÃO FLUTUANTE WHATSAPP */
+#zapFloat{
+  position: fixed;
+  bottom: 90px; /* fica acima do botão da música */
+  right: 20px;
+
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+
+  background: radial-gradient(circle at top, gold, #b8860b);
+  color: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 26px;
+  text-decoration: none;
+
+  box-shadow: 0 0 20px rgba(255,215,0,0.8);
+  z-index: 9999;
+
+  animation: flutuarZap 2.5s ease-in-out infinite;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#zapFloat:hover{
+  transform: scale(1.08);
+  box-shadow: 0 0 35px gold;
+}
+
+@keyframes flutuarZap{
+  0%{ transform: translateY(0); }
+  50%{ transform: translateY(-8px); }
+  100%{ transform: translateY(0); }
+}
 </script>
+
+
+<!-- BOTÃO FLUTUANTE WHATSAPP -->
+<a
+  id="zapFloat"
+  href="https://wa.me/5583996469538"
+  target="_blank"
+  aria-label="Falar no WhatsApp">
+  💬
+</a>
 <body>
 
 <script>
