@@ -254,7 +254,6 @@ button:active{ transform:scale(0.95); }
 </head>
 
 
-<!-- BOTÃO FLUTUANTE DE MÚSICA -->
 <button id="musicToggle" aria-label="Controle de música">
   <span id="musicIcon">🎵</span>
 </button>
@@ -389,7 +388,6 @@ botaoMusica.addEventListener("click", () => {
 });
 </script>
 
-<!-- AJUDA RÁPIDA -->
 <div class="ajuda-overlay" id="ajuda">
   <div class="ajuda-box">
     <h3>ℹ️ Ajuda rápida</h3>
@@ -409,20 +407,26 @@ botaoMusica.addEventListener("click", () => {
     <button onclick="fecharAjuda()">Entendi</button>
   </div>
 </div>
+
 <script>
 function fecharAjuda(){
   document.getElementById("ajuda").style.display = "none";
-  localStorage.setItem("ajudaVista", "true");
+  
+  // Depois da ajuda, abre o aviso importante com um leve delay (300ms)
+  setTimeout(() => {
+    document.getElementById("popupAvisoInicial").style.display = "flex";
+  }, 300);
 }
 
 window.addEventListener("load", () => {
-  if(!localStorage.getItem("ajudaVista")){
-    document.getElementById("ajuda").style.display = "flex";
-  }
+  // Sempre começa mostrando a ajuda rápida
+  document.getElementById("ajuda").style.display = "flex";
+  
+  // Garante que o aviso importante comece escondido
+  document.getElementById("popupAvisoInicial").style.display = "none";
 });
 </script>
 
-<!-- BOTÃO WHATSAPP FLUTUANTE -->
 <a
   href="https://wa.me/5583996469538"
   target="_blank"
@@ -503,7 +507,7 @@ sua presença ainda pode fazer parte desse momento tão especial 💛
 Este projeto representa meus 18 anos — o início de uma nova fase,
 cheia de sonhos, responsabilidades e conquistas.
 <br><br>
-Cada apoio é um gesto de carinho e incentivo,
+Cada apoio é um gesto de carinho e incentive,
 e faz parte dessa história que estou construindo.
 <br><br>
 <strong style="color:gold;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
@@ -605,22 +609,17 @@ setInterval(()=>{
 },1000);
 </script>
 
-<!-- FIM DO SEU ÚLTIMO SCRIPT -->
 <script>
 window.addEventListener("load", () => {
-
   const dados = JSON.parse(localStorage.getItem("ranking"));
-
   if(!dados) return;
 
   // 🥇 LÍDER
   if(dados.lider){
     document.getElementById("nomeLider").textContent =
       "🥇 1º Lugar — " + dados.lider.nome;
-
     document.getElementById("valorLider").textContent =
       dados.lider.valor;
-
     document.getElementById("fotoLider").src =
       dados.lider.foto;
   }
@@ -629,7 +628,6 @@ window.addEventListener("load", () => {
   if(dados.segundo){
     document.getElementById("nome2").textContent =
       "🥈 2º Lugar — " + dados.segundo.nome;
-
     document.getElementById("valor2").textContent =
       dados.segundo.valor;
   }
@@ -638,11 +636,9 @@ window.addEventListener("load", () => {
   if(dados.terceiro){
     document.getElementById("nome3").textContent =
       "🥉 3º Lugar — " + dados.terceiro.nome;
-
     document.getElementById("valor3").textContent =
       dados.terceiro.valor;
   }
-
 });
 </script>
 
@@ -651,3 +647,5 @@ function fecharPopup(){
   document.getElementById("popupAvisoInicial").style.display = "none";
 }
 </script>
+</body>
+</html>
