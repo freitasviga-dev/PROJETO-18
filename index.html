@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Projeto 18 - Maioridade</title>
 
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <style>
 body{
   margin:0;
@@ -412,7 +416,7 @@ botaoMusica.addEventListener("click", () => {
 function fecharAjuda(){
   document.getElementById("ajuda").style.display = "none";
   
-  // Atualizado para 700 milissegundos (0.7 segundos) antes de abrir o aviso do Pix
+  // Mantido o tempo ideal de 700 milissegundos para abrir o aviso do Pix com fluidez
   setTimeout(() => {
     document.getElementById("popupAvisoInicial").style.display = "flex";
   }, 700);
