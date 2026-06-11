@@ -430,7 +430,7 @@ window.addEventListener("load", () => {
   aria-label="Falar comigo no WhatsApp"
 >
   <span>💬</span>
-</a
+</a>
 
 <body>
 
@@ -604,13 +604,8 @@ setInterval(()=>{
   }
 },1000);
 </script>
-  <button onclick="fecharPopup()">Entendi e continuar</button>
 
-<script>
-function fecharPopup(){
-  document.getElementById("popupAvisoInicial").style.display = "none";
-}
-</script>
+<!-- FIM DO SEU ÚLTIMO SCRIPT -->
 <script>
 window.addEventListener("load", () => {
 
@@ -620,34 +615,33 @@ window.addEventListener("load", () => {
 
   // 🥇 LÍDER
   if(dados.lider){
+    document.getElementById("nomeLider").textContent =
+      "🥇 1º Lugar — " + dados.lider.nome;
 
-    const nome = document.getElementById("nomeLider");
-    const valor = document.getElementById("valorLider");
-    const foto = document.getElementById("fotoLider");
+    document.getElementById("valorLider").textContent =
+      dados.lider.valor;
 
-    if(nome) nome.textContent = "🥇 1º Lugar — " + dados.lider.nome;
-    if(valor) valor.textContent = dados.lider.valor;
-    if(foto) foto.src = dados.lider.foto;
+    document.getElementById("fotoLider").src =
+      dados.lider.foto;
   }
 
   // 🥈 SEGUNDO
   if(dados.segundo){
+    document.getElementById("nome2").textContent =
+      "🥈 2º Lugar — " + dados.segundo.nome;
 
-    const nome2 = document.getElementById("nome2");
-    const valor2 = document.getElementById("valor2");
-
-    if(nome2) nome2.textContent = "🥈 2º Lugar — " + dados.segundo.nome;
-    if(valor2) valor2.textContent = dados.segundo.valor;
+    document.getElementById("valor2").textContent =
+      dados.segundo.valor;
   }
 
   // 🥉 TERCEIRO
   if(dados.terceiro){
+    document.getElementById("nome3").textContent =
+      "🥉 3º Lugar — " + dados.terceiro.nome;
 
-    const nome3 = document.getElementById("nome3");
-    const valor3 = document.getElementById("valor3");
-
-    if(nome3) nome3.textContent = "🥉 3º Lugar — " + dados.terceiro.nome;
-    if(valor3) valor3.textContent = dados.terceiro.valor;
+    document.getElementById("valor3").textContent =
+      dados.terceiro.valor;
   }
 
 });
+</script>
