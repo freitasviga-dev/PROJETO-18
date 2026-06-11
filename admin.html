@@ -1,301 +1,75 @@
-Veja esse código <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Ranking VIP</title>
-
-<style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#000;
-  color:#fff;
-  overflow-x:hidden;
-}
-
-/* ================= LOGIN ================= */
-#login{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:radial-gradient(circle at top, #111, #000);
-  z-index:99999;
-}
-
-.login-box{
-  width:90%;
-  max-width:340px;
-  background:#111;
-  border:2px solid gold;
-  padding:20px;
-  border-radius:15px;
-  box-shadow:0 0 40px gold;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.login-box h2{
-  color:gold;
-}
-
-input{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  border:none;
-  outline:none;
-}
-
-/* olho senha */
-.eye{
-  position:absolute;
-  right:25px;
-  top:145px;
-  cursor:pointer;
-  color:gold;
-}
-
-/* chuva dourada */
-.rain{
-  position:fixed;
-  width:2px;
-  height:20px;
-  background:gold;
-  top:-10%;
-  animation:fall linear infinite;
-  opacity:0.6;
-}
-
-@keyframes fall{
-  to{
-    transform:translateY(120vh);
-  }
-}
-
-/* ================= PAINEL ================= */
-#painel{
-  display:none;
-  padding:20px;
-}
-
-.section{
-  background:#111;
-  border:1px solid gold;
-  border-radius:12px;
-  padding:15px;
-  margin-bottom:20px;
-}
-
-h3{
-  color:gold;
-}
-
-/* preview foto */
-.preview{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  object-fit:cover;
-  margin-top:10px;
-  display:block;
-}
-
-/* botão X foto */
-.remove{
-  position:relative;
-  top:-120px;
-  left:90px;
-  background:red;
-  border:none;
-  border-radius:50%;
-  color:#fff;
-  width:25px;
-  height:25px;
-  cursor:pointer;
-}
-
-/* salvar */
-button{
-  background:gold;
-  border:none;
-  padding:10px;
-  width:100%;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-/* SAIR FIXO */
-#sair{
-  position:fixed;
-  right:10px;
-  top:40%;
-  width:3cm;
-  height:3cm;
-  background:red;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-  box-shadow:0 0 20px black;
-  cursor:pointer;
-  z-index:9999;
-}
-
-@media(max-width:600px){
-  #sair{
-    width:2.5cm;
-    height:2.5cm;
-  }
-}
-</style>
+<title>Painel Ranking</title>
 </head>
 
-<body>
+<body style="font-family:Arial;background:#111;color:white;padding:20px">
 
-<!-- LOGIN -->
-<div id="login">
-  <div class="login-box">
-    <h2>🔐 ADMIN</h2>
+<h2>⚙️ Painel do Ranking</h2>
 
-    <input type="password" id="senha" placeholder="Digite a senha">
+<hr>
 
-    <span class="eye" onclick="toggleSenha()">👁</span>
-
-    <button onclick="entrar()">Entrar</button>
-  </div>
-</div>
-
-<!-- PAINEL -->
-<div id="painel">
-
-<button id="sair" onclick="sair()">SAIR</button>
-
-<h2 style="color:gold;text-align:center">PAINEL RANKING</h2>
-
-<!-- LÍDER -->
-<div class="section">
 <h3>🥇 Líder</h3>
 
-<input id="l_nome" placeholder="Nome">
-<input id="l_valor" placeholder="Valor">
+<label>Nome:</label><br>
+<input id="liderNome" style="width:100%;padding:8px"><br><br>
 
-<input type="file" onchange="preview(this,'l')">
+<label>Valor:</label><br>
+<input id="liderValor" style="width:100%;padding:8px"><br><br>
 
-<img id="img_l" class="preview">
-<button class="remove" onclick="remover('l')">X</button>
+<label>Link da foto:</label><br>
+<input id="liderFoto" style="width:100%;padding:8px"><br><br>
 
-<button onclick="salvar('l')">Salvar líder</button>
-</div>
+<hr>
 
-<!-- SEGUNDO -->
-<div class="section">
-<h3>🥈 Segundo</h3>
+<h3>🥈 Segundo lugar</h3>
 
-<input id="s_nome" placeholder="Nome">
-<input id="s_valor" placeholder="Valor">
+<label>Nome:</label><br>
+<input id="segNome" style="width:100%;padding:8px"><br><br>
 
-<button onclick="salvar('s')">Salvar segundo</button>
-</div>
+<label>Valor:</label><br>
+<input id="segValor" style="width:100%;padding:8px"><br><br>
 
-<!-- TERCEIRO -->
-<div class="section">
-<h3>🥉 Terceiro</h3>
+<hr>
 
-<input id="t_nome" placeholder="Nome">
-<input id="t_valor" placeholder="Valor">
+<h3>🥉 Terceiro lugar</h3>
 
-<button onclick="salvar('t')">Salvar terceiro</button>
-</div>
+<label>Nome:</label><br>
+<input id="terNome" style="width:100%;padding:8px"><br><br>
 
-</div>
+<label>Valor:</label><br>
+<input id="terValor" style="width:100%;padding:8px"><br><br>
+
+<hr>
+
+<button onclick="salvar()" style="padding:12px 20px;font-weight:bold;">
+Salvar Ranking
+</button>
 
 <script>
-/* LOGIN */
-function entrar(){
-  let senha = document.getElementById("senha").value;
-  if(senha === "Vittor262200"){
-    document.getElementById("login").style.display="none";
-    document.getElementById("painel").style.display="block";
-  }else{
-    alert("Senha errada!");
-  }
-}
+function salvar(){
 
-/* mostrar senha */
-function toggleSenha(){
-  let i = document.getElementById("senha");
-  i.type = i.type==="password" ? "text" : "password";
-}
+  const ranking = {
+    lider: {
+      nome: document.getElementById("liderNome").value,
+      valor: document.getElementById("liderValor").value,
+      foto: document.getElementById("liderFoto").value
+    },
+    segundo: {
+      nome: document.getElementById("segNome").value,
+      valor: document.getElementById("segValor").value
+    },
+    terceiro: {
+      nome: document.getElementById("terNome").value,
+      valor: document.getElementById("terValor").value
+    }
+  };
 
-/* sair */
-function sair(){
-  document.getElementById("painel").style.display="none";
-  document.getElementById("login").style.display="flex";
-}
+  localStorage.setItem("ranking", JSON.stringify(ranking));
 
-/* preview imagem */
-function preview(input, tipo){
-  let file = input.files[0];
-  let reader = new FileReader();
-
-  reader.onload = function(e){
-    document.getElementById("img_"+tipo).src = e.target.result;
-  }
-
-  reader.readAsDataURL(file);
-}
-
-/* remover foto */
-function remover(tipo){
-  document.getElementById("img_"+tipo).src="";
-}
-
-/* salvar ranking */
-function salvar(tipo){
-
-  let dados = JSON.parse(localStorage.getItem("ranking")) || {};
-
-  if(tipo==="l"){
-    dados.lider = {
-      nome: document.getElementById("l_nome").value,
-      valor: document.getElementById("l_valor").value,
-      foto: document.getElementById("img_l").src
-    };
-  }
-
-  if(tipo==="s"){
-    dados.segundo = {
-      nome: document.getElementById("s_nome").value,
-      valor: document.getElementById("s_valor").value
-    };
-  }
-
-  if(tipo==="t"){
-    dados.terceiro = {
-      nome: document.getElementById("t_nome").value,
-      valor: document.getElementById("t_valor").value
-    };
-  }
-
-  localStorage.setItem("ranking", JSON.stringify(dados));
-
-  alert("Salvo com sucesso!");
-}
-
-/* chuva dourada infinita */
-for(let i=0;i<60;i++){
-  let d = document.createElement("div");
-  d.className="rain";
-  d.style.left=Math.random()*100+"vw";
-  d.style.animationDuration=(Math.random()*3+2)+"s";
-  document.body.appendChild(d);
+  alert("Ranking salvo com sucesso!");
 }
 </script>
 
