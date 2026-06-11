@@ -618,7 +618,7 @@ window.addEventListener("load", () => {
 
   if(!dados) return;
 
-  // LÍDER
+  // 🥇 LÍDER
   if(dados.lider){
 
     const nome = document.getElementById("nomeLider");
@@ -630,5 +630,24 @@ window.addEventListener("load", () => {
     if(foto) foto.src = dados.lider.foto;
   }
 
+  // 🥈 SEGUNDO
+  if(dados.segundo){
+
+    const nome2 = document.getElementById("nome2");
+    const valor2 = document.getElementById("valor2");
+
+    if(nome2) nome2.textContent = "🥈 2º Lugar — " + dados.segundo.nome;
+    if(valor2) valor2.textContent = dados.segundo.valor;
+  }
+
+  // 🥉 TERCEIRO
+  if(dados.terceiro){
+
+    const nome3 = document.getElementById("nome3");
+    const valor3 = document.getElementById("valor3");
+
+    if(nome3) nome3.textContent = "🥉 3º Lugar — " + dados.terceiro.nome;
+    if(valor3) valor3.textContent = dados.terceiro.valor;
+  }
+
 });
-</script>
