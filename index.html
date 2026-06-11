@@ -432,7 +432,52 @@ window.addEventListener("load", () => {
   <span>💬</span>
 </a>
 <body>
+<!-- POPUP AVISO -->
+<div id="popupAviso" style="
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.85);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:99999;
+">
 
+  <div style="
+  background:#111;
+  border:2px solid gold;
+  padding:22px;
+  border-radius:16px;
+  width:90%;
+  max-width:360px;
+  text-align:center;
+  box-shadow:0 0 35px rgba(255,215,0,0.4);
+  color:white;
+  ">
+
+    <h2 style="color:gold;">⚠️ Aviso Importante</h2>
+
+    <p style="line-height:1.6;">
+      Após realizar o Pix 💸,<br>
+      clique no WhatsApp 💬 e envie o comprovante + sua foto 📸<br><br>
+      para validar sua participação no ranking 🏆.
+    </p>
+
+    <button onclick="document.getElementById('popupAviso').style.display='none'"
+    style="
+      margin-top:15px;
+      padding:12px 22px;
+      background:gold;
+      border:none;
+      border-radius:10px;
+      font-weight:bold;
+      cursor:pointer;
+    ">
+      Entendi e continuar
+    </button>
+
+  </div>
+</div>
 
 <script>
 for(let i=0;i<25;i++){
