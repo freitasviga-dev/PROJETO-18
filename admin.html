@@ -2,75 +2,227 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Painel Ranking</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin Ranking</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* LOGIN */
+#loginScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at top, #111, #000);
+  z-index:9999;
+  overflow:hidden;
+}
+
+.loginBox{
+  width:90%;
+  max-width:320px;
+  text-align:center;
+  padding:25px;
+  background:rgba(0,0,0,0.85);
+  border:2px solid gold;
+  border-radius:15px;
+  box-shadow:0 0 30px gold;
+}
+
+.loginBox h2{ color:gold; }
+
+.senhaBox{
+  position:relative;
+}
+
+.senhaBox input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  text-align:center;
+}
+
+.senhaBox span{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+}
+
+/* PAINEL */
+#painel{
+  display:none;
+  padding:20px;
+  max-width:700px;
+  margin:auto;
+}
+
+h2{ text-align:center; color:gold; }
+
+.section{
+  background:#111;
+  border:1px solid gold;
+  padding:15px;
+  border-radius:10px;
+  margin:15px auto;
+  max-width:500px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:6px;
+  border:none;
+}
+
+/* BOTÃO SAIR (SÓ NO PAINEL) */
+#logout{
+  position:fixed;
+  top:10px;
+  right:10px;
+
+  width:55px;
+  height:28px;
+  font-size:11px;
+
+  background:red;
+  color:#fff;
+
+  border:none;
+  border-radius:6px;
+
+  cursor:pointer;
+  z-index:9999;
+}
+
+/* FOTO */
+.preview{
+  display:flex;
+  justify-content:center;
+  position:relative;
+}
+
+.preview img{
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid gold;
+}
+
+.removeBtn{
+  position:absolute;
+  top:0;
+  right:calc(50% - 85px);
+  width:28px;
+  height:28px;
+  border:none;
+  border-radius:50%;
+  background:red;
+  color:white;
+  cursor:pointer;
+}
+</style>
 </head>
 
-<body style="font-family:Arial;background:#111;color:white;padding:20px">
+<body>
 
-<h2>⚙️ Painel do Ranking</h2>
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="loginBox">
+    <h2>⚙️ PAINEL ADMIN</h2>
 
-<hr>
+    <div class="senhaBox">
+      <input type="password" id="senha" placeholder="Senha">
+      <span onclick="toggleSenha()">👁️</span>
+    </div>
 
+    <button onclick="entrar()">Entrar</button>
+  </div>
+</div>
+
+<!-- PAINEL -->
+<div id="painel">
+
+<!-- BOTÃO SAIR AGORA SÓ AQUI DENTRO -->
+<button id="logout" onclick="sair()">Sair</button>
+
+<h2>⚙️ Painel Ranking</h2>
+
+<div class="section">
 <h3>🥇 Líder</h3>
+<input id="l_nome" placeholder="Nome">
+<input id="l_valor" placeholder="Valor">
+<input type="file" id="l_foto">
 
-<label>Nome:</label><br>
-<input id="liderNome" style="width:100%;padding:8px"><br><br>
+<div class="preview" id="prev"></div>
 
-<label>Valor:</label><br>
-<input id="liderValor" style="width:100%;padding:8px"><br><br>
+<button onclick="salvar()">Salvar</button>
+</div>
 
-<label>Link da foto:</label><br>
-<input id="liderFoto" style="width:100%;padding:8px"><br><br>
-
-<hr>
-
-<h3>🥈 Segundo lugar</h3>
-
-<label>Nome:</label><br>
-<input id="segNome" style="width:100%;padding:8px"><br><br>
-
-<label>Valor:</label><br>
-<input id="segValor" style="width:100%;padding:8px"><br><br>
-
-<hr>
-
-<h3>🥉 Terceiro lugar</h3>
-
-<label>Nome:</label><br>
-<input id="terNome" style="width:100%;padding:8px"><br><br>
-
-<label>Valor:</label><br>
-<input id="terValor" style="width:100%;padding:8px"><br><br>
-
-<hr>
-
-<button onclick="salvar()" style="padding:12px 20px;font-weight:bold;">
-Salvar Ranking
-</button>
+</div>
 
 <script>
-function salvar(){
 
-  const ranking = {
-    lider: {
-      nome: document.getElementById("liderNome").value,
-      valor: document.getElementById("liderValor").value,
-      foto: document.getElementById("liderFoto").value
-    },
-    segundo: {
-      nome: document.getElementById("segNome").value,
-      valor: document.getElementById("segValor").value
-    },
-    terceiro: {
-      nome: document.getElementById("terNome").value,
-      valor: document.getElementById("terValor").value
-    }
+function entrar(){
+  if(document.getElementById("senha").value === "Vittor262200"){
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("painel").style.display="block";
+  }else{
+    alert("Senha incorreta!");
+  }
+}
+
+function toggleSenha(){
+  const i=document.getElementById("senha");
+  i.type=i.type==="password"?"text":"password";
+}
+
+function sair(){
+  location.reload();
+}
+
+let fotoBase64="";
+
+document.getElementById("l_foto").addEventListener("change",e=>{
+  const file=e.target.files[0];
+  const reader=new FileReader();
+
+  reader.onload=()=>{
+    fotoBase64=reader.result;
+
+    document.getElementById("prev").innerHTML=`
+      <img src="${fotoBase64}">
+      <button class="removeBtn" onclick="removerFoto()">X</button>
+    `;
   };
 
-  localStorage.setItem("ranking", JSON.stringify(ranking));
+  reader.readAsDataURL(file);
+});
 
-  alert("Ranking salvo com sucesso!");
+function removerFoto(){
+  fotoBase64="";
+  document.getElementById("prev").innerHTML="";
+  document.getElementById("l_foto").value="";
 }
+
+function salvar(){
+  const d=JSON.parse(localStorage.getItem("ranking"))||{};
+  d.lider={nome:l_nome.value,valor:l_valor.value,foto:fotoBase64};
+  localStorage.setItem("ranking",JSON.stringify(d));
+  alert("Salvo!");
+}
+
 </script>
 
 </body>
