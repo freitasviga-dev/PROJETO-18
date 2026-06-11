@@ -9,32 +9,67 @@
 
 <h2>⚙️ Painel do Ranking</h2>
 
-<label>Nome do líder:</label><br>
-<input id="nome" style="width:100%;padding:8px"><br><br>
+<hr>
+
+<h3>🥇 Líder</h3>
+
+<label>Nome:</label><br>
+<input id="liderNome" style="width:100%;padding:8px"><br><br>
 
 <label>Valor:</label><br>
-<input id="valor" style="width:100%;padding:8px"><br><br>
+<input id="liderValor" style="width:100%;padding:8px"><br><br>
 
 <label>Link da foto:</label><br>
-<input id="foto" style="width:100%;padding:8px"><br><br>
+<input id="liderFoto" style="width:100%;padding:8px"><br><br>
 
-<button onclick="salvar()" style="padding:10px 20px;font-weight:bold;">
-Salvar
+<hr>
+
+<h3>🥈 Segundo lugar</h3>
+
+<label>Nome:</label><br>
+<input id="segNome" style="width:100%;padding:8px"><br><br>
+
+<label>Valor:</label><br>
+<input id="segValor" style="width:100%;padding:8px"><br><br>
+
+<hr>
+
+<h3>🥉 Terceiro lugar</h3>
+
+<label>Nome:</label><br>
+<input id="terNome" style="width:100%;padding:8px"><br><br>
+
+<label>Valor:</label><br>
+<input id="terValor" style="width:100%;padding:8px"><br><br>
+
+<hr>
+
+<button onclick="salvar()" style="padding:12px 20px;font-weight:bold;">
+Salvar Ranking
 </button>
 
 <script>
 function salvar(){
+
   const ranking = {
     lider: {
-      nome: document.getElementById("nome").value,
-      valor: document.getElementById("valor").value,
-      foto: document.getElementById("foto").value
+      nome: document.getElementById("liderNome").value,
+      valor: document.getElementById("liderValor").value,
+      foto: document.getElementById("liderFoto").value
+    },
+    segundo: {
+      nome: document.getElementById("segNome").value,
+      valor: document.getElementById("segValor").value
+    },
+    terceiro: {
+      nome: document.getElementById("terNome").value,
+      valor: document.getElementById("terValor").value
     }
   };
 
   localStorage.setItem("ranking", JSON.stringify(ranking));
 
-  alert("Salvo! Agora abre o site.");
+  alert("Ranking salvo com sucesso!");
 }
 </script>
 
