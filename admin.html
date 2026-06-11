@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Painel Ranking</title>
+</head>
+
+<body style="font-family:Arial;background:#111;color:white;padding:20px">
+
+<h2>⚙️ Painel do Ranking</h2>
+
+<label>Nome do líder:</label><br>
+<input id="nome" style="width:100%;padding:8px"><br><br>
+
+<label>Valor:</label><br>
+<input id="valor" style="width:100%;padding:8px"><br><br>
+
+<label>Link da foto:</label><br>
+<input id="foto" style="width:100%;padding:8px"><br><br>
+
+<button onclick="salvar()" style="padding:10px 20px;font-weight:bold;">
+Salvar
+</button>
+
+<script>
+function salvar(){
+  const ranking = {
+    lider: {
+      nome: document.getElementById("nome").value,
+      valor: document.getElementById("valor").value,
+      foto: document.getElementById("foto").value
+    }
+  };
+
+  localStorage.setItem("ranking", JSON.stringify(ranking));
+
+  alert("Salvo! Agora abre o site.");
+}
+</script>
+
+</body>
+</html>
