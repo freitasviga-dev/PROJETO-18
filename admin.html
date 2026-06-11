@@ -23,7 +23,6 @@ body{
   justify-content:center;
   background:radial-gradient(circle at top, #111, #000);
   z-index:9999;
-  overflow:hidden;
 }
 
 .loginBox{
@@ -66,7 +65,10 @@ body{
   margin:auto;
 }
 
-h2{ text-align:center; color:gold; }
+h2{
+  text-align:center;
+  color:gold;
+}
 
 .section{
   background:#111;
@@ -77,6 +79,10 @@ h2{ text-align:center; color:gold; }
   max-width:500px;
 }
 
+.section h3{
+  text-align:center;
+}
+
 input{
   width:100%;
   padding:10px;
@@ -85,28 +91,25 @@ input{
   border:none;
 }
 
-/* BOTÃO SAIR (SÓ NO PAINEL) */
+/* BOTÃO SAIR */
 #logout{
   position:fixed;
   top:10px;
   right:10px;
-
   width:55px;
   height:28px;
   font-size:11px;
-
   background:red;
   color:#fff;
-
   border:none;
   border-radius:6px;
-
   cursor:pointer;
   z-index:9999;
 }
 
 /* FOTO */
 .preview{
+  margin-top:12px;
   display:flex;
   justify-content:center;
   position:relative;
@@ -118,6 +121,7 @@ input{
   border-radius:50%;
   object-fit:cover;
   border:3px solid gold;
+  box-shadow:0 0 25px gold;
 }
 
 .removeBtn{
@@ -154,26 +158,43 @@ input{
 <!-- PAINEL -->
 <div id="painel">
 
-<!-- BOTÃO SAIR AGORA SÓ AQUI DENTRO -->
 <button id="logout" onclick="sair()">Sair</button>
 
 <h2>⚙️ Painel Ranking</h2>
 
+<!-- LÍDER -->
 <div class="section">
 <h3>🥇 Líder</h3>
 <input id="l_nome" placeholder="Nome">
 <input id="l_valor" placeholder="Valor">
 <input type="file" id="l_foto">
-
 <div class="preview" id="prev"></div>
+<button onclick="salvar()">Salvar Líder</button>
+</div>
 
-<button onclick="salvar()">Salvar</button>
+<!-- SEGUNDO -->
+<div class="section">
+<h3>🥈 Segundo</h3>
+<input id="s_nome" placeholder="Nome">
+<input id="s_valor" placeholder="Valor">
+<button onclick="salvar2()">Salvar Segundo</button>
+</div>
+
+<!-- TERCEIRO -->
+<div class="section">
+<h3>🥉 Terceiro</h3>
+<input id="t_nome" placeholder="Nome">
+<input id="t_valor" placeholder="Valor">
+<button onclick="salvar3()">Salvar Terceiro</button>
 </div>
 
 </div>
 
 <script>
 
+let fotoBase64="";
+
+/* LOGIN */
 function entrar(){
   if(document.getElementById("senha").value === "Vittor262200"){
     document.getElementById("loginScreen").style.display="none";
@@ -183,17 +204,18 @@ function entrar(){
   }
 }
 
+/* SENHA */
 function toggleSenha(){
   const i=document.getElementById("senha");
   i.type=i.type==="password"?"text":"password";
 }
 
+/* SAIR */
 function sair(){
   location.reload();
 }
 
-let fotoBase64="";
-
+/* FOTO */
 document.getElementById("l_foto").addEventListener("change",e=>{
   const file=e.target.files[0];
   const reader=new FileReader();
@@ -216,11 +238,26 @@ function removerFoto(){
   document.getElementById("l_foto").value="";
 }
 
+/* SALVAR */
 function salvar(){
   const d=JSON.parse(localStorage.getItem("ranking"))||{};
   d.lider={nome:l_nome.value,valor:l_valor.value,foto:fotoBase64};
   localStorage.setItem("ranking",JSON.stringify(d));
-  alert("Salvo!");
+  alert("Líder salvo!");
+}
+
+function salvar2(){
+  const d=JSON.parse(localStorage.getItem("ranking"))||{};
+  d.segundo={nome:s_nome.value,valor:s_valor.value};
+  localStorage.setItem("ranking",JSON.stringify(d));
+  alert("Segundo salvo!");
+}
+
+function salvar3(){
+  const d=JSON.parse(localStorage.getItem("ranking"))||{};
+  d.terceiro={nome:t_nome.value,valor:t_valor.value};
+  localStorage.setItem("ranking",JSON.stringify(d));
+  alert("Terceiro salvo!");
 }
 
 </script>
