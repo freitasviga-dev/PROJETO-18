@@ -604,39 +604,3 @@ setInterval(()=>{
   }
 },1000);
 </script>
-<script>
-function fecharPopup(){
-  document.getElementById("popupAvisoInicial").style.display = "none";
-}
-</script>
-<script>
-window.addEventListener("load", () => {
-
-  const rankingData = {
-    lider: {
-      nome: "BEATRIZ",
-      valor: "R$ 0,01"
-    },
-    segundo: {
-      nome: "Nome da Pessoa",
-      valor: "R$ 10"
-    },
-    terceiro: {
-      nome: "Nome da Pessoa",
-      valor: "R$ 0"
-    }
-  };
-
-  const nome = document.querySelector(".lider .nome");
-  const valor = document.querySelector(".lider span");
-
-  if (nome) {
-    nome.textContent = "🥇 1º Lugar — " + rankingData.lider.nome;
-  }
-
-  if (valor) {
-    valor.textContent = rankingData.lider.valor;
-  }
-
-});
-</script>
