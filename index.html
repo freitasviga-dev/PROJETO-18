@@ -431,6 +431,28 @@ window.addEventListener("load", () => {
 >
   <span>💬</span>
 </a>
+
+<script>
+function carregarRanking() {
+  const data = JSON.parse(localStorage.getItem("ranking")) || {
+    lider: {
+      nome: "BEATRIZ",
+      valor: "R$ 0,01",
+      foto: "foto-lider.jpg"
+    }
+  };
+
+  const nome = document.querySelector(".lider .nome");
+  const valor = document.querySelector(".lider span");
+  const foto = document.querySelector(".foto-lider");
+
+  if (nome) nome.textContent = "🥇 1º Lugar — " + data.lider.nome;
+  if (valor) valor.textContent = data.lider.valor;
+  if (foto) foto.src = data.lider.foto;
+}
+
+window.addEventListener("load", carregarRanking);
+</script>
 <body>
 
 <div id="popupAvisoInicial" style="
