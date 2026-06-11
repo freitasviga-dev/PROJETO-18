@@ -545,19 +545,19 @@ no <span style="color:gold;">grupo da família</span>
 <h3 style="color:gold;">🏆 Top Apoiadores</h3>
 
 <div class="rank-item ouro lider">
-  <img src="foto-lider.jpg" class="foto-lider" alt="Foto do líder">
-  <div class="nome">🥇 1º Lugar — BEATRIZ</div>
-  <span>R$ 0,01</span>
+  <img class="foto-lider" id="fotoLider" alt="Foto do líder">
+  <div class="nome" id="nomeLider">🥇 1º Lugar — BEATRIZ</div>
+  <span id="valorLider">R$ 0,01</span>
 </div>
 
 <div class="rank-item prata">
-  🥈 2º Lugar — Nome da Pessoa
-  <span>R$ 0</span>
+  <div id="nome2">🥈 2º Lugar — Nome da Pessoa</div>
+<span id="valor2">R$ 0</span>
 </div>
 
 <div class="rank-item bronze">
-  🥉 3º Lugar — Nome da Pessoa
-  <span>R$ 0</span>
+  <div id="nome3">🥉 3º Lugar — Nome da Pessoa</div>
+<span id="valor3">R$ 0</span>
 </div>
 </div>
 
@@ -610,4 +610,25 @@ setInterval(()=>{
 function fecharPopup(){
   document.getElementById("popupAvisoInicial").style.display = "none";
 }
+</script>
+<script>
+window.addEventListener("load", () => {
+
+  const dados = JSON.parse(localStorage.getItem("ranking"));
+
+  if(!dados) return;
+
+  // LÍDER
+  if(dados.lider){
+
+    const nome = document.getElementById("nomeLider");
+    const valor = document.getElementById("valorLider");
+    const foto = document.getElementById("fotoLider");
+
+    if(nome) nome.textContent = "🥇 1º Lugar — " + dados.lider.nome;
+    if(valor) valor.textContent = dados.lider.valor;
+    if(foto) foto.src = dados.lider.foto;
+  }
+
+});
 </script>
