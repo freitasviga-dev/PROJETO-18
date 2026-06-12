@@ -139,8 +139,8 @@ input{
   z-index:9999;
 }
 
-/* CONTAINER DA FOTO CENTRALIZADO */
-.preview{
+/* CONTAINER DA FOTO CENTRALIZADO (NOME NOVO ANTICACHE) */
+.area-foto{
   margin-top:15px;
   display: block;
   position: relative;
@@ -150,7 +150,7 @@ input{
   margin-right: auto;
 }
 
-.preview img{
+.area-foto img{
   width: 170px;
   height: 170px;
   border-radius: 50%;
@@ -160,26 +160,26 @@ input{
   display: block;
 }
 
-/* BOTÃO X CORRIGIDO - MODELO DO EXEMPLO APROVADO */
-.removeBtn{
+/* O "X" PERFEITO: MENOR, MAIS PRA DIREITA E COM BORDA BRANCA (NOME NOVO ANTICACHE) */
+.botao-fechar{
   position: absolute;
-  top: -5px;       
-  right: -10px;    
-  width: 26px;     
-  height: 26px;
-  background: #cc0000; 
-  color: #ffffff;    
+  top: -5px;       /* Deslocado para cima */
+  right: -12px;    /* Deslocado bem mais para a direita, fora do círculo */
+  width: 25px;     /* Tamanho menor e discreto */
+  height: 25px;
+  background: #cc0000 !important; /* Força o vermelho vivo */
+  color: #ffffff !important;    /* Força o X branco */
   font-weight: bold;
   font-size: 13px;
   font-family: Arial, sans-serif;
-  border: 1.5px solid #ffffff; 
+  border: 1.5px solid #ffffff !important; /* Bordinha branca nítida do seu exemplo */
   border-radius: 50%;     
   cursor: pointer;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-  z-index: 999;    
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  z-index: 9999 !important; /* Fica acima de tudo sem erro */
   padding: 0;
   margin: 0;
 }
@@ -212,8 +212,7 @@ input{
 <input id="l_nome" placeholder="Nome">
 <input id="l_valor" placeholder="Valor">
 <input type="file" id="l_foto" style="color: white; margin-top: 10px;">
-<div class="preview" id="prev"></div>
-<button onclick="salvarLider()">Salvar Líder</button>
+<div class="area-foto" id="prev"></div> <button onclick="salvarLider()">Salvar Líder</button>
 </div>
 
 <div class="section">
@@ -261,9 +260,10 @@ input{
           document.getElementById("l_valor").value = data.lider.valor || "";
           if (data.lider.foto) {
             fotoBase64 = data.lider.foto;
+            // Atualizado com a classe anticache nova
             document.getElementById("prev").innerHTML = `
               <img src="${fotoBase64}">
-              <button class="removeBtn" type="button" id="btnRemoveFoto">X</button>
+              <button class="botao-fechar" type="button" id="btnRemoveFoto">X</button>
             `;
             document.getElementById("btnRemoveFoto").onclick = removerFoto;
           }
@@ -324,9 +324,10 @@ input{
     const reader = new FileReader();
     reader.onload = () => {
       fotoBase64 = reader.result;
+      // Atualizado com a classe anticache nova
       document.getElementById("prev").innerHTML = `
         <img src="${fotoBase64}">
-        <button class="removeBtn" type="button" id="btnRemoveFoto">X</button>
+        <button class="botao-fechar" type="button" id="btnRemoveFoto">X</button>
       `;
       document.getElementById("btnRemoveFoto").onclick = removerFoto;
     };
