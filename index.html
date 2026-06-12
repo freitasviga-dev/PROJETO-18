@@ -257,6 +257,7 @@ button:active{ transform:scale(0.95); }
 </style>
 </head>
 
+<body>
 
 <button id="musicToggle" aria-label="Controle de música">
   <span id="musicIcon">🎵</span>
@@ -367,31 +368,6 @@ button:active{ transform:scale(0.95); }
 }
 </style>
 
-<script>
-const botaoMusica = document.getElementById("musicToggle");
-const iconeMusica = document.getElementById("musicIcon");
-
-/* MP3 LOCAL — arquivo precisa estar na mesma pasta do index.html */
-const musica = new Audio("musica.mp3");
-musica.loop = true;
-
-let tocando = false;
-
-botaoMusica.addEventListener("click", () => {
-  if (!tocando) {
-    musica.play();
-    botaoMusica.classList.add("active");
-    iconeMusica.textContent = "🔊";
-    tocando = true;
-  } else {
-    musica.pause();
-    botaoMusica.classList.remove("active");
-    iconeMusica.textContent = "🎵";
-    tocando = false;
-  }
-});
-</script>
-
 <div class="ajuda-overlay" id="ajuda">
   <div class="ajuda-box">
     <h3>ℹ️ Ajuda rápida</h3>
@@ -412,25 +388,6 @@ botaoMusica.addEventListener("click", () => {
   </div>
 </div>
 
-<script>
-function fecharAjuda(){
-  document.getElementById("ajuda").style.display = "none";
-  
-  // Mantido o tempo ideal de 700 milissegundos para abrir o aviso do Pix com fluidez
-  setTimeout(() => {
-    document.getElementById("popupAvisoInicial").style.display = "flex";
-  }, 700);
-}
-
-window.addEventListener("load", () => {
-  // Sempre começa mostrando a ajuda rápida
-  document.getElementById("ajuda").style.display = "flex";
-  
-  // Garante que o aviso importante comece escondido
-  document.getElementById("popupAvisoInicial").style.display = "none";
-});
-</script>
-
 <a
   href="https://wa.me/5583996469538"
   target="_blank"
@@ -439,8 +396,6 @@ window.addEventListener("load", () => {
 >
   <span>💬</span>
 </a>
-
-<body>
 
 <div id="popupAvisoInicial" style="
 position:fixed;
@@ -487,16 +442,6 @@ z-index:999999;
 
   </div>
 </div>
-
-<script>
-for(let i=0;i<25;i++){
-  const p=document.createElement("div");
-  p.className="particula";
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDelay=Math.random()*10+"s";
-  document.body.appendChild(p);
-}
-</script>
 
 <div class="container">
 
@@ -553,7 +498,7 @@ no <span style="color:gold;">grupo da família</span>
 <h3 style="color:gold;">🏆 Top Apoiadores</h3>
 
 <div class="rank-item ouro lider">
-  <img class="foto-lider" id="fotoLider" alt="Foto do líder">
+  <img class="foto-lider" id="fotoLider" alt="Foto do líder" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='55' height='55' viewBox='0 0 55 55'><rect width='55' height='55' fill='%23111'/></svg>">
   <div class="nome" id="nomeLider">🥇 1º Lugar — Carregando...</div>
   <span id="valorLider">...</span>
 </div>
@@ -589,13 +534,58 @@ O novo líder terá seu nome destacado aqui 🥇 e será
 </div>
 
 <script>
+const botaoMusica = document.getElementById("musicToggle");
+const iconeMusica = document.getElementById("musicIcon");
+const musica = new Audio("musica.mp3");
+musica.loop = true;
+let tocando = false;
+
+botaoMusica.addEventListener("click", () => {
+  if (!tocando) {
+    musica.play();
+    botaoMusica.classList.add("active");
+    iconeMusica.textContent = "🔊";
+    tocando = true;
+  } else {
+    musica.pause();
+    botaoMusica.classList.remove("active");
+    iconeMusica.textContent = "🎵";
+    tocando = false;
+  }
+});
+
+function fecharAjuda(){
+  document.getElementById("ajuda").style.display = "none";
+  setTimeout(() => {
+    document.getElementById("popupAvisoInicial").style.display = "flex";
+  }, 700);
+}
+
+window.addEventListener("load", () => {
+  document.getElementById("ajuda").style.display = "flex";
+  document.getElementById("popupAvisoInicial").style.display = "none";
+});
+
+function fecharPopup(){
+  document.getElementById("popupAvisoInicial").style.display = "none";
+}
+
 function copiar(){
   navigator.clipboard.writeText("83996721410")
   .then(()=>alert("Chave Pix copiada!"));
 }
 
-const aniversario = new Date("2026-07-22T00:00:00").getTime();
+// Gerador de Partículas de Ouro
+for(let i=0;i<25;i++){
+  const p=document.createElement("div");
+  p.className="particula";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDelay=Math.random()*10+"s";
+  document.body.appendChild(p);
+}
 
+// Contador Regressivo
+const aniversario = new Date("2026-07-22T00:00:00").getTime();
 setInterval(()=>{
   const agora = new Date().getTime();
   const d = aniversario - agora;
@@ -613,43 +603,56 @@ setInterval(()=>{
 },1000);
 </script>
 
-<script>
-window.addEventListener("load", () => {
-  const dados = JSON.parse(localStorage.getItem("ranking"));
-  if(!dados) return;
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-  // 🥇 LÍDER
-  if(dados.lider){
-    document.getElementById("nomeLider").textContent =
-      "🥇 1º Lugar — " + dados.lider.nome;
-    document.getElementById("valorLider").textContent =
-      dados.lider.valor;
-    document.getElementById("fotoLider").src =
-      dados.lider.foto;
-  }
+  // Suas credenciais do Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCLl0PxicnE9Hdio-dREwtiN-06YfKalPA",
+    authDomain: "projeto-18-14723.firebaseapp.com",
+    databaseURL: "https://projeto-18-14723-default-rtdb.firebaseio.com",
+    projectId: "projeto-18-14723",
+    storageBucket: "projeto-18-14723.firebasestorage.app",
+    messagingSenderId: "159188137463",
+    appId: "1:159188137463:web:4787318803107e001f2af2"
+  };
 
-  // 🥈 SEGUNDO
-  if(dados.segundo){
-    document.getElementById("nome2").textContent =
-      "🥈 2º Lugar — " + dados.segundo.nome;
-    document.getElementById("valor2").textContent =
-      dados.segundo.valor;
-  }
+  // Inicializa o Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
-  // 🥉 TERCEIRO
-  if(dados.terceiro){
-    document.getElementById("nome3").textContent =
-      "🥉 3º Lugar — " + dados.terceiro.nome;
-    document.getElementById("valor3").textContent =
-      dados.terceiro.valor;
-  }
-});
+  // Escuta as atualizações do banco em tempo real
+  const rankingRef = ref(db, 'ranking');
+  onValue(rankingRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      // 🥇 ATUALIZA O 1º LUGAR (LÍDER)
+      if (data.lider) {
+        document.getElementById("nomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
+        document.getElementById("valorLider").textContent = data.lider.valor || "R$ 0";
+        if (data.lider.foto) {
+          document.getElementById("fotoLider").src = data.lider.foto;
+          document.getElementById("fotoLider").style.display = "block";
+        } else {
+          document.getElementById("fotoLider").src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='55' height='55' viewBox='0 0 55 55'><rect width='55' height='55' fill='%23111'/></svg>";
+        }
+      }
+
+      // 🥈 ATUALIZA O 2º LUGAR
+      if (data.segundo) {
+        document.getElementById("nome2").textContent = "🥈 2º Lugar — " + (data.segundo.nome || "A definir");
+        document.getElementById("valor2").textContent = data.segundo.valor || "R$ 0";
+      }
+
+      // 🥉 ATUALIZA O 3º LUGAR
+      if (data.terceiro) {
+        document.getElementById("nome3").textContent = "🥉 3º Lugar — " + (data.terceiro.nome || "A definir");
+        document.getElementById("valor3").textContent = data.terceiro.valor || "R$ 0";
+      }
+    }
+  });
 </script>
 
-<script>
-function fecharPopup(){
-  document.getElementById("popupAvisoInicial").style.display = "none";
-}
-</script>
 </body>
 </html>
