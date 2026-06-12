@@ -160,26 +160,26 @@ input{
   display: block;
 }
 
-/* BOTÃO X: MENOR, MAIS PARA A DIREITA E COM BORDA BRANCA */
+/* BOTÃO X CORRIGIDO - MODELO DO EXEMPLO APROVADO */
 .removeBtn{
   position: absolute;
-  top: -5px;       /* Joga o botão um pouco para cima da foto */
-  right: -10px;    /* Desloca o botão mais para a direita para fora do círculo */
-  width: 26px;     /* Tamanho ligeiramente menor e mais discreto */
+  top: -5px;       
+  right: -10px;    
+  width: 26px;     
   height: 26px;
-  background: #cc0000; /* Vermelho vivo */
-  color: #ffffff;    /* X Branco */
+  background: #cc0000; 
+  color: #ffffff;    
   font-weight: bold;
   font-size: 13px;
   font-family: Arial, sans-serif;
-  border: 1.5px solid #ffffff; /* Bordinha branca fina idêntica ao exemplo */
-  border-radius: 50%;     /* Círculo perfeito */
+  border: 1.5px solid #ffffff; 
+  border-radius: 50%;     
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-  z-index: 999;    /* Fica por cima de qualquer elemento */
+  z-index: 999;    
   padding: 0;
   margin: 0;
 }
@@ -236,7 +236,6 @@ input{
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-  // Suas credenciais do Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCLl0PxicnE9Hdio-dREwtiN-06YfKalPA",
     authDomain: "projeto-18-14723.firebaseapp.com",
@@ -247,19 +246,16 @@ input{
     appId: "1:159188137463:web:4787318803107e001f2af2"
   };
 
-  // Inicializando o Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
   let fotoBase64 = "";
 
-  // Carregar dados atuais do Firebase ao entrar na página
   function carregarDadosAtuais() {
     const rankingRef = ref(db, 'ranking');
     onValue(rankingRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        // Preenche o Líder
         if (data.lider) {
           document.getElementById("l_nome").value = data.lider.nome || "";
           document.getElementById("l_valor").value = data.lider.valor || "";
@@ -272,12 +268,10 @@ input{
             document.getElementById("btnRemoveFoto").onclick = removerFoto;
           }
         }
-        // Preenche o Segundo
         if (data.segundo) {
           document.getElementById("s_nome").value = data.segundo.nome || "";
           document.getElementById("s_valor").value = data.segundo.valor || "";
         }
-        // Preenche o Terceiro
         if (data.terceiro) {
           document.getElementById("t_nome").value = data.terceiro.nome || "";
           document.getElementById("t_valor").value = data.terceiro.valor || "";
@@ -286,7 +280,6 @@ input{
     });
   }
 
-  // Funções de clique expostas para o HTML tradicional conseguir chamar
   window.salvarLider = function() {
     const nome = document.getElementById("l_nome").value;
     const valor = document.getElementById("l_valor").value;
@@ -324,7 +317,6 @@ input{
     .catch((error) => alert("Erro ao salvar: " + error.message));
   }
 
-  // Monitorar input de foto
   document.getElementById("l_foto").addEventListener("change", e => {
     const file = e.target.files[0];
     if (!file) return;
@@ -347,12 +339,11 @@ input{
     document.getElementById("l_foto").value = "";
   }
 
-  // Expor a função de entrar para ativar o carregamento de dados do banco
   window.entrar = function() {
     if(document.getElementById("senha").value === "Vittor262200"){
       document.getElementById("loginScreen").style.display="none";
       document.getElementById("painel").style.display="block";
-      carregarDadosAtuais(); // Puxa os dados do banco assim que loga
+      carregarDadosAtuais();
     }else{
       alert("Senha incorreta!");
     }
@@ -360,7 +351,6 @@ input{
 </script>
 
 <script>
-/* Funções globais simples de interface */
 function toggleSenha(){
   const i=document.getElementById("senha");
   i.type=i.type==="password"?"text":"password";
