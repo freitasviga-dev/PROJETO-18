@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin Ranking</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#000;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* LOGIN */
+#loginScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle at top, #111, #000);
+  z-index:9999;
+}
+
+.loginBox{
+  width:90%;
+  max-width:320px;
+  text-align:center;
+  padding:25px;
+  background:rgba(0,0,0,0.85);
+  border:2px solid gold;
+  border-radius:15px;
+  box-shadow:0 0 30px gold;
+}
+
+.loginBox h2{ color:gold; }
+
+.senhaBox{
+  position:relative;
+}
+
+.senhaBox input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  text-align:center;
+}
+
+.senhaBox span{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+}
+
+/* PAINEL */
+#painel{
+  display:none;
+  padding:20px;
+  max-width:700px;
+  margin:auto;
+}
+
+h2{
+  text-align:center;
+  color:gold;
+}
+
+.section{
+  background:#111;
+  border:1px solid gold;
+  padding:15px;
+  border-radius:10px;
+  margin:15px auto;
+  max-width:500px;
+}
+
+.section h3{
+  text-align:center;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:6px;
+  border:none;
+}
+
+/* BOTÃO SAIR */
+#logout{
+  position:fixed;
+  top:10px;
+  right:10px;
+  width:55px;
+  height:28px;
+  font-size:11px;
+  background:red;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  z-index:9999;
+}
+
+/* FOTO */
+.preview{
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+  position:relative;
+}
+
+.preview img{
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid gold;
+  box-shadow:0 0 25px gold;
+}
+
+.removeBtn{
+  position:absolute;
+  top:0;
+  right:calc(50% - 85px);
+  width:28px;
+  height:28px;
+  border:none;
+  border-radius:50%;
+  background:red;
+  color:white;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="loginBox">
+    <h2>⚙️ PAINEL ADMIN</h2>
+
+    <div class="senhaBox">
+      <input type="password" id="senha" placeholder="Senha">
+      <span onclick="toggleSenha()">👁️</span>
+    </div>
+
+    <button onclick="entrar()">Entrar</button>
+  </div>
+</div>
+
+<!-- PAINEL -->
+<div id="painel">
+
+<button id="logout" onclick="sair()">Sair</button>
+
+<h2>⚙️ Painel Ranking</h2>
+
+<!-- LÍDER -->
+<div class="section">
+<h3>🥇 Líder</h3>
+<input id="l_nome" placeholder="Nome">
+<input id="l_valor" placeholder="Valor">
+<input type="file" id="l_foto">
+<div class="preview" id="prev"></div>
+<button onclick="salvar()">Salvar Líder</button>
+</div>
+
+<!-- SEGUNDO -->
+<div class="section">
+<h3>🥈 Segundo</h3>
+<input id="s_nome" placeholder="Nome">
+<input id="s_valor" placeholder="Valor">
+<button onclick="salvar2()">Salvar Segundo</button>
+</div>
+
+<!-- TERCEIRO -->
+<div class="section">
+<h3>🥉 Terceiro</h3>
+<input id="t_nome" placeholder="Nome">
+<input id="t_valor" placeholder="Valor">
+<button onclick="salvar3()">Salvar Terceiro</button>
+</div>
+
+</div>
+
+<script>
+
+let fotoBase64="";
+
+/* LOGIN */
+function entrar(){
+  if(document.getElementById("senha").value === "Vittor262200"){
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("painel").style.display="block";
+  }else{
+    alert("Senha incorreta!");
+  }
+}
+
+/* SENHA */
+function toggleSenha(){
+  const i=document.getElementById("senha");
+  i.type=i.type==="password"?"text":"password";
+}
+
+/* SAIR */
+function sair(){
+  location.reload();
+}
+
+/* FOTO */
+document.getElementById("l_foto").addEventListener("change",e=>{
+  const file=e.target.files[0];
+  const reader=new FileReader();
+
+  reader.onload=()=>{
+    fotoBase64=reader.result;
+
+    document.getElementById("prev").innerHTML=`
+      <img src="${fotoBase64}">
+      <button class="removeBtn" onclick="removerFoto()">X</button>
+    `;
+  };
+
+  reader.readAsDataURL(file);
+});
+
+function removerFoto(){
+  fotoBase64="";
+  document.getElementById("prev").innerHTML="";
+  document.getElementById("l_foto").value="";
+}
+
+/* SALVAR */
+function salvar(){
+  const d=JSON.parse(localStorage.getItem("ranking"))||{};
+  d.lider={nome:l_nome.value,valor:l_valor.value,foto:fotoBase64};
+  localStorage.setItem("ranking",JSON.stringify(d));
+  alert("Líder salvo!");
+}
+
+function salvar2(){
+  const d=JSON.parse(localStorage.getItem("ranking"))||{};
+  d.segundo={nome:s_nome.value,valor:s_valor.value};
+  localStorage.setItem("ranking",JSON.stringify(d));
+  alert("Segundo salvo!");
+}
+
+function salvar3(){
+  const d=JSON.parse(localStorage.getItem("ranking"))||{};
+  d.terceiro={nome:t_nome.value,valor:t_valor.value};
+  localStorage.setItem("ranking",JSON.stringify(d));
+  alert("Terceiro salvo!");
+}
+
+</script>
+
+</body>
+</html>
