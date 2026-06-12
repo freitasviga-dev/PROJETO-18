@@ -3,125 +3,611 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projeto 18 – Hall da Fama</title>
+<title>Projeto 18 - Maioridade</title>
 
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 
 <style>
-body{ margin:0; background:radial-gradient(circle at top, #1a1a1a, #000); font-family:Arial, sans-serif; color:white; text-align:center; overflow-x:hidden; }
-.container{ max-width:500px; margin:auto; padding:35px 20px; }
-.particula{ position:fixed; width:4px; height:4px; background:gold; border-radius:50%; opacity:0.6; animation:flutuar 12s linear infinite; }
-@keyframes flutuar{ from{ transform:translateY(100vh); } to{ transform:translateY(-10vh); } }
-.foto{ width:220px; height:220px; border-radius:50%; object-fit:cover; border:4px solid gold; animation:glowFoto 3s infinite; }
-@keyframes glowFoto{ 0%{ box-shadow:0 0 20px gold; } 50%{ box-shadow:0 0 50px gold; } 100%{ box-shadow:0 0 20px gold; } }
-h1{ color:gold; font-size:34px; margin-top:25px; animation:brilhoTitulo 2.5s infinite; }
-@keyframes brilhoTitulo{ 0%{ text-shadow:0 0 5px gold; } 50%{ text-shadow:0 0 30px gold; } 100%{ text-shadow:0 0 5px gold; } }
-.texto{ margin-top:20px; line-height:1.7; font-size:17px; color:#ddd; }
-.card{ background:rgba(0,0,0,0.65); border:2px solid gold; border-radius:18px; padding:22px; margin-top:28px; box-shadow:0 0 30px rgba(255,215,0,0.2); }
-#contador{ font-size:20px; color:gold; font-weight:bold; }
-.pix-numero{ font-size:20px; margin:15px 0; }
-button{ background:gold; border:none; padding:14px 30px; border-radius:12px; font-weight:bold; cursor:pointer; animation:pulsarBotao 2s infinite; }
-@keyframes pulsarBotao{ 0%{ box-shadow:0 0 10px gold; } 50%{ box-shadow:0 0 35px gold; } 100%{ box-shadow:0 0 10px gold; } }
-.qr{ width:220px; margin-top:20px; border-radius:12px; box-shadow:0 0 25px gold; }
-.tabela{ width:100%; border-collapse:collapse; margin-top:18px; }
-.tabela th, .tabela td{ border:1px solid gold; padding:12px; }
-.tabela th{ background:#111; color:gold; }
-.rank-item{ display:flex; align-items:center; justify-content:space-between; padding:12px; margin-top:10px; border-radius:12px; border:1px solid gold; background:#111; }
-.lider{ animation:liderGlow 1.3s infinite; position:relative; padding-left:90px; min-height:70px; }
-@keyframes liderGlow{ 0%{ box-shadow:0 0 15px gold; transform:scale(1); } 50%{ box-shadow:0 0 60px gold; transform:scale(1.08); } 100%{ box-shadow:0 0 15px gold; transform:scale(1); } }
-.lider::after{ content:"🔥 Líder atual"; position:absolute; top:-14px; right:-12px; background:gold; color:black; font-size:11px; padding:4px 8px; border-radius:8px; font-weight:bold; }
-.foto-lider{ position:absolute; left:18px; top:50%; transform:translateY(-50%); width:55px; height:55px; border-radius:50%; object-fit:cover; border:2px solid gold; box-shadow:0 0 12px gold; background:#000; }
-.zap-float{ position: fixed; bottom: 90px; right: 20px; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fff; text-decoration: none; box-shadow: 0 0 15px rgba(37,211,102,0.8); z-index: 15000; }
-#musicToggle{ position:fixed; bottom:20px; right:20px; width:60px; height:60px; border-radius:50%; border:none; z-index:9999; background:#b00000; cursor:pointer; }
+body{
+  margin:0;
+  background:radial-gradient(circle at top, #1a1a1a, #000);
+  font-family:Arial, sans-serif;
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:35px 20px;
+}
+
+/* PARTÍCULAS */
+.particula{
+  position:fixed;
+  width:4px;
+  height:4px;
+  background:gold;
+  border-radius:50%;
+  opacity:0.6;
+  animation:flutuar 12s linear infinite;
+}
+@keyframes flutuar{
+  from{ transform:translateY(100vh); }
+  to{ transform:translateY(-10vh); }
+}
+
+/* FOTO */
+@keyframes glowFoto{
+  0%{ box-shadow:0 0 20px gold; }
+  50%{ box-shadow:0 0 50px gold; }
+  100%{ box-shadow:0 0 20px gold; }
+}
+.foto{
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid gold;
+  animation:glowFoto 3s infinite;
+}
+
+/* TÍTULO */
+@keyframes brilhoTitulo{
+  0%{ text-shadow:0 0 5px gold; }
+  50%{ text-shadow:0 0 30px gold; }
+  100%{ text-shadow:0 0 5px gold; }
+}
+h1{
+  color:gold;
+  font-size:34px;
+  margin-top:25px;
+  animation:brilhoTitulo 2.5s infinite;
+}
+
+/* TEXTO */
+.texto{
+  margin-top:20px;
+  line-height:1.7;
+  font-size:17px;
+  color:#ddd;
+}
+
+/* CARD */
+.card{
+  background:rgba(0,0,0,0.65);
+  border:2px solid gold;
+  border-radius:18px;
+  padding:22px;
+  margin-top:28px;
+  box-shadow:0 0 30px rgba(255,215,0,0.2);
+}
+
+/* CONTADOR */
+#contador{
+  font-size:20px;
+  color:gold;
+  font-weight:bold;
+}
+
+/* PIX */
+.pix-numero{
+  font-size:20px;
+  margin:15px 0;
+}
+
+/* BOTÃO */
+@keyframes pulsarBotao{
+  0%{ box-shadow:0 0 10px gold; }
+  50%{ box-shadow:0 0 35px gold; }
+  100%{ box-shadow:0 0 10px gold; }
+}
+button{
+  background:gold;
+  border:none;
+  padding:14px 30px;
+  border-radius:12px;
+  font-weight:bold;
+  cursor:pointer;
+  animation:pulsarBotao 2s infinite;
+}
+button:active{ transform:scale(0.95); }
+
+/* QR */
+.qr{
+  width:220px;
+  margin-top:20px;
+  border-radius:12px;
+  box-shadow:0 0 25px gold;
+}
+
+/* TABELA */
+.tabela{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:18px;
+}
+.tabela th, .tabela td{
+  border:1px solid gold;
+  padding:12px;
+}
+.tabela th{
+  background:#111;
+  color:gold;
+}
+
+/* VIP */
+@keyframes vip{
+  0%{ background:#1a1a1a; box-shadow:0 0 10px gold; transform:scale(1); }
+  50%{ background:#2a2a2a; box-shadow:0 0 45px gold; transform:scale(1.07); }
+  100%{ background:#1a1a1a; box-shadow:0 0 10px gold; transform:scale(1); }
+}
+.destaque{
+  font-weight:bold;
+  animation:vip 1.2s infinite;
+  position:relative;
+}
+.destaque::after{
+  content:"🥇 TOP APOIADOR";
+  position:absolute;
+  top:-12px;
+  right:-10px;
+  background:gold;
+  color:black;
+  font-size:10px;
+  padding:3px 6px;
+  border-radius:6px;
+}
+
+/* RANKING */
+.rank-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px;
+  margin-top:10px;
+  border-radius:12px;
+  border:1px solid gold;
+  background:#111;
+}
+
+.ouro{ background:linear-gradient(90deg,#332200,#000); }
+.prata{ background:#1a1a1a; }
+.bronze{ background:#1a1a1a; }
+
+/* LÍDER */
+@keyframes liderGlow{
+  0%{ box-shadow:0 0 15px gold; transform:scale(1); }
+  50%{ box-shadow:0 0 60px gold; transform:scale(1.08); }
+  100%{ box-shadow:0 0 15px gold; transform:scale(1); }
+}
+.lider{
+  animation:liderGlow 1.3s infinite;
+  position:relative;
+  padding-left:90px;
+  min-height:70px;
+}
+.lider::after{
+  content:"🔥 Líder atual";
+  position:absolute;
+  top:-14px;
+  right:-12px;
+  background:gold;
+  color:black;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+/* layout padrão (2º e 3º NÃO mudam) */
+.rank-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* SOMENTE o líder tem espaço pra foto */
+.rank-item.lider{
+  position:relative;
+  padding-left:90px;
+}
+
+.foto-lider{
+  position:absolute;
+  left:18px;
+  top:50%;
+  transform:translateY(-50%);
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid gold;
+  box-shadow:0 0 12px gold;
+  background:#000;
+}
+
+/* AJUSTE FINAL DO 1º LUGAR */
+.rank-item.lider{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:70px;
+}
+
+.rank-item.lider span{
+  white-space:nowrap;
+}
+/* afastar o nome do valor no 1º lugar */
+.rank-item.lider .nome{
+  margin-right:20px;
+}
+
+/* PADRONIZAR ALTURA E FORMATO DA TABELA */
+.tabela td,
+.tabela th {
+  white-space: nowrap;       /* impede quebrar linha */
+  vertical-align: middle;    /* centraliza vertical */
+  height: 55px;              /* altura fixa igual */
+  font-size: 16px;           /* tamanho uniforme */
+}
 </style>
 </head>
 
 <body>
 
-<button id="musicToggle">🎵</button>
+<button id="musicToggle" aria-label="Controle de música">
+  <span id="musicIcon">🎵</span>
+</button>
 
-<div id="aviso-flutuante" style="position: fixed; bottom: 155px; right: 20px; background: linear-gradient(135deg, #FFD700, #DAA520); color: black; padding: 12px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 9999; max-width: 200px; text-align: center; font-weight: bold; cursor: pointer; border: 2px solid #000; font-size: 13px;" onclick="this.style.display='none'">
-  🎁 Hall da Fama: Garanta seu lugar no pódio até meu aniversário e ganhe um brinde exclusivo!
+<style>
+#musicToggle{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #b00000; /* desligado */
+  cursor: pointer;
+  z-index: 9999;
+
+  box-shadow: 0 0 18px rgba(0,0,0,0.6);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+#musicToggle:hover{
+  transform: scale(1.05);
+}
+
+#musicToggle.active{
+  background: #0bb300; /* ligado */
+  box-shadow: 0 0 25px #0bb300;
+}
+
+#musicIcon{
+  font-size: 26px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.ajuda-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+
+.ajuda-box{
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 16px;
+  padding: 22px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 0 30px gold;
+}
+
+.ajuda-box h3{
+  color: gold;
+  margin-bottom: 14px;
+}
+
+.ajuda-box p{
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #ddd;
+}
+
+.ajuda-box button{
+  margin-top: 10px;
+  background: gold;
+  color: #000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.zap-float{
+  position: fixed;
+  bottom: 90px;           /* fica acima do botão da música */
+  right: 20px;            /* canto direito */
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(37,211,102,0.8);
+  z-index: 15000;
+}
+
+.zap-float:hover{
+  transform: scale(1.08);
+}
+</style>
+
+<div class="ajuda-overlay" id="ajuda">
+  <div class="ajuda-box">
+    <h3>ℹ️ Ajuda rápida</h3>
+
+    <p>
+      🎵 <strong>Botão da música</strong><br>
+      Serve para ligar e desligar a música do site.  
+      Verde = música ligada  
+      Vermelho = música desligada
+    </p>
+
+    <p>
+      💬 <strong>Botão do WhatsApp</strong><br>
+      Serve para falar comigo diretamente e tirar dúvidas.
+    </p>
+
+    <button onclick="fecharAjuda()">Entendi</button>
+  </div>
 </div>
 
-<a href="https://wa.me/5583996469538" target="_blank" class="zap-float">💬</a>
+<a
+  href="https://wa.me/5583996469538"
+  target="_blank"
+  class="zap-float"
+  aria-label="Falar comigo no WhatsApp"
+>
+  <span>💬</span>
+</a>
+
+<div id="popupAvisoInicial" style="
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.85);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999999;
+">
+
+  <div style="
+    background:#111;
+    border:2px solid gold;
+    padding:22px;
+    border-radius:16px;
+    width:90%;
+    max-width:360px;
+    text-align:center;
+    box-shadow:0 0 35px rgba(255,215,0,0.4);
+    color:white;
+  ">
+
+    <h2 style="color:gold;">⚠️ Aviso Importante</h2>
+
+    <p style="line-height:1.6;">
+      Após realizar o Pix 💸,<br>
+      clique no WhatsApp 💬 e envie o comprovante + sua foto 📸<br><br>
+      para entrar no ranking 🏆.
+    </p>
+
+    <button onclick="fecharPopup()"
+    style="
+      margin-top:15px;
+      padding:12px 22px;
+      background:gold;
+      border:none;
+      border-radius:10px;
+      font-weight:bold;
+      cursor:pointer;
+    ">
+      Entendi e continuar
+    </button>
+
+  </div>
+</div>
 
 <div class="container">
-  <img class="foto" src="minha-foto.jpg" alt="Foto">
-  <h1>PROJETO 18 –<br>HALL DA FAMA</h1>
-  <div class="texto">
-    Esta é a forma oficial de celebrarmos juntos o meu aniversário! 💛 
-    <br><br>
-    Criei este Hall da Fama para reconhecer quem faz parte desta história. Participe, mostre seu apoio e garanta seu lugar entre os maiores apoiadores dos meus 18 anos.
-    <br><br>
-    <strong style="color:gold;">Quanto maior o seu valor, mais exclusivo será o seu brinde.</strong> O Hall da Fama está aberto, venha conquistar o seu lugar! 🙏✨
-  </div>
 
-  <div class="card">
-    🎂 <strong>22 de Julho de 2026</strong> 🎉
-    <div id="contador" style="margin-top:10px;"></div>
-  </div>
+<img class="foto" src="minha-foto.jpg" alt="Foto do aniversariante">
 
-  <div class="card">
-    💸 <strong>Pix para participação</strong>
-    <div class="pix-numero">(83) 9 9672-1410</div>
-    <button onclick="copiar()">Copiar chave Pix</button>
-    <br>
-    <img class="qr" src="qrcode.png" alt="QR">
-    
-    <h3 style="color:gold; margin-top:22px;">🏆 Pódio e Recompensas</h3>
-    <table class="tabela">
-      <tr><th>Posição</th><th>Recompensa</th></tr>
-      <tr><td>1º Lugar</td><td>Brinde Ouro 🥇</td></tr>
-      <tr><td>2º Lugar</td><td>Brinde Prata 🥈</td></tr>
-      <tr><td>3º Lugar</td><td>Brinde Bronze 🥉</td></tr>
-    </table>
-  </div>
+<h1>PROJETO 18 –<br>MAIORIDADE</h1>
 
-  <div class="card">
-    <h3 style="color:gold;">🏆 Hall da Fama</h3>
-    <div class="rank-item ouro lider">
-      <img class="foto-lider" id="fotoLider" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='55' height='55' viewBox='0 0 55 55'><rect width='55' height='55' fill='%23111'/></svg>">
-      <div class="nome" id="nomeLider">🥇 1º Lugar — Carregando...</div>
-      <span id="valorLider">...</span>
-    </div>
-    <div class="rank-item prata">
-      <div class="nome" id="nome2">🥈 2º Lugar — Carregando...</div>
-      <span id="valor2">...</span>
-    </div>
-    <div class="rank-item bronze">
-      <div class="nome" id="nome3">🥉 3º Lugar — Carregando...</div>
-      <span id="valor3">...</span>
-    </div>
-  </div>
+<div class="texto">
+Mesmo que você esteja longe e não possamos comemorar juntos,
+sua presença ainda pode fazer parte desse momento tão especial 💛
+<br><br>
+Este projeto representa meus 18 anos — o início de uma nova fase,
+cheia de sonhos, responsabilidades e conquistas.
+<br><br>
+Cada apoio é um gesto de carinho e incentivo,
+e faz parte dessa história que estou construindo.
+<br><br>
+<strong style="color:gold;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
+</div>
+
+<div class="card">
+🎂 <strong>22 de Julho de 2026</strong> 🎉
+<br><br>
+<div id="contador"></div>
+</div>
+
+<div class="card">
+💸 <strong>Pix para contribuição</strong>
+
+<div class="pix-numero">(83) 9 9672-1410</div>
+
+<button onclick="copiar()">Copiar chave Pix</button>
+
+<br>
+<img class="qr" src="qrcode.png" alt="QR Code Pix">
+
+<h3 style="color:gold; margin-top:22px;">💛 Formas de participar</h3>
+
+<table class="tabela">
+<tr><th>Valor</th><th>Significado</th></tr>
+<tr><td>R$ 15 – R$ 30</td><td>Presença e carinho 🤍</td></tr>
+<tr><td>R$ 50 – R$ 100</td><td>Participação especial 🎉</td></tr>
+<tr class="destaque"><td>R$ 100+</td><td>Apoiador VIP ✨</td></tr>
+</table>
+
+<p style="margin-top:16px;">
+🏆 <strong style="color:gold;">Destaque especial:</strong><br>
+Quem enviar o <strong>maior valor</strong> será mencionado
+no <span style="color:gold;">grupo da família</span>
+</p>
+</div>
+
+<div class="card">
+<h3 style="color:gold;">🏆 Top Apoiadores</h3>
+
+<div class="rank-item ouro lider">
+  <img class="foto-lider" id="fotoLider" alt="Foto do líder" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='55' height='55' viewBox='0 0 55 55'><rect width='55' height='55' fill='%23111'/></svg>">
+  <div class="nome" id="nomeLider">🥇 1º Lugar — Carregando...</div>
+  <span id="valorLider">...</span>
+</div>
+
+<div class="rank-item prata">
+  <div class="nome" id="nome2">🥈 2º Lugar — Carregando...</div>
+  <span id="valor2">...</span>
+</div>
+
+<div class="rank-item bronze">
+  <div class="nome" id="nome3">🥉 3º Lugar — Carregando...</div>
+  <span id="valor3">...</span>
+</div>
+</div>
+
+<p style="
+  margin-top:18px;
+  font-size:15px;
+  line-height:1.6;
+  color:#ddd;
+  background:rgba(255,215,0,0.08);
+  border:1px dashed gold;
+  padding:14px;
+  border-radius:12px;
+">
+👑 <strong style="color:gold;">Como se tornar o Líder:</strong><br>
+Para assumir o <strong>1º lugar</strong>, basta enviar um valor
+<strong>maior que o atual líder</strong> via Pix 💸.<br><br>
+O novo líder terá seu nome destacado aqui 🥇 e será
+<strong style="color:gold;">mencionado com honra no grupo da família</strong>.
+</p>
+
 </div>
 
 <script>
 const botaoMusica = document.getElementById("musicToggle");
+const iconeMusica = document.getElementById("musicIcon");
 const musica = new Audio("musica.mp3");
 musica.loop = true;
 let tocando = false;
+
 botaoMusica.addEventListener("click", () => {
-  if (!tocando) { musica.play(); botaoMusica.style.background="#0bb300"; tocando=true; }
-  else { musica.pause(); botaoMusica.style.background="#b00000"; tocando=false; }
+  if (!tocando) {
+    musica.play();
+    botaoMusica.classList.add("active");
+    iconeMusica.textContent = "🔊";
+    tocando = true;
+  } else {
+    musica.pause();
+    botaoMusica.classList.remove("active");
+    iconeMusica.textContent = "🎵";
+    tocando = false;
+  }
 });
-function copiar(){ navigator.clipboard.writeText("83996721410").then(()=>alert("Chave Pix copiada!")); }
-for(let i=0;i<25;i++){ const p=document.createElement("div"); p.className="particula"; p.style.left=Math.random()*100+"vw"; p.style.animationDelay=Math.random()*10+"s"; document.body.appendChild(p); }
+
+function fecharAjuda(){
+  document.getElementById("ajuda").style.display = "none";
+  setTimeout(() => {
+    document.getElementById("popupAvisoInicial").style.display = "flex";
+  }, 700);
+}
+
+window.addEventListener("load", () => {
+  document.getElementById("ajuda").style.display = "flex";
+  document.getElementById("popupAvisoInicial").style.display = "none";
+});
+
+function fecharPopup(){
+  document.getElementById("popupAvisoInicial").style.display = "none";
+}
+
+function copiar(){
+  navigator.clipboard.writeText("83996721410")
+  .then(()=>alert("Chave Pix copiada!"));
+}
+
+// Gerador de Partículas de Ouro
+for(let i=0;i<25;i++){
+  const p=document.createElement("div");
+  p.className="particula";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDelay=Math.random()*10+"s";
+  document.body.appendChild(p);
+}
+
+// Contador Regressivo
 const aniversario = new Date("2026-07-22T00:00:00").getTime();
 setInterval(()=>{
   const agora = new Date().getTime();
   const d = aniversario - agora;
   const contador = document.getElementById("contador");
-  if(d <= 0){ contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; }
-  else{ contador.innerHTML = Math.floor(d/86400000)+"d "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; }
+
+  if(d <= 0){
+    contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨";
+  }else{
+    contador.innerHTML =
+      Math.floor(d/86400000)+" dias "+
+      Math.floor((d%86400000)/3600000)+"h "+
+      Math.floor((d%3600000)/60000)+"m "+
+      Math.floor((d%60000)/1000)+"s";
+  }
 },1000);
 </script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // Suas credenciais do Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCLl0PxicnE9Hdio-dREwtiN-06YfKalPA",
     authDomain: "projeto-18-14723.firebaseapp.com",
@@ -131,14 +617,39 @@ setInterval(()=>{
     messagingSenderId: "159188137463",
     appId: "1:159188137463:web:4787318803107e001f2af2"
   };
+
+  // Inicializa o Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-  onValue(ref(db, 'ranking'), (snapshot) => {
+
+  // Escuta as atualizações do banco em tempo real
+  const rankingRef = ref(db, 'ranking');
+  onValue(rankingRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-      if (data.lider) { document.getElementById("nomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir"); document.getElementById("valorLider").textContent = data.lider.valor || "R$ 0"; if (data.lider.foto) document.getElementById("fotoLider").src = data.lider.foto; }
-      if (data.segundo) { document.getElementById("nome2").textContent = "🥈 2º Lugar — " + (data.segundo.nome || "A definir"); document.getElementById("valor2").textContent = data.segundo.valor || "R$ 0"; }
-      if (data.terceiro) { document.getElementById("nome3").textContent = "🥉 3º Lugar — " + (data.terceiro.nome || "A definir"); document.getElementById("valor3").textContent = data.terceiro.valor || "R$ 0"; }
+      // 🥇 ATUALIZA O 1º LUGAR (LÍDER)
+      if (data.lider) {
+        document.getElementById("nomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
+        document.getElementById("valorLider").textContent = data.lider.valor || "R$ 0";
+        if (data.lider.foto) {
+          document.getElementById("fotoLider").src = data.lider.foto;
+          document.getElementById("fotoLider").style.display = "block";
+        } else {
+          document.getElementById("fotoLider").src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='55' height='55' viewBox='0 0 55 55'><rect width='55' height='55' fill='%23111'/></svg>";
+        }
+      }
+
+      // 🥈 ATUALIZA O 2º LUGAR
+      if (data.segundo) {
+        document.getElementById("nome2").textContent = "🥈 2º Lugar — " + (data.segundo.nome || "A definir");
+        document.getElementById("valor2").textContent = data.segundo.valor || "R$ 0";
+      }
+
+      // 🥉 ATUALIZA O 3º LUGAR
+      if (data.terceiro) {
+        document.getElementById("nome3").textContent = "🥉 3º Lugar — " + (data.terceiro.nome || "A definir");
+        document.getElementById("valor3").textContent = data.terceiro.valor || "R$ 0";
+      }
     }
   });
 </script>
