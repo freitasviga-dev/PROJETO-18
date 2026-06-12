@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <title>Painel Admin Ranking</title>
 
 <style>
@@ -40,6 +45,7 @@ body{
 
 .senhaBox{
   position:relative;
+  margin-bottom: 15px;
 }
 
 .senhaBox input{
@@ -47,6 +53,7 @@ body{
   padding:10px;
   border-radius:8px;
   text-align:center;
+  box-sizing: border-box;
 }
 
 .senhaBox span{
@@ -55,6 +62,18 @@ body{
   top:50%;
   transform:translateY(-50%);
   cursor:pointer;
+  color: #000;
+}
+
+.loginBox button {
+  background: gold;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
 }
 
 /* PAINEL */
@@ -89,6 +108,19 @@ input{
   margin-top:6px;
   border-radius:6px;
   border:none;
+  box-sizing: border-box;
+}
+
+.section button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  background: gold;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 /* BOTÃO SAIR */
@@ -107,41 +139,55 @@ input{
   z-index:9999;
 }
 
-/* FOTO */
+/* FOTO E CONTAINER DO BOTÃO REMOVER CORRIGIDOS */
 .preview{
-  margin-top:12px;
-  display:flex;
-  justify-content:center;
-  position:relative;
+  margin-top:15px;
+  display: block;
+  position: relative;
+  width: 170px;  /* Largura exata da foto */
+  height: 170px; /* Altura exata da foto */
+  margin-left: auto;
+  margin-right: auto; /* Centraliza o bloco perfeitamente na tela */
 }
 
 .preview img{
-  width:170px;
-  height:170px;
-  border-radius:50%;
-  object-fit:cover;
-  border:3px solid gold;
-  box-shadow:0 0 25px gold;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid gold;
+  box-shadow: 0 0 25px gold;
+  display: block;
 }
 
+/* BOLINHA VERMELHA COM X NO CANTO SUPERIOR DIREITO */
 .removeBtn{
-  position:absolute;
-  top:0;
-  right:calc(50% - 85px);
-  width:28px;
-  height:28px;
-  border:none;
-  border-radius:50%;
-  background:red;
-  color:white;
-  cursor:pointer;
+  position: absolute;
+  top: 5px;       /* Ajustado para casar com a curvatura da foto redonda */
+  right: 5px;     /* Ajustado para casar com a curvatura da foto redonda */
+  width: 30px;    /* Tamanho ideal de bolinha para o toque do dedo */
+  height: 30px;
+  background: #ff0000; /* Vermelho vivo */
+  color: #ffffff;    /* X Branco */
+  font-weight: bold;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  border: 2px solid gold; /* Borda dourada combinando com o painel */
+  border-radius: 50%;     /* Deixa totalmente redondo */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+  z-index: 99;   /* Garante que fica por cima do brilho dourado */
+  padding: 0;
+  margin: 0;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <div id="loginScreen">
   <div class="loginBox">
     <h2>⚙️ PAINEL ADMIN</h2>
@@ -155,111 +201,174 @@ input{
   </div>
 </div>
 
-<!-- PAINEL -->
 <div id="painel">
 
 <button id="logout" onclick="sair()">Sair</button>
 
 <h2>⚙️ Painel Ranking</h2>
 
-<!-- LÍDER -->
 <div class="section">
 <h3>🥇 Líder</h3>
 <input id="l_nome" placeholder="Nome">
 <input id="l_valor" placeholder="Valor">
-<input type="file" id="l_foto">
+<input type="file" id="l_foto" style="color: white; margin-top: 10px;">
 <div class="preview" id="prev"></div>
-<button onclick="salvar()">Salvar Líder</button>
+<button onclick="salvarLider()">Salvar Líder</button>
 </div>
 
-<!-- SEGUNDO -->
 <div class="section">
 <h3>🥈 Segundo</h3>
 <input id="s_nome" placeholder="Nome">
 <input id="s_valor" placeholder="Valor">
-<button onclick="salvar2()">Salvar Segundo</button>
+<button onclick="salvarSegundo()">Salvar Segundo</button>
 </div>
 
-<!-- TERCEIRO -->
 <div class="section">
 <h3>🥉 Terceiro</h3>
 <input id="t_nome" placeholder="Nome">
 <input id="t_valor" placeholder="Valor">
-<button onclick="salvar3()">Salvar Terceiro</button>
+<button onclick="salvarTerceiro()">Salvar Terceiro</button>
 </div>
 
 </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // Suas credenciais do Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCLl0PxicnE9Hdio-dREwtiN-06YfKalPA",
+    authDomain: "projeto-18-14723.firebaseapp.com",
+    databaseURL: "https://projeto-18-14723-default-rtdb.firebaseio.com",
+    projectId: "projeto-18-14723",
+    storageBucket: "projeto-18-14723.firebasestorage.app",
+    messagingSenderId: "159188137463",
+    appId: "1:159188137463:web:4787318803107e001f2af2"
+  };
+
+  // Inicializando o Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  let fotoBase64 = "";
+
+  // Carregar dados atuais do Firebase ao entrar na página
+  function carregarDadosAtuais() {
+    const rankingRef = ref(db, 'ranking');
+    onValue(rankingRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        // Preenche o Líder
+        if (data.lider) {
+          document.getElementById("l_nome").value = data.lider.nome || "";
+          document.getElementById("l_valor").value = data.lider.valor || "";
+          if (data.lider.foto) {
+            fotoBase64 = data.lider.foto;
+            document.getElementById("prev").innerHTML = `
+              <img src="${fotoBase64}">
+              <button class="removeBtn" type="button" id="btnRemoveFoto">X</button>
+            `;
+            document.getElementById("btnRemoveFoto").onclick = removerFoto;
+          }
+        }
+        // Preenche o Segundo
+        if (data.segundo) {
+          document.getElementById("s_nome").value = data.segundo.nome || "";
+          document.getElementById("s_valor").value = data.segundo.valor || "";
+        }
+        // Preenche o Terceiro
+        if (data.terceiro) {
+          document.getElementById("t_nome").value = data.terceiro.nome || "";
+          document.getElementById("t_valor").value = data.terceiro.valor || "";
+        }
+      }
+    });
+  }
+
+  // Funções de clique expostas para o HTML tradicional conseguir chamar
+  window.salvarLider = function() {
+    const nome = document.getElementById("l_nome").value;
+    const valor = document.getElementById("l_valor").value;
+
+    set(ref(db, 'ranking/lider'), {
+      nome: nome,
+      valor: valor,
+      foto: fotoBase64
+    })
+    .then(() => alert("🥇 Líder salvo com sucesso no Firebase!"))
+    .catch((error) => alert("Erro ao salvar: " + error.message));
+  }
+
+  window.salvarSegundo = function() {
+    const nome = document.getElementById("s_nome").value;
+    const valor = document.getElementById("s_valor").value;
+
+    set(ref(db, 'ranking/segundo'), {
+      nome: nome,
+      valor: valor
+    })
+    .then(() => alert("🥈 Segundo lugar salvo com sucesso no Firebase!"))
+    .catch((error) => alert("Erro ao salvar: " + error.message));
+  }
+
+  window.salvarTerceiro = function() {
+    const nome = document.getElementById("t_nome").value;
+    const valor = document.getElementById("t_valor").value;
+
+    set(ref(db, 'ranking/terceiro'), {
+      nome: nome,
+      valor: valor
+    })
+    .then(() => alert("🥉 Terceiro lugar salvo com sucesso no Firebase!"))
+    .catch((error) => alert("Erro ao salvar: " + error.message));
+  }
+
+  // Monitorar input de foto
+  document.getElementById("l_foto").addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+      fotoBase64 = reader.result;
+      document.getElementById("prev").innerHTML = `
+        <img src="${fotoBase64}">
+        <button class="removeBtn" type="button" id="btnRemoveFoto">X</button>
+      `;
+      document.getElementById("btnRemoveFoto").onclick = removerFoto;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  window.removerFoto = function() {
+    fotoBase64 = "";
+    document.getElementById("prev").innerHTML = "";
+    document.getElementById("l_foto").value = "";
+  }
+
+  // Expor a função de entrar para ativar o carregamento de dados do banco
+  window.entrar = function() {
+    if(document.getElementById("senha").value === "Vittor262200"){
+      document.getElementById("loginScreen").style.display="none";
+      document.getElementById("painel").style.display="block";
+      carregarDadosAtuais(); // Puxa os dados do banco assim que loga
+    }else{
+      alert("Senha incorreta!");
+    }
+  }
+</script>
 
 <script>
-
-let fotoBase64="";
-
-/* LOGIN */
-function entrar(){
-  if(document.getElementById("senha").value === "Vittor262200"){
-    document.getElementById("loginScreen").style.display="none";
-    document.getElementById("painel").style.display="block";
-  }else{
-    alert("Senha incorreta!");
-  }
-}
-
-/* SENHA */
+/* Funções globais simples de interface */
 function toggleSenha(){
   const i=document.getElementById("senha");
   i.type=i.type==="password"?"text":"password";
 }
 
-/* SAIR */
 function sair(){
   location.reload();
 }
-
-/* FOTO */
-document.getElementById("l_foto").addEventListener("change",e=>{
-  const file=e.target.files[0];
-  const reader=new FileReader();
-
-  reader.onload=()=>{
-    fotoBase64=reader.result;
-
-    document.getElementById("prev").innerHTML=`
-      <img src="${fotoBase64}">
-      <button class="removeBtn" onclick="removerFoto()">X</button>
-    `;
-  };
-
-  reader.readAsDataURL(file);
-});
-
-function removerFoto(){
-  fotoBase64="";
-  document.getElementById("prev").innerHTML="";
-  document.getElementById("l_foto").value="";
-}
-
-/* SALVAR */
-function salvar(){
-  const d=JSON.parse(localStorage.getItem("ranking"))||{};
-  d.lider={nome:l_nome.value,valor:l_valor.value,foto:fotoBase64};
-  localStorage.setItem("ranking",JSON.stringify(d));
-  alert("Líder salvo!");
-}
-
-function salvar2(){
-  const d=JSON.parse(localStorage.getItem("ranking"))||{};
-  d.segundo={nome:s_nome.value,valor:s_valor.value};
-  localStorage.setItem("ranking",JSON.stringify(d));
-  alert("Segundo salvo!");
-}
-
-function salvar3(){
-  const d=JSON.parse(localStorage.getItem("ranking"))||{};
-  d.terceiro={nome:t_nome.value,valor:t_valor.value};
-  localStorage.setItem("ranking",JSON.stringify(d));
-  alert("Terceiro salvo!");
-}
-
 </script>
 
 </body>
