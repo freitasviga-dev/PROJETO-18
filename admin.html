@@ -139,15 +139,15 @@ input{
   z-index:9999;
 }
 
-/* FOTO E CONTAINER DO BOTÃO REMOVER CORRIGIDOS */
+/* CONTAINER DA FOTO CENTRALIZADO */
 .preview{
   margin-top:15px;
   display: block;
   position: relative;
-  width: 170px;  /* Largura exata da foto */
-  height: 170px; /* Altura exata da foto */
+  width: 170px;  
+  height: 170px; 
   margin-left: auto;
-  margin-right: auto; /* Centraliza o bloco perfeitamente na tela */
+  margin-right: auto;
 }
 
 .preview img{
@@ -160,26 +160,26 @@ input{
   display: block;
 }
 
-/* BOLINHA VERMELHA COM X NO CANTO SUPERIOR DIREITO */
+/* BOTÃO X: MENOR, MAIS PARA A DIREITA E COM BORDA BRANCA */
 .removeBtn{
   position: absolute;
-  top: 5px;       /* Ajustado para casar com a curvatura da foto redonda */
-  right: 5px;     /* Ajustado para casar com a curvatura da foto redonda */
-  width: 30px;    /* Tamanho ideal de bolinha para o toque do dedo */
-  height: 30px;
-  background: #ff0000; /* Vermelho vivo */
+  top: -5px;       /* Joga o botão um pouco para cima da foto */
+  right: -10px;    /* Desloca o botão mais para a direita para fora do círculo */
+  width: 26px;     /* Tamanho ligeiramente menor e mais discreto */
+  height: 26px;
+  background: #cc0000; /* Vermelho vivo */
   color: #ffffff;    /* X Branco */
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   font-family: Arial, sans-serif;
-  border: 2px solid gold; /* Borda dourada combinando com o painel */
-  border-radius: 50%;     /* Deixa totalmente redondo */
+  border: 1.5px solid #ffffff; /* Bordinha branca fina idêntica ao exemplo */
+  border-radius: 50%;     /* Círculo perfeito */
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-  z-index: 99;   /* Garante que fica por cima do brilho dourado */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  z-index: 999;    /* Fica por cima de qualquer elemento */
   padding: 0;
   margin: 0;
 }
