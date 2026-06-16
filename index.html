@@ -11,6 +11,8 @@
     <title>Projeto 18 - Maioridade</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <link rel="preload" href="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=button-pressed-38129.mp3" as="audio">
+
     <style>
         /* RESET E TEMA BASE CASSINO VIP */
         body {
@@ -109,7 +111,7 @@
 
         /* TEXTO DE INCENTIVO EM TEMPO REAL */
         #incentivoText {
-            font-size: 13px; font-weight: bold; color: #00e676; margin-bottom: 15px; min-height: 16px;
+            font-size: 14px; font-weight: bold; color: #00e676; margin-bottom: 15px; min-height: 16px;
             animation: softPulse 1.5s infinite alternate;
         }
         @keyframes softPulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
@@ -179,7 +181,6 @@
 
 <canvas id="canvasFestivo"></canvas>
 
-<!-- AVISO EXPLOSIVO -->
 <div id="aviso-explosivo" style="
   position: fixed; bottom: 160px; right: 20px; 
   background: linear-gradient(135deg, #FFD700, #DAA520); 
@@ -193,7 +194,6 @@
   <div id="contador-aviso" style="font-size: 14px; margin-top: 8px; color: #550000;">15s</div>
 </div>
 
-<!-- AJUDA INICIAL -->
 <div class="overlay" id="ajuda">
   <div class="popup-box">
     <h3>ℹ️ Ajuda rápida</h3>
@@ -207,18 +207,17 @@
       💬 <strong>Botão do WhatsApp</strong><br>
       Serve para falar comigo diretamente e tirar dúvidas.
     </p>
-    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entendi</button>
+    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entrar no Site</button>
   </div>
 </div>
 
-<!-- AVISO IMPORTANTE POPUP (CORRIGIDO PARA A FOTO) -->
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
-    <h2>⚠️ Aviso Importante</h2>
+    <h2>⚠️ Quadro do Pódio</h2>
     <p>
-      Após escolher o valor, clique no botão para ir ao WhatsApp 💬 e envie o <strong>comprovante do Pix</strong> para entrar no ranking 🏆.<br><br>
+      Após escolher o valor, clique para ir ao WhatsApp 💬 e envie o <strong>comprovante do Pix</strong> para garantir sua vaga no ranking 🏆.<br><br>
       <span style="font-size: 13px; color: #aaa; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; display: block; border: 1px dashed #555;">
-        📸 <em>Sua foto só será necessária se você assumir o <strong>1º LUGAR!</strong></em>
+        📸 <em>Sua foto no destaque máximo do site é uma exclusividade de quem dominar o <strong>1º LUGAR!</strong></em>
       </span>
     </p>
     <button class="btn-popup btn-3d" onclick="fecharPopup()">Entrar no Site</button>
@@ -250,7 +249,6 @@
     <div id="contador"></div>
     </div>
 
-    <!-- PAINEL INTERATIVO COM CAMPO EDITÁVEL DIRETO E SOMA DE CHIPS -->
     <div class="pay-panel">
         <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-gift"></i> Escolha ou digite o valor</h3>
         
@@ -263,7 +261,6 @@
             <div class="bet-adjust btn-3d" id="btnPlus"><i class="fa-solid fa-plus"></i></div>
         </div>
         
-        <!-- TEXTO DE INCENTIVO DINÂMICO -->
         <div id="incentivoText">🚀 Todo apoio faz a diferença!</div>
 
         <div class="chip-container">
@@ -294,7 +291,6 @@
     </p>
     </div>
 
-    <!-- RANKING -->
     <div class="card">
     <h3 style="color:gold;">🏆 Top Apoiadores</h3>
 
@@ -344,30 +340,42 @@
 <audio id="bgMusic" loop src="musica.mp3"></audio>
 
 <script>
-// MOTOR DO CONTROLE E INCENTIVO
+// MOTOR DO CONTROLE E INCENTIVO PROGRESSIVO CASSINO
 let valorAtual = 50;
 let valorLiderNumerico = 0; 
 const meuNumero = "5583996469538";
 const inputValor = document.getElementById('valorPresenteInput');
 const incentivoText = document.getElementById('incentivoText');
 
+// INCENTIVOS INTERATIVOS EM TEMPO REAL NO VISOR DO PREÇO
 function atualizarIncentivo() {
     if (valorLiderNumerico > 0) {
         if (valorAtual > valorLiderNumerico) {
             incentivoText.style.color = "gold";
-            incentivoText.innerHTML = "🔥 VOCÊ ESTÁ PASSANDO O LÍDER!";
+            incentivoText.innerHTML = "🔥 INSANO! Você está assumindo a liderança máxima!";
         } else {
-            let diff = (valorLiderNumerico - valorAtual) + 1; // +1 para passar de fato
-            incentivoText.style.color = "#00e676";
-            incentivoText.innerHTML = `Faltam R$ ${diff.toFixed(2).replace('.',',')} para assumir o 1º Lugar! 🚀`;
+            let diff = (valorLiderNumerico - valorAtual) + 1;
+            if (valorAtual < 30) {
+                incentivoText.style.color = "#aaa";
+                incentivoText.innerHTML = "Opa, já paga um refrigerante na resenha! 🥤";
+            } else if (valorAtual >= 30 && valorAtual < 70) {
+                incentivoText.style.color = "#00e676";
+                incentivoText.innerHTML = "Aí sim! Participação especial confirmada! 🎉";
+            } else {
+                incentivoText.style.color = "gold";
+                incentivoText.innerHTML = `Presente pesado! Faltam R$ ${diff.toFixed(2).replace('.',',')} pro 1º lugar! 🚀`;
+            }
         }
     } else {
-        if(valorAtual >= 100) {
+        if (valorAtual < 30) {
+            incentivoText.style.color = "#aaa";
+            incentivoText.innerHTML = "Opa, já paga um refrigerante na resenha! 🥤";
+        } else if (valorAtual >= 30 && valorAtual < 70) {
+            incentivoText.style.color = "#00e676";
+            incentivoText.innerHTML = "Aí sim! Participação especial confirmada! 🎉";
+        } else {
             incentivoText.style.color = "gold";
             incentivoText.innerHTML = "✨ PRESENTE VIP GIGANTE! ✨";
-        } else {
-            incentivoText.style.color = "#00e676";
-            incentivoText.innerHTML = "🚀 Todo apoio faz a diferença!";
         }
     }
 }
@@ -393,7 +401,7 @@ document.getElementById('btnPlus').addEventListener('click', () => {
 inputValor.addEventListener('blur', tratarValor); 
 inputValor.addEventListener('change', tratarValor);
 
-// FICHAS AGORA SOMAM AO VALOR EXISTENTE
+// CHIPS DE SOMA COORDENADA
 document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', function() {
         tratarValor();
@@ -403,15 +411,23 @@ document.querySelectorAll('.chip').forEach(chip => {
     });
 });
 
-// WHATSAPP INTELIGENTE
+// WHATSAPP MENSAGEM INTELIGENTE E PROGRESSIVA POR FAIXAS DE VALOR
 document.getElementById('btnMandar').addEventListener('click', () => {
     tratarValor();
     let msg = "";
     
+    // 1. GATILHO SE PASSAR O PRIMEIRO COLOCADO DO RANKING
     if (valorLiderNumerico > 0 && valorAtual > valorLiderNumerico) {
-        msg = `Opa, Vittor! Dei uma olhada no seu site de aniversário e decidi que vou *QUEBRAR O RECORDE*! Quero mandar um presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para assumir o *1º LUGAR* do ranking! Me passa sua chave Pix? 🥇🔥`;
+        msg = `Opa, Vittor! Dei uma olhada no seu site de aniversário e decidi que vou *QUEBRAR O RECORDE*! Quero mandar um presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para assumir o *1º LUGAR* do ranking! Já separa o espaço da minha foto na galeria de honra! 🥇🔥`;
     } else {
-        msg = `Opa, Vittor! Vi seu site de aniversário. Escolhi o presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para te dar uma força e entrar no pódio dos apoiadores! Me passa sua chave Pix? 🎁✨`;
+        // 2. MENSAGEM DINÂMICA CASO SEJA UM APOIO NORMAL OU VIP DE ACORDO COM O VALOR SELECIONADO
+        if (valorAtual <= 25) {
+            msg = `Opa Vittor! Dei uma olhada no seu site de 18 anos e decidi mandar uma contribuição de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para marcar presença e te dar os parabéns! Me passa sua chave Pix? 🤍🎂`;
+        } else if (valorAtual > 25 && valorAtual < 100) {
+            msg = `Fala Vittor! Vi seu projeto da maioridade no site. Separei o presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para te dar aquela força nessa nova fase! Me manda a chave Pix para eu enviar e entrar no ranking? 🎉⚡`;
+        } else {
+            msg = `Eae Vittor, beleza? Decidi fechar com um presente VIP de *R$ ${valorAtual.toFixed(2).replace('.',',')}*! Quero garantir meu lugar no topo do pódio dos apoiadores! Manda a chave Pix aí! 🎁✨`;
+        }
     }
     
     window.open(`https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`, '_blank');
@@ -504,7 +520,6 @@ setInterval(()=>{
 },1000);
 </script>
 
-<!-- FIREBASE CONECTADO E ALIMENTANDO O VALOR DO LÍDER -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -530,12 +545,10 @@ setInterval(()=>{
         document.getElementById("nomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
         document.getElementById("valorLider").textContent = data.lider.valor || "R$ 0,00";
         
-        // EXTRAI O VALOR DO LÍDER DO BANCO
         let textoPreco = data.lider.valor || "0";
         let apenasNumeros = textoPreco.replace(/[^\d,]/g, '').replace(',', '.');
         valorLiderNumerico = parseFloat(apenasNumeros) || 0;
         
-        // Atualiza a frase de incentivo na hora que o Firebase puxar o dado
         atualizarIncentivo();
 
         if (data.lider.foto) { document.getElementById("fotoLider").src = data.lider.foto; }
