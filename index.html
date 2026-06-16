@@ -11,6 +11,7 @@
     <title>Projeto 18 - Maioridade</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <!-- PRELOAD DOS ÁUDIOS -->
     <link rel="preload" href="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=button-pressed-38129.mp3" as="audio">
 
     <style>
@@ -181,6 +182,7 @@
 
 <canvas id="canvasFestivo"></canvas>
 
+<!-- AVISO EXPLOSIVO -->
 <div id="aviso-explosivo" style="
   position: fixed; bottom: 160px; right: 20px; 
   background: linear-gradient(135deg, #FFD700, #DAA520); 
@@ -194,6 +196,7 @@
   <div id="contador-aviso" style="font-size: 14px; margin-top: 8px; color: #550000;">15s</div>
 </div>
 
+<!-- AJUDA INICIAL -->
 <div class="overlay" id="ajuda">
   <div class="popup-box">
     <h3>ℹ️ Ajuda rápida</h3>
@@ -207,10 +210,11 @@
       💬 <strong>Botão do WhatsApp</strong><br>
       Serve para falar comigo diretamente e tirar dúvidas.
     </p>
-    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entrar no Site</button>
+    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entendi</button>
   </div>
 </div>
 
+<!-- AVISO IMPORTANTE POPUP -->
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
     <h2>⚠️ Quadro do Pódio</h2>
@@ -226,6 +230,7 @@
 
 <div class="container">
 
+    <!-- 1. FOTO, TEXTO E CONTADOR -->
     <img class="foto" src="minha-foto.jpg" alt="Foto do aniversariante">
 
     <h1>PROJETO 18 –<br>MAIORIDADE</h1>
@@ -249,6 +254,18 @@
     <div id="contador"></div>
     </div>
 
+    <!-- 2. SIGNIFICADOS DOS VALORES (A JUSTIFICATIVA VEM ANTES) -->
+    <div class="card">
+        <h3 style="color:gold;">💛 Formas de participar</h3>
+        <table class="tabela">
+        <tr><th>Valor</th><th>Significado</th></tr>
+        <tr><td>R$ 15 – R$ 30</td><td>Presença e carinho 🤍</td></tr>
+        <tr><td>R$ 50 – R$ 100</td><td>Participação especial 🎉</td></tr>
+        <tr class="destaque"><td>R$ 100+</td><td>Apoiador VIP ✨</td></tr>
+        </table>
+    </div>
+
+    <!-- 3. PAINEL DE APOSTAS (O CARA LÊ E DEPOIS ESCOLHE) -->
     <div class="pay-panel">
         <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-gift"></i> Escolha ou digite o valor</h3>
         
@@ -261,6 +278,7 @@
             <div class="bet-adjust btn-3d" id="btnPlus"><i class="fa-solid fa-plus"></i></div>
         </div>
         
+        <!-- TEXTO DE INCENTIVO DINÂMICO -->
         <div id="incentivoText">🚀 Todo apoio faz a diferença!</div>
 
         <div class="chip-container">
@@ -275,22 +293,7 @@
         </button>
     </div>
 
-    <div class="card">
-    <h3 style="color:gold;">💛 Formas de participar</h3>
-    <table class="tabela">
-    <tr><th>Valor</th><th>Significado</th></tr>
-    <tr><td>R$ 15 – R$ 30</td><td>Presença e carinho 🤍</td></tr>
-    <tr><td>R$ 50 – R$ 100</td><td>Participação especial 🎉</td></tr>
-    <tr class="destaque"><td>R$ 100+</td><td>Apoiador VIP ✨</td></tr>
-    </table>
-
-    <p style="margin-top:16px;">
-    🏆 <strong style="color:gold;">Destaque especial:</strong><br>
-    Quem enviar o <strong>maior valor</strong> será eternizado aqui
-    no <span style="color:gold;">site com honra!</span>
-    </p>
-    </div>
-
+    <!-- 4. RANKING E LIDERANÇA (FECHANDO COM A COMPETIÇÃO SOCIAL) -->
     <div class="card">
     <h3 style="color:gold;">🏆 Top Apoiadores</h3>
 
@@ -311,6 +314,13 @@
       <div class="nome" id="nome3">🥉 3º Lugar — Carregando...</div>
       <span id="valor3">...</span>
     </div>
+
+    <p style="margin-top:16px;">
+    🏆 <strong style="color:gold;">Destaque especial:</strong><br>
+    Quem enviar o <strong>maior valor</strong> será eternizado aqui
+    no <span style="color:gold;">site com honra!</span>
+    </p>
+
     </div>
 
     <p style="
@@ -337,6 +347,7 @@
     <button class="btn-float btn-music btn-3d" id="musicToggle"><span id="musicIcon">🎵</span></button>
 </div>
 
+<!-- TOCA A MÚSICA QUE ACABAMOS DE GERAR -->
 <audio id="bgMusic" loop src="musica.mp3"></audio>
 
 <script>
@@ -426,7 +437,7 @@ document.getElementById('btnMandar').addEventListener('click', () => {
         } else if (valorAtual > 25 && valorAtual < 100) {
             msg = `Fala Vittor! Vi seu projeto da maioridade no site. Separei o presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para te dar aquela força nessa nova fase! Me manda a chave Pix para eu enviar e entrar no ranking? 🎉⚡`;
         } else {
-            msg = `Eae Vittor, beleza? Decidi fechar com um presente VIP de *R$ ${valorAtual.toFixed(2).replace('.',',')}*! Quero garantir meu lugar no topo do pódio dos apoiadores! Manda a chave Pix aí! 🎁✨`;
+            msg = `Eae Vittor, beleza? Decidi fechar com um presente VIP de *R$ ${valorAtual.toFixed(2).replace('.',',')}*! Quero garantir meu lugar no pódio dos apoiadores! Manda a chave Pix aí! 🎁✨`;
         }
     }
     
@@ -520,6 +531,7 @@ setInterval(()=>{
 },1000);
 </script>
 
+<!-- FIREBASE ALIMENTANDO VARIÁVEL LIDER -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
