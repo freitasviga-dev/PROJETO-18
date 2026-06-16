@@ -89,7 +89,7 @@
         
         .bet-input-row {
             display: flex; background: rgba(255,255,255,0.05); border-radius: 50px; padding: 4px;
-            border: 1px solid gold; align-items: center; justify-content: space-between; margin-bottom: 15px;
+            border: 1px solid gold; align-items: center; justify-content: space-between; margin-bottom: 8px;
         }
         .bet-adjust {
             background: #222; border: 1px solid #444; color: gold; width: 40px; height: 40px;
@@ -99,20 +99,27 @@
         
         /* INPUT DE TEXTO EDITÁVEL ESTILIZADO */
         .bet-display-input {
-            font-size: 22px; font-weight: 900; color: #fff; text-align: center; flex: 1;
+            font-size: 24px; font-weight: 900; color: #fff; text-align: center; flex: 1;
             background: transparent; border: none; outline: none; width: 100%;
             letter-spacing: -0.5px; font-family: inherit;
         }
-        /* Remove setas padrões do input de número */
         .bet-display-input::-webkit-outer-spin-button,
         .bet-display-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .bet-display-input { -moz-appearance: textfield; }
+
+        /* TEXTO DE INCENTIVO EM TEMPO REAL */
+        #incentivoText {
+            font-size: 13px; font-weight: bold; color: #00e676; margin-bottom: 15px; min-height: 16px;
+            animation: softPulse 1.5s infinite alternate;
+        }
+        @keyframes softPulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
 
         .chip-container { display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
         .chip {
             background: #111; border: 1px solid #444; color: #aaa; padding: 6px 14px;
             border-radius: 20px; font-size: 12px; font-weight: bold; box-shadow: 0 3px 0 #000;
         }
+        .chip:active { color: gold; border-color: gold; }
 
         .btn-enviar {
             width: 100%; background: gold; border: none; border-radius: 12px; padding: 15px; color: #000;
@@ -159,18 +166,20 @@
         .btn-zap { background: #25D366; text-decoration: none; box-shadow: 0 0 15px rgba(37,211,102,0.8); }
 
         /* OVERLAYS */
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; z-index: 20000; }
-        .popup-box { background: #111; border: 2px solid gold; border-radius: 16px; padding: 22px; width: 90%; max-width: 340px; text-align: center; box-shadow: 0 0 30px gold; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 20000; backdrop-filter: blur(5px); }
+        .popup-box { background: #111; border: 2px solid gold; border-radius: 16px; padding: 25px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 0 35px rgba(241, 196, 15, 0.4); }
         .popup-box h3 { color: gold; margin-bottom: 14px; }
-        .popup-box h2 { color: gold; }
-        .popup-box p { font-size: 15px; line-height: 1.6; margin-bottom: 12px; color: #ddd; }
-        .btn-popup { background: gold; color: #000; border: none; padding: 10px 24px; border-radius: 10px; font-weight: bold; }
+        .popup-box h2 { color: gold; margin-bottom: 15px; text-transform: uppercase; font-weight: 900; }
+        .popup-box p { font-size: 15px; line-height: 1.6; margin-bottom: 15px; color: #ccc; }
+        .btn-popup { background: gold; color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; box-shadow: 0 4px 0 #b8860b; }
+        .btn-popup:active { transform: translateY(4px); box-shadow: none; }
     </style>
 </head>
 <body>
 
 <canvas id="canvasFestivo"></canvas>
 
+<!-- AVISO EXPLOSIVO -->
 <div id="aviso-explosivo" style="
   position: fixed; bottom: 160px; right: 20px; 
   background: linear-gradient(135deg, #FFD700, #DAA520); 
@@ -184,6 +193,7 @@
   <div id="contador-aviso" style="font-size: 14px; margin-top: 8px; color: #550000;">15s</div>
 </div>
 
+<!-- AJUDA INICIAL -->
 <div class="overlay" id="ajuda">
   <div class="popup-box">
     <h3>ℹ️ Ajuda rápida</h3>
@@ -197,19 +207,21 @@
       💬 <strong>Botão do WhatsApp</strong><br>
       Serve para falar comigo diretamente e tirar dúvidas.
     </p>
-    <button class="btn-popup" onclick="fecharAjuda()">Entrar no Site</button>
+    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entendi</button>
   </div>
 </div>
 
+<!-- AVISO IMPORTANTE POPUP (CORRIGIDO PARA A FOTO) -->
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
     <h2>⚠️ Aviso Importante</h2>
-    <p style="line-height:1.6;">
-      Após realizar o Pix 💸,<br>
-      clique no WhatsApp 💬 e envie o comprovante + sua foto 📸<br><br>
-      para entrar no ranking 🏆.
+    <p>
+      Após escolher o valor, clique no botão para ir ao WhatsApp 💬 e envie o <strong>comprovante do Pix</strong> para entrar no ranking 🏆.<br><br>
+      <span style="font-size: 13px; color: #aaa; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; display: block; border: 1px dashed #555;">
+        📸 <em>Sua foto só será necessária se você assumir o <strong>1º LUGAR!</strong></em>
+      </span>
     </p>
-    <button class="btn-popup" onclick="fecharPopup()">Entrar no Site</button>
+    <button class="btn-popup btn-3d" onclick="fecharPopup()">Entrar no Site</button>
   </div>
 </div>
 
@@ -238,6 +250,7 @@
     <div id="contador"></div>
     </div>
 
+    <!-- PAINEL INTERATIVO COM CAMPO EDITÁVEL DIRETO E SOMA DE CHIPS -->
     <div class="pay-panel">
         <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-gift"></i> Escolha ou digite o valor</h3>
         
@@ -249,16 +262,19 @@
             </div>
             <div class="bet-adjust btn-3d" id="btnPlus"><i class="fa-solid fa-plus"></i></div>
         </div>
+        
+        <!-- TEXTO DE INCENTIVO DINÂMICO -->
+        <div id="incentivoText">🚀 Todo apoio faz a diferença!</div>
 
         <div class="chip-container">
-            <div class="chip btn-3d" data-val="15">R$ 15</div>
-            <div class="chip btn-3d" data-val="30">R$ 30</div>
-            <div class="chip btn-3d" data-val="50">R$ 50</div>
-            <div class="chip btn-3d" data-val="100" style="color:gold; border-color:gold;">R$ 100</div>
+            <div class="chip btn-3d" data-val="15">+ R$ 15</div>
+            <div class="chip btn-3d" data-val="30">+ R$ 30</div>
+            <div class="chip btn-3d" data-val="50">+ R$ 50</div>
+            <div class="chip btn-3d" data-val="100" style="color:gold; border-color:gold;">+ R$ 100</div>
         </div>
 
         <button class="btn-enviar btn-3d" id="btnMandar">
-            <i class="fa-brands fa-whatsapp"></i> Definir e falar com ele
+            <i class="fa-brands fa-whatsapp"></i> Confirmar Presente
         </button>
     </div>
 
@@ -278,6 +294,7 @@
     </p>
     </div>
 
+    <!-- RANKING -->
     <div class="card">
     <h3 style="color:gold;">🏆 Top Apoiadores</h3>
 
@@ -327,46 +344,71 @@
 <audio id="bgMusic" loop src="musica.mp3"></audio>
 
 <script>
-// CONTROLE DO PAINEL EDITÁVEL
+// MOTOR DO CONTROLE E INCENTIVO
 let valorAtual = 50;
-let valorLiderNumerico = 0; // Será preenchido via Firebase em tempo real
+let valorLiderNumerico = 0; 
 const meuNumero = "5583996469538";
 const inputValor = document.getElementById('valorPresenteInput');
+const incentivoText = document.getElementById('incentivoText');
+
+function atualizarIncentivo() {
+    if (valorLiderNumerico > 0) {
+        if (valorAtual > valorLiderNumerico) {
+            incentivoText.style.color = "gold";
+            incentivoText.innerHTML = "🔥 VOCÊ ESTÁ PASSANDO O LÍDER!";
+        } else {
+            let diff = (valorLiderNumerico - valorAtual) + 1; // +1 para passar de fato
+            incentivoText.style.color = "#00e676";
+            incentivoText.innerHTML = `Faltam R$ ${diff.toFixed(2).replace('.',',')} para assumir o 1º Lugar! 🚀`;
+        }
+    } else {
+        if(valorAtual >= 100) {
+            incentivoText.style.color = "gold";
+            incentivoText.innerHTML = "✨ PRESENTE VIP GIGANTE! ✨";
+        } else {
+            incentivoText.style.color = "#00e676";
+            incentivoText.innerHTML = "🚀 Todo apoio faz a diferença!";
+        }
+    }
+}
 
 function tratarValor() {
     let num = parseFloat(inputValor.value);
-    if(isNaN(num) || num < 10) num = 10; // VALOR MÍNIMO EM 10 REAIS ASSEGURADO
+    if(isNaN(num) || num < 10) num = 10; 
     valorAtual = Math.round(num);
     inputValor.value = valorAtual;
+    atualizarIncentivo();
 }
 
 document.getElementById('btnMinus').addEventListener('click', () => { 
     tratarValor();
-    if(valorAtual - 10 >= 10) { valorAtual -= 10; inputValor.value = valorAtual; } 
+    if(valorAtual - 10 >= 10) { valorAtual -= 10; inputValor.value = valorAtual; atualizarIncentivo(); } 
 });
 
 document.getElementById('btnPlus').addEventListener('click', () => { 
     tratarValor();
-    valorAtual += 10; inputValor.value = valorAtual; 
+    valorAtual += 10; inputValor.value = valorAtual; atualizarIncentivo();
 });
 
-inputValor.addEventListener('blur', tratarValor); // Valida quando o cara clica fora
+inputValor.addEventListener('blur', tratarValor); 
 inputValor.addEventListener('change', tratarValor);
 
+// FICHAS AGORA SOMAM AO VALOR EXISTENTE
 document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', function() {
-        valorAtual = parseInt(this.dataset.val);
+        tratarValor();
+        valorAtual += parseFloat(this.dataset.val);
         inputValor.value = valorAtual;
+        atualizarIncentivo();
     });
 });
 
-// WHATSAPP INTELIGENTE: VALIDA SE ULTRAPASSA O LÍDER ATUAL
+// WHATSAPP INTELIGENTE
 document.getElementById('btnMandar').addEventListener('click', () => {
     tratarValor();
     let msg = "";
     
-    // Verifica matematicamente se o valor é maior que o líder do Firebase
-    if (valorAtual > valorLiderNumerico) {
+    if (valorLiderNumerico > 0 && valorAtual > valorLiderNumerico) {
         msg = `Opa, Vittor! Dei uma olhada no seu site de aniversário e decidi que vou *QUEBRAR O RECORDE*! Quero mandar um presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para assumir o *1º LUGAR* do ranking! Me passa sua chave Pix? 🥇🔥`;
     } else {
         msg = `Opa, Vittor! Vi seu site de aniversário. Escolhi o presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para te dar uma força e entrar no pódio dos apoiadores! Me passa sua chave Pix? 🎁✨`;
@@ -402,7 +444,7 @@ botaoMusica.addEventListener("click", () => {
   else { musica.pause(); botaoMusica.classList.remove("active"); iconeMusica.textContent = "🎵"; tocando = false; }
 });
 
-// RECONEXÃO DAS PARTÍCULAS
+// PARTÍCULAS
 for(let i=0; i<25; i++){
   const p = document.createElement("div"); p.className = "particula";
   p.style.left = Math.random() * 100 + "vw"; p.style.animationDelay = Math.random() * 10 + "s"; p.style.top = "0"; 
@@ -462,6 +504,7 @@ setInterval(()=>{
 },1000);
 </script>
 
+<!-- FIREBASE CONECTADO E ALIMENTANDO O VALOR DO LÍDER -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -487,10 +530,13 @@ setInterval(()=>{
         document.getElementById("nomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
         document.getElementById("valorLider").textContent = data.lider.valor || "R$ 0,00";
         
-        // EXTRAI O VALOR DO LÍDER DO BANCO PARA FAZER O CÁLCULO DO WHATSAPP
+        // EXTRAI O VALOR DO LÍDER DO BANCO
         let textoPreco = data.lider.valor || "0";
         let apenasNumeros = textoPreco.replace(/[^\d,]/g, '').replace(',', '.');
         valorLiderNumerico = parseFloat(apenasNumeros) || 0;
+        
+        // Atualiza a frase de incentivo na hora que o Firebase puxar o dado
+        atualizarIncentivo();
 
         if (data.lider.foto) { document.getElementById("fotoLider").src = data.lider.foto; }
       }
