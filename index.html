@@ -3,148 +3,544 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <title>Projeto 18 - Maioridade</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="preload" href="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=button-pressed-38129.mp3" as="audio">
+
     <style>
-        body { margin: 0; background: radial-gradient(circle at top, #1a1a1a, #000); font-family: Arial, sans-serif; color: white; text-align: center; overflow-x: hidden; }
+        /* RESET E TEMA BASE CASSINO VIP */
+        body {
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at top, #1a1a1a, #000);
+            font-family: Arial, sans-serif;
+            color: white; text-align: center; overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         .container { max-width: 500px; margin: auto; padding: 35px 20px 100px; position: relative; z-index: 10; }
-        #canvasFestivo { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 5; display: none; }
-        .btn-3d { transition: transform 0.1s ease, box-shadow 0.1s ease; cursor: pointer; }
-        .btn-3d:active { transform: translateY(4px) !important; box-shadow: none !important; }
-        .particula { position: fixed; width: 4px; height: 4px; background: gold; border-radius: 50%; opacity: 0.6; animation: flutuar 12s linear infinite; z-index: 1; top: 0; }
-        @keyframes flutuar { from { transform: translateY(105vh); } to { transform: translateY(-10vh); } }
-        .foto { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 4px solid gold; animation: glowFoto 3s infinite; }
-        @keyframes glowFoto { 0% { box-shadow: 0 0 20px gold; } 50% { box-shadow: 0 0 50px gold; } 100% { box-shadow: 0 0 20px gold; } }
-        h1 { color: gold; font-size: 34px; margin-top: 25px; animation: brilhoTitulo 2.5s infinite; font-weight: bold; }
-        @keyframes brilhoTitulo { 0% { text-shadow: 0 0 5px gold; } 50% { text-shadow: 0 0 30px gold; } 100% { text-shadow: 0 0 5px gold; } }
-        .texto { margin-top: 20px; line-height: 1.7; font-size: 17px; color: #ddd; }
-        .card { background: rgba(0,0,0,0.65); border: 2px solid gold; border-radius: 18px; padding: 22px; margin-top: 28px; box-shadow: 0 0 30px rgba(255,215,0,0.2); }
+
+        /* CANVAS DOS FOGOS DE ARTIFÍCIO */
+        #canvasFestivo {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 5; display: none;
+        }
+
+        /* BOTÕES 3D (PROFUNDIDADE) */
+        .btn-3d {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            cursor: pointer;
+        }
+        .btn-3d:active {
+            transform: translateY(4px) !important;
+            box-shadow: none !important;
+        }
+
+        /* PARTÍCULAS FLUTUANTES */
+        .particula {
+            position: fixed; width: 4px; height: 4px; background: gold;
+            border-radius: 50%; opacity: 0.6; animation: flutuar 12s linear infinite; z-index: 1; top: 0;
+        }
+        @keyframes flutuar {
+            from { transform: translateY(105vh); }
+            to { transform: translateY(-10vh); }
+        }
+
+        /* FOTO */
+        @keyframes glowFoto {
+            0% { box-shadow: 0 0 20px gold; }
+            50% { box-shadow: 0 0 50px gold; }
+            100% { box-shadow: 0 0 20px gold; }
+        }
+        .foto {
+            width: 220px; height: 220px; border-radius: 50%; object-fit: cover;
+            border: 4px solid gold; animation: glowFoto 3s infinite;
+        }
+
+        /* TÍTULO */
+        @keyframes brilhoTitulo {
+            0% { text-shadow: 0 0 5px gold; }
+            50% { text-shadow: 0 0 30px gold; }
+            100% { text-shadow: 0 0 5px gold; }
+        }
+        h1 {
+            color: gold; font-size: 34px; margin-top: 25px;
+            animation: brilhoTitulo 2.5s infinite; font-weight: bold;
+        }
+
+        /* TEXTO ORIGINAL */
+        .texto { margin-top: 20px; line-height: 1.7; font-size: 17px; color: #ddd; text-align: center; }
+
+        /* CARDS */
+        .card {
+            background: rgba(0,0,0,0.65); border: 2px solid gold; border-radius: 18px;
+            padding: 22px; margin-top: 28px; box-shadow: 0 0 30px rgba(255,215,0,0.2);
+        }
+
+        /* CONTADOR */
         #contador { font-size: 20px; color: gold; font-weight: bold; }
+
+        /* PAINEL DE SELEÇÃO INTERATIVO EDITÁVEL */
         .pay-panel { background: #0a0a0a; border: 2px solid gold; border-radius: 16px; padding: 20px; margin-top: 28px; }
-        .bet-input-row { display: flex; background: rgba(255,255,255,0.05); border-radius: 50px; padding: 4px; border: 1px solid gold; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-        .bet-adjust { background: #222; border: 1px solid #444; color: gold; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 3px 0 #000; }
-        .bet-display-input { font-size: 24px; font-weight: 900; color: #fff; text-align: center; flex: 1; background: transparent; border: none; outline: none; width: 100%; font-family: inherit; }
-        #incentivoText { font-size: 15px; font-weight: bold; margin-bottom: 15px; min-height: 20px; color: #00e676; }
+        .pay-panel h3 { color: gold; margin-bottom: 15px; font-size: 18px; text-transform: uppercase; }
+        
+        .bet-input-row {
+            display: flex; background: rgba(255,255,255,0.05); border-radius: 50px; padding: 4px;
+            border: 1px solid gold; align-items: center; justify-content: space-between; margin-bottom: 8px;
+        }
+        .bet-adjust {
+            background: #222; border: 1px solid #444; color: gold; width: 40px; height: 40px;
+            border-radius: 50%; font-size: 20px; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 3px 0 #000;
+        }
+        
+        /* INPUT DE TEXTO EDITÁVEL ESTILIZADO */
+        .bet-display-input {
+            font-size: 24px; font-weight: 900; color: #fff; text-align: center; flex: 1;
+            background: transparent; border: none; outline: none; width: 100%;
+            letter-spacing: -0.5px; font-family: inherit;
+        }
+        .bet-display-input::-webkit-outer-spin-button,
+        .bet-display-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .bet-display-input { -moz-appearance: textfield; }
+
+        /* TEXTO DE INCENTIVO EM TEMPO REAL */
+        #incentivoText {
+            font-size: 15px; font-weight: bold; margin-bottom: 15px; min-height: 20px; line-height: 1.4;
+            transition: all 0.3s;
+        }
+        
+        /* CAIXAS DE ALERTA DE STATUS (ALTAMENTE VISÍVEIS) */
+        .alerta-status { padding: 14px; border-radius: 12px; margin-top: 15px; font-size: 14px; line-height: 1.5; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .alerta-red { background: rgba(231, 76, 60, 0.15); border: 2px solid #e74c3c; color: #ff5252; animation: lightPulseRed 1.5s infinite alternate; }
+        .alerta-green { background: rgba(0, 230, 118, 0.15); border: 2px solid #00e676; color: #00e676; animation: lightPulseGreen 1.5s infinite alternate; }
+        .alerta-yellow { background: rgba(241, 196, 15, 0.15); border: 2px solid gold; color: gold; animation: lightPulseYellow 1.5s infinite alternate; }
+
+        @keyframes lightPulseRed { 0% { box-shadow: 0 0 5px rgba(231,76,60,0.4); } 100% { box-shadow: 0 0 20px rgba(231,76,60,0.8); } }
+        @keyframes lightPulseGreen { 0% { box-shadow: 0 0 5px rgba(0,230,118,0.4); } 100% { box-shadow: 0 0 20px rgba(0,230,118,0.8); } }
+        @keyframes lightPulseYellow { 0% { box-shadow: 0 0 5px rgba(241,196,15,0.4); } 100% { box-shadow: 0 0 20px rgba(241,196,15,0.8); } }
+
+        @keyframes softPulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
+
         .chip-container { display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
-        .chip { background: #111; border: 1px solid #444; color: #aaa; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; box-shadow: 0 3px 0 #000; }
-        .btn-enviar { width: 100%; background: gold; border: none; border-radius: 12px; padding: 15px; color: #000; font-size: 16px; font-weight: bold; text-transform: uppercase; box-shadow: 0 5px 0 #8a6508; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .chip {
+            background: #111; border: 1px solid #444; color: #aaa; padding: 6px 14px;
+            border-radius: 20px; font-size: 12px; font-weight: bold; box-shadow: 0 3px 0 #000;
+        }
+        .chip:active { color: gold; border-color: gold; }
+
+        .btn-enviar {
+            width: 100%; background: gold; border: none; border-radius: 12px; padding: 15px; color: #000;
+            font-size: 16px; font-weight: bold; text-transform: uppercase;
+            box-shadow: 0 5px 0 #8a6508, 0 10px 20px rgba(0,0,0,0.4);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+
+        /* TABELA ORIGINAL DE SIGNIFICADOS */
         .tabela { width: 100%; border-collapse: collapse; margin-top: 18px; }
-        .tabela th, .tabela td { border: 1px solid gold; padding: 12px; height: 55px; }
+        .tabela th, .tabela td { border: 1px solid gold; padding: 12px; white-space: nowrap; vertical-align: middle; height: 55px; font-size: 16px; }
         .tabela th { background: #111; color: gold; }
-        .destaque { animation: vip 1.2s infinite; position: relative; }
-        @keyframes vip { 0% { background: #1a1a1a; } 50% { background: #332200; } 100% { background: #1a1a1a; } }
+        
+        @keyframes vip {
+            0% { background: #1a1a1a; box-shadow: 0 0 10px gold; transform: scale(1); }
+            50% { background: #2a2a2a; box-shadow: 0 0 45px gold; transform: scale(1.07); }
+            100% { background: #1a1a1a; box-shadow: 0 0 10px gold; transform: scale(1); }
+        }
+        .destaque { font-weight: bold; animation: vip 1.2s infinite; position: relative; }
+        .destaque::after { content: "🥇 TOP APOIADOR"; position: absolute; top: -12px; right: -10px; background: gold; color: black; font-size: 10px; padding: 3px 6px; border-radius: 6px; }
+
+        /* RANKING E LIDERANÇA */
         .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; margin-top: 10px; border-radius: 12px; border: 1px solid gold; background: #111; }
-        .ouro { background: linear-gradient(90deg,#332200,#000); padding-left: 115px; min-height: 100px; position: relative; }
-        .foto-lider { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 90px; height: 90px; border-radius: 50%; border: 3px solid gold; }
-        #valorLider { display: block; font-size: 24px; color: gold; font-weight: bold; }
+        .ouro { background: linear-gradient(90deg,#332200,#000); position: relative; padding-left: 115px; min-height: 100px; }
+        .prata { background: #1a1a1a; }
+        .bronze { background: #1a1a1a; }
+
+        @keyframes liderGlow {
+            0% { box-shadow: 0 0 15px gold; transform: scale(1); }
+            50% { box-shadow: 0 0 60px gold; transform: scale(1.08); }
+            100% { box-shadow: 0 0 15px gold; transform: scale(1); }
+        }
+        .lider { animation: liderGlow 1.3s infinite; }
+        .lider::after { content: "🔥 Líder atual"; position: absolute; top: -14px; right: -12px; background: gold; color: black; font-size: 11px; padding: 4px 8px; border-radius: 8px; font-weight: bold; }
+        
+        .foto-lider { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid gold; box-shadow: 0 0 15px gold; background: #000; }
+        #valorLider { display: block; font-size: 24px; color: gold; font-weight: bold; margin-top: 5px; }
+
+        /* FLUTUANTES */
         .float-controls { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
         .btn-float { width: 60px; height: 60px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fff; box-shadow: 0 0 18px rgba(0,0,0,0.6); }
+        .btn-music { background: #b00000; }
+        .btn-music.active { background: #0bb300; box-shadow: 0 0 25px #0bb300; }
+        .btn-zap { background: #25D366; text-decoration: none; box-shadow: 0 0 15px rgba(37,211,102,0.8); }
+
+        /* OVERLAYS */
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 20000; backdrop-filter: blur(5px); }
-        .popup-box { background: #111; border: 2px solid gold; border-radius: 16px; padding: 25px; width: 90%; max-width: 360px; text-align: center; }
-        .btn-popup { background: gold; color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 900; cursor: pointer; width: 100%; }
+        .popup-box { background: #111; border: 2px solid gold; border-radius: 16px; padding: 25px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 0 35px rgba(241, 196, 15, 0.4); }
+        .popup-box h3 { color: gold; margin-bottom: 14px; }
+        .popup-box h2 { color: gold; margin-bottom: 15px; text-transform: uppercase; font-weight: 900; }
+        .popup-box p { font-size: 15px; line-height: 1.6; margin-bottom: 15px; color: #ccc; }
+        .btn-popup { background: gold; color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; box-shadow: 0 4px 0 #b8860b; }
+        .btn-popup:active { transform: translateY(4px); box-shadow: none; }
     </style>
 </head>
 <body>
 
 <canvas id="canvasFestivo"></canvas>
 
-<div class="overlay" id="ajuda"><div class="popup-box"><h3>ℹ️ Ajuda</h3><p>Botão música = Liga/Desliga.<br>Botão Zap = Falar comigo.</p><button class="btn-popup btn-3d" onclick="fecharAjuda()">Entrar</button></div></div>
-<div class="overlay" id="popupAvisoInicial" style="display:none;"><div class="popup-box"><h2>🏆 Ranking do Pódio</h2><p>Escolha seu presente, chame no Zap e garanta sua vaga!<br><br>📸 <strong>A foto no destaque é exclusiva de quem dominar o 1º LUGAR!</strong></p><button class="btn-popup btn-3d" onclick="fecharPopup()">Entrar</button></div></div>
+<div id="aviso-explosivo" style="
+  position: fixed; bottom: 160px; right: 20px; 
+  background: linear-gradient(135deg, #FFD700, #DAA520); 
+  color: black; padding: 15px; border-radius: 20px; 
+  box-shadow: 0 0 25px gold; z-index: 20000; 
+  max-width: 220px; text-align: center; font-weight: bold; 
+  cursor: pointer; border: 3px solid #000;
+  animation: pulse 1s infinite;
+">
+  🎁 Quem estiver no pódio no dia do meu aniversário ganha um brinde proporcional ao valor!
+  <div id="contador-aviso" style="font-size: 14px; margin-top: 8px; color: #550000;">15s</div>
+</div>
+
+<div class="overlay" id="ajuda">
+  <div class="popup-box">
+    <h3>ℹ️ Ajuda rápida</h3>
+    <p>
+      🎵 <strong>Botão da música</strong><br>
+      Serve para ligar e desligar a música do site.<br>  
+      Verde = música ligada<br>  
+      Vermelho = música desligada
+    </p>
+    <p>
+      💬 <strong>Botão do WhatsApp</strong><br>
+      Serve para falar comigo diretamente e tirar dúvidas.
+    </p>
+    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entrar no Site</button>
+  </div>
+</div>
+
+<div class="overlay" id="popupAvisoInicial" style="display:none;">
+  <div class="popup-box">
+    <h2>⚠️ Quadro do Pódio</h2>
+    <p>
+      Após escolher o valor, clique para ir ao WhatsApp 💬 e envie o <strong>comprovante do Pix</strong> para garantir sua vaga no ranking 🏆.<br><br>
+      <span style="font-size: 13px; color: #aaa; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; display: block; border: 1px dashed #555;">
+        📸 <em>Sua foto no destaque máximo do site é uma exclusividade de quem dominar o <strong>1º LUGAR!</strong></em>
+      </span>
+    </p>
+    <button class="btn-popup btn-3d" onclick="fecharPopup()">Entrar no Site</button>
+  </div>
+</div>
 
 <div class="container">
-    <img class="foto" src="minha-foto.jpg" alt="Foto">
-    <h1>PROJETO 18 –<br>MAIORIDADE</h1>
-    <div class="texto">Mesmo longe, sua presença faz parte desse momento especial 💛<br>Obrigado por estar comigo! 🙏✨</div>
-    <div class="card">🎂 <strong>22 de Julho de 2026</strong><br><br><div id="contador"></div></div>
 
-    <!-- 1. TABELA SIGNIFICADOS -->
+    <img class="foto" src="minha-foto.jpg" alt="Foto do aniversariante">
+
+    <h1>PROJETO 18 –<br>MAIORIDADE</h1>
+
+    <div class="texto">
+    Mesmo que você esteja longe e não possamos comemorar juntos,
+    sua presença ainda pode fazer parte desse momento tão especial 💛
+    <br><br>
+    Este projeto representa meus 18 anos — o início de uma nova fase,
+    cheia de sonhos, responsabilidades e conquistas.
+    <br><br>
+    Cada apoio é um gesto de carinho e incentivo,
+    e faz parte dessa história que estou construindo.
+    <br><br>
+    <strong style="color:gold;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
+    </div>
+
+    <div class="card">
+    🎂 <strong>22 de Julho de 2026</strong> 🎉
+    <br><br>
+    <div id="contador"></div>
+    </div>
+
     <div class="card">
         <h3 style="color:gold;">💛 Formas de participar</h3>
         <table class="tabela">
         <tr><th>Valor</th><th>Significado</th></tr>
-        <tr><td>R$ 15 – R$ 30</td><td>Carinho 🤍</td></tr>
-        <tr><td>R$ 50 – R$ 100</td><td>Especial 🎉</td></tr>
+        <tr><td>R$ 15 – R$ 30</td><td>Presença e carinho 🤍</td></tr>
+        <tr><td>R$ 50 – R$ 100</td><td>Participação especial 🎉</td></tr>
         <tr class="destaque"><td>R$ 100+</td><td>Apoiador VIP ✨</td></tr>
         </table>
     </div>
 
-    <!-- 2. PAINEL DE APOSTAS -->
     <div class="pay-panel">
-        <h3><i class="fa-solid fa-gift"></i> Presenteie</h3>
+        <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-gift"></i> Escolha ou digite o valor</h3>
+        
         <div class="bet-input-row">
             <div class="bet-adjust btn-3d" id="btnMinus"><i class="fa-solid fa-minus"></i></div>
             <div style="display: flex; align-items: center; justify-content: center; flex: 1;">
-                <span style="font-size: 22px; font-weight: 900; margin-right: 5px;">R$</span>
+                <span style="font-size: 22px; font-weight: 900; color: #fff; margin-right: 2px;">R$</span>
                 <input type="number" class="bet-display-input" id="valorPresenteInput" value="50" min="10">
             </div>
             <div class="bet-adjust btn-3d" id="btnPlus"><i class="fa-solid fa-plus"></i></div>
         </div>
-        <div id="incentivoText">🚀 Todo apoio conta!</div>
+        
+        <div id="incentivoText">Carregando dados...</div>
+
         <div class="chip-container">
-            <div class="chip btn-3d" data-val="15">+15</div><div class="chip btn-3d" data-val="50">+50</div><div class="chip btn-3d" data-val="100">+100</div>
+            <div class="chip btn-3d" data-val="15">+ R$ 15</div>
+            <div class="chip btn-3d" data-val="30">+ R$ 30</div>
+            <div class="chip btn-3d" data-val="50">+ R$ 50</div>
+            <div class="chip btn-3d" data-val="100" style="color:gold; border-color:gold;">+ R$ 100</div>
         </div>
-        <button class="btn-enviar btn-3d" id="btnMandar"><i class="fa-brands fa-whatsapp"></i> Confirmar Presente</button>
+
+        <button class="btn-enviar btn-3d" id="btnMandar">
+            <i class="fa-brands fa-whatsapp"></i> Confirmar Presente
+        </button>
     </div>
 
-    <!-- 3. RANKING -->
     <div class="card">
-        <h3 style="color:gold;">🏆 Top Apoiadores</h3>
-        <div class="rank-item ouro lider">
-            <img class="foto-lider" id="fotoLider" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'><rect width='90' height='90' fill='%23111'/></svg>">
-            <div style="text-align: left; width: 100%;"><div id="nomeLider">1º Lugar — Carregando...</div><div id="valorLider">...</div></div>
-        </div>
-        <div class="rank-item prata"><div id="nome2">2º Lugar — ...</div><span id="valor2">...</span></div>
-        <div class="rank-item bronze"><div id="nome3">3º Lugar — ...</div><span id="valor3">...</span></div>
-        <p style="margin-top:16px;">👑 <strong>Para ser o Líder:</strong><br>Envie um valor maior que o atual líder pelo Zap!</p>
+    <h3 style="color:gold;">🏆 Top Apoiadores</h3>
+
+    <div class="rank-item ouro lider">
+      <img class="foto-lider" id="fotoLider" alt="Foto do líder" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><rect width='90' height='90' fill='%23111'/></svg>">
+      <div style="text-align: left; width: 100%;">
+        <div class="nome" id="nomeLider" style="font-size: 16px;">🥇 1º Lugar — Carregando...</div>
+        <div id="valorLider">...</div>
+      </div>
     </div>
+
+    <div class="rank-item prata">
+      <div class="nome" id="nome2">🥈 2º Lugar — Carregando...</div>
+      <span id="valor2">...</span>
+    </div>
+
+    <div class="rank-item bronze">
+      <div class="nome" id="nome3">🥉 3º Lugar — Carregando...</div>
+      <span id="valor3">...</span>
+    </div>
+
+    <p style="margin-top:16px;">
+    🏆 <strong style="color:gold;">Destaque especial:</strong><br>
+    Quem enviar o <strong>maior valor</strong> será eternizado aqui
+    no <span style="color:gold;">site com honra!</span>
+    </p>
+    </div>
+
+    <p style="
+      margin-top:18px;
+      font-size:15px;
+      line-height:1.6;
+      color:#ddd;
+      background:rgba(255,215,0,0.08);
+      border:1px dashed gold;
+      padding:14px;
+      border-radius:12px;
+    ">
+    👑 <strong style="color:gold;">Como se tornar o Líder:</strong><br>
+    Para assumir o <strong>1º lugar</strong>, basta enviar um valor
+    <strong>maior que o atual líder</strong> via Pix 💸.<br><br>
+    O novo líder terá seu nome destacado aqui 🥇 e será
+    <strong style="color:gold;">eternizado com honra em nossa galeria oficial</strong>.
+    </p>
+
 </div>
 
 <div class="float-controls">
-    <a href="https://wa.me/5583996469538" target="_blank" class="btn-float btn-3d" style="background:#25D366"><i class="fa-brands fa-whatsapp"></i></a>
-    <button class="btn-float btn-music btn-3d" id="musicToggle" style="background:#b00000;"><i class="fa-solid fa-music"></i></button>
+    <a href="https://wa.me/5583996469538" target="_blank" class="btn-float btn-zap btn-3d" id="btnZapBase"><span>💬</span></a>
+    <button class="btn-float btn-music btn-3d" id="musicToggle"><span id="musicIcon">🎵</span></button>
 </div>
 
 <audio id="bgMusic" loop src="musica.mp3"></audio>
 
-<script>
-    let valorAtual = 50; let valorLiderNumerico = 0;
-    const inputValor = document.getElementById('valorPresenteInput');
-    const incentivoText = document.getElementById('incentivoText');
-    const meuNumero = "5583996469538";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    function atualizarIncentivo() {
-        let texto = `Caramba, com R$ ${valorAtual} você já garante um presente carinhoso! 🤍`;
-        if(valorAtual >= 50) texto = "Aí sim! Participação especial confirmada! 🎉";
-        if(valorAtual >= 100) texto = "Presente VIP de patrão! ✨";
-        if(valorLiderNumerico > 0 && valorAtual > valorLiderNumerico) texto = "🔥 INSANO! VOCÊ É O NOVO LÍDER!";
-        incentivoText.innerHTML = texto;
+  // CREDENCIAIS OFICIAIS DO TEU BANCO
+  const firebaseConfig = {
+    apiKey: "AIzaSyCLl0PxicnE9Hdio-dREwtiN-06YfKalPA",
+    authDomain: "projeto-18-14723.firebaseapp.com",
+    databaseURL: "https://projeto-18-14723-default-rtdb.firebaseio.com",
+    projectId: "projeto-18-14723",
+    storageBucket: "projeto-18-14723.firebasestorage.app",
+    messagingSenderId: "159188137463",
+    appId: "1:159188137463:web:4787318803107e001f2af2"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // LOGICA DO PAINEL CASSINO INTERATIVO
+  let valorAtual = 50;
+  let valorLiderNumerico = 0; 
+  const meuNumero = "5583996469538";
+  const inputValor = document.getElementById('valorPresenteInput');
+  const incentivoText = document.getElementById('incentivoText');
+
+  const adj1 = ["Caramba", "Sensacional", "Brabo demais", "Espetacular", "Incrível", "Opa", "Uau", "Que massa", "Massa demais", "Olha aí"];
+  const adj2 = ["um presente super carinhoso! 🤍", "uma força animal para os meus 18 anos! 🎉", "um incentivo gigantesco! 🚀", "um apoio de extremo respeito! ✨", "um presentaço de patrão! 👑", "um marco histórico na festa! 🏆"];
+  const adj3 = ["Sua amizade é nota mil!", "Gratidão total por esse gesto!", "Você acabou de somar muito!", "O projeto decola forte com você!", "Tamo junto demais!"];
+
+  const msgsBaixas = [
+    "Dez reais já ajuda muito! Muito obrigado! 🤍",
+    "Onze pila! Número da sorte? Valeu demais! 🍀",
+    "Doze reais pra começar a comemoração! 🎉",
+    "Treze? Gostei da audácia! 🚀",
+    "Quatorze reais e a parceria continua forte! 🤝",
+    "Quinze conto já garante um presente carinhoso! 🤍",
+    "Dezesseis reais caindo na conta! Gratidão! 💸",
+    "Dezessete! Quase dezoito, hein? 😂",
+    "Dezoito reais para os 18 anos! Emblemático! 🎂",
+    "Dezenove! Quase vinte, mas já valeu muito! ✨"
+  ];
+
+  function obterMensagemMatematicaUnica(val) {
+      if (val === 18) return "Dezoito reais cravados para o Projeto 18! Meta emblemática! 🎂✨";
+      if (val >= 10 && val <= 19) return msgsBaixas[val - 10];
+      
+      let i1 = val % adj1.length;
+      let i2 = (val + 2) % adj2.length;
+      let i3 = (val * 4) % adj3.length;
+      
+      if (val < 50) return `${adj1[i1]}, com R$ ${val} você já dá ${adj2[0]} ${adj3[i3]}`;
+      if (val >= 50 && val < 100) return `${adj1[i1]}! R$ ${val} já é ${adj2[1]} ${adj3[i3]}`;
+      if (val >= 100 && val < 300) return `${adj1[i1]}! Um presente de R$ ${val} é ${adj2[3]} Você é VIP! ✨`;
+      if (val >= 300 && val < 600) return `Sem palavras! R$ ${val} é ${adj2[4]} Que força absurda! 🔥`;
+      if (val >= 600 && val < 1000) return `Histórico! R$ ${val} é ${adj2[5]} Você quebra tudo! 👑`;
+      return `LENDÁRIO! R$ ${val}?! Você acabou de zerar o jogo com esse presente! 🏆`;
+  }
+
+  function atualizarIncentivo() {
+      let corTexto = (valorAtual >= 50) ? "gold" : "#ccc";
+      let fraseUnica = `<span style="color: ${corTexto}; font-size: 15px; font-weight: bold;">${obterMensagemMatematicaUnica(valorAtual)}</span>`;
+      let alertaLideranca = "";
+
+      if (valorLiderNumerico > 0) {
+          if (valorAtual > valorLiderNumerico) {
+              let folga = valorAtual - valorLiderNumerico;
+              alertaLideranca = `
+                  <div class="alerta-status alerta-green">
+                      👑 <strong>VOCÊ ESTÁ ASSUMINDO O TRONO!</strong><br>
+                      <span style="font-size: 12px; color: #fff; font-weight:normal;">Sua vantagem atual é de apenas <strong>R$ ${folga.toFixed(2).replace('.',',')}</strong>! Se eles revidarem, sua foto cai. Adicione uma gordura de segurança para blindar sua liderança! 🛡️🔥</span>
+                  </div>`;
+          } else if (valorAtual === valorLiderNumerico) {
+              alertaLideranca = `
+                  <div class="alerta-status alerta-yellow">
+                      ⚠️ <strong>EMPATOU COM O LÍDER!</strong><br>
+                      <span style="font-size: 12px; color: #fff; font-weight:normal;">Adicione pelo menos mais R$ 1,00 para desbancar o topo e garantir o destaque da sua foto! 🚀</span>
+                  </div>`;
+          } else {
+              let diff = (valorLiderNumerico - valorAtual) + 1;
+              alertaLideranca = `
+                  <div class="alerta-status alerta-red">
+                      🎯 <strong>ALVO EM MIRA: 1º LUGAR!</strong><br>
+                      <span style="font-size: 12px; color: #fff; font-weight:normal;">Faltam exatamente <strong style="color: gold; font-size: 14px;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para você roubar a liderança e cravar sua foto no topo! Suba a mão! 🚀</span>
+                  </div>`;
+          }
+      }
+      incentivoText.innerHTML = fraseUnica + alertaLideranca;
+  }
+
+  function tratarValor() {
+      let num = parseFloat(inputValor.value);
+      if(isNaN(num) || num < 10) num = 10; 
+      valorAtual = Math.round(num);
+      inputValor.value = valorAtual;
+      atualizarIncentivo();
+  }
+
+  document.getElementById('btnMinus').addEventListener('click', () => { 
+      tratarValor(); if(valorAtual - 10 >= 10) { valorAtual -= 10; inputValor.value = valorAtual; atualizarIncentivo(); } 
+  });
+  document.getElementById('btnPlus').addEventListener('click', () => { 
+      tratarValor(); valorAtual += 10; inputValor.value = valorAtual; atualizarIncentivo();
+  });
+
+  inputValor.addEventListener('blur', tratarValor); 
+  inputValor.addEventListener('change', tratarValor);
+
+  document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+          tratarValor(); valorAtual += parseFloat(this.dataset.val);
+          inputValor.value = valorAtual; atualizarIncentivo();
+      });
+  });
+
+  document.getElementById('btnMandar').addEventListener('click', () => {
+      tratarValor();
+      let msg = "";
+      if (valorLiderNumerico > 0 && valorAtual > valorLiderNumerico) {
+          msg = `Opa, Vittor! Dei uma olhada no seu site de aniversário e decidi que vou *ASSUMIR A LIDERANÇA MÁXIMA*! Quero mandar um presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para tomar o *1º LUGAR* e blindar meu trono! Já separa o espaço pra minha foto na galeria! 🥇👑`;
+      } else {
+          if (valorAtual <= 25) {
+              msg = `Opa Vittor! Dei uma olhada no seu site de 18 anos e decidi mandar uma contribuição de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para marcar presença! Me passa sua chave Pix? 🤍🎂`;
+          } else if (valorAtual > 25 && valorAtual < 100) {
+              msg = `Fala Vittor! Vi seu projeto no site. Separei o presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para te dar aquela força! Me manda a chave Pix para eu enviar e entrar no ranking? 🎉⚡`;
+          } else {
+              msg = `Eae Vittor, beleza? Decidi fechar com um presente VIP de *R$ ${valorAtual.toFixed(2).replace('.',',')}*! Quero garantir meu lugar de respeito no pódio! Manda a chave Pix aí! 🎁✨`;
+          }
+      }
+      window.open(`https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`, '_blank');
+  });
+
+  // CONTROLES DOS POPUPS
+  window.fecharAjuda = function() {
+    document.getElementById("ajuda").style.display = "none";
+    setTimeout(() => { document.getElementById("popupAvisoInicial").style.display = "flex"; }, 500);
+  }
+  window.fecharPopup = function() { document.getElementById("popupAvisoInicial").style.display = "none"; }
+
+  let tempo = 15; const aviso = document.getElementById('aviso-explosivo');
+  const timer = setInterval(() => { tempo--; document.getElementById('contador-aviso').textContent = tempo + "s"; if (tempo <= 0) { clearInterval(timer); aviso.style.display = 'none'; } }, 1000);
+  aviso.onclick = () => aviso.style.display = 'none';
+
+  // CONTROLE DE AUDIO
+  const botaoMusica = document.getElementById("musicToggle"); const iconeMusica = document.getElementById("musicIcon"); const musica = document.getElementById("bgMusic"); let tocando = false;
+  botaoMusica.addEventListener("click", () => { if (!tocando) { musica.play().catch(e=>{}); botaoMusica.classList.add("active"); iconeMusica.textContent = "🔊"; tocando = true; } else { musica.pause(); botaoMusica.classList.remove("active"); iconeMusica.textContent = "🎵"; tocando = false; } });
+
+  // SISTEMA DE PARTÍCULAS
+  for(let i=0; i<25; i++){ const p = document.createElement("div"); p.className = "particula"; p.style.left = Math.random() * 100 + "vw"; p.style.animationDelay = Math.random() * 10 + "s"; p.style.top = "0"; document.body.appendChild(p); }
+
+  // ENGINE DE FOGOS EM CANVAS (100% NATIVA E COMPLETA)
+  const canvas = document.getElementById('canvasFestivo'); const ctx = canvas.getContext('2d');
+  let fireworks = []; let particles = [];
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+  class Firework { constructor() { this.x = Math.random() * canvas.width; this.y = canvas.height; this.tx = Math.random() * canvas.width; this.ty = Math.random() * (canvas.height * 0.5); this.speed = 3; this.angle = Math.atan2(this.ty - this.y, this.tx - this.x); this.hue = Math.random() * 360; } update(index) { this.x += Math.cos(this.angle) * this.speed; this.y += Math.sin(this.angle) * this.speed; if (this.y <= this.ty) { for (let i = 0; i < 40; i++) particles.push(new Particle(this.x, this.y, this.hue)); fireworks.splice(index, 1); } } draw() { ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`; ctx.beginPath(); ctx.arc(this.x, this.y, 3, 0, Math.PI * 2); ctx.fill(); } }
+  class Particle { constructor(x, y, hue) { this.x = x; this.y = y; this.hue = hue; this.angle = Math.random() * Math.PI * 2; this.speed = Math.random() * 5 + 1; this.friction = 0.95; this.gravity = 0.1; this.alpha = 1; this.decay = Math.random() * 0.02 + 0.01; } update(index) { this.speed *= this.friction; this.x += Math.cos(this.angle) * this.speed; this.y += Math.sin(this.angle) * this.speed + this.gravity; this.alpha -= this.decay; if (this.alpha <= 0) particles.splice(index, 1); } draw() { ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.alpha})`; ctx.beginPath(); ctx.arc(this.x, this.y, Math.random()*3+1, 0, Math.PI * 2); ctx.fill(); } }
+  function loopFestivo() { ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.globalCompositeOperation = 'lighter'; if (Math.random() < 0.05) fireworks.push(new Firework()); fireworks.forEach((f, i) => { f.update(i); f.draw(); }); particles.forEach((p, i) => { p.update(i); p.draw(); }); requestAnimationFrame(loopFestivo); }
+
+  // CRONÔMETRO DO GRANDE DIA E ATIVADOR DE FOGOS
+  const aniversario = new Date("2026-07-22T00:00:00").getTime(); let fogosAtivados = false;
+  setInterval(()=>{ const agora = new Date().getTime(); const d = aniversario - agora; const contador = document.getElementById("contador"); if(d <= 0){ contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; if(!fogosAtivados) { canvas.style.display = 'block'; loopFestivo(); fogosAtivados = true; } }else{ contador.innerHTML = Math.floor(d/86400000)+" dias "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; } },1000);
+
+  // ESCUTADOR ESCURIDÃO REALTIME DO FIREBASE (RANKING)
+  const rankingRef = ref(db, 'ranking');
+  onValue(rankingRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      if (data.lider) {
+        document.getElementById("nomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
+        document.getElementById("valorLider").textContent = data.lider.valor || "R$ 0,00";
+        
+        let textoPreco = data.lider.valor || "0";
+        let apenasNumeros = textoPreco.replace(/[^\d,]/g, '').replace(',', '.');
+        valorLiderNumerico = parseFloat(apenasNumeros) || 0;
+        
+        atualizarIncentivo();
+
+        if (data.lider.foto) { document.getElementById("fotoLider").src = data.lider.foto; }
+      }
+      if (data.segundo) {
+        document.getElementById("nome2").textContent = "🥈 2º Lugar — " + (data.segundo.nome || "A definir");
+        document.getElementById("valor2").textContent = data.segundo.valor || "R$ 0,00";
+      }
+      if (data.terceiro) {
+        document.getElementById("nome3").textContent = "🥉 3º Lugar — " + (data.terceiro.nome || "A definir");
+        document.getElementById("valor3").textContent = data.terceiro.valor || "R$ 0,00";
+      }
     }
-
-    inputValor.addEventListener('input', () => { valorAtual = parseInt(inputValor.value) || 0; atualizarIncentivo(); });
-    document.getElementById('btnMinus').addEventListener('click', () => { if(valorAtual > 10) valorAtual -= 10; inputValor.value = valorAtual; atualizarIncentivo(); });
-    document.getElementById('btnPlus').addEventListener('click', () => { valorAtual += 10; inputValor.value = valorAtual; atualizarIncentivo(); });
-    document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => { valorAtual += parseInt(c.dataset.val); inputValor.value = valorAtual; atualizarIncentivo(); }));
-    
-    document.getElementById('btnMandar').addEventListener('click', () => {
-        window.open(`https://wa.me/${meuNumero}?text=Vittor, escolhi o presente de R$ ${valorAtual}!`, '_blank');
-    });
-
-    function fecharAjuda(){ document.getElementById("ajuda").style.display = "none"; document.getElementById("popupAvisoInicial").style.display = "flex"; }
-    function fecharPopup(){ document.getElementById("popupAvisoInicial").style.display = "none"; }
-    
-    // MÚSICA E FOGOS (MANTIDOS)
-    const musica = document.getElementById("bgMusic");
-    document.getElementById("musicToggle").addEventListener("click", () => { musica.paused ? musica.play() : musica.pause(); });
-    
-    const canvas = document.getElementById('canvasFestivo'); const ctx = canvas.getContext('2d');
-    const aniversario = new Date("2026-07-22T00:00:00").getTime();
-    setInterval(() => {
-        const d = aniversario - new Date().getTime();
-        const cont = document.getElementById("contador");
-        if(d <= 0){ cont.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; canvas.style.display = 'block'; }
-        else{ cont.innerHTML = Math.floor(d/86400000)+" dias "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; }
-    }, 1000);
+  });
 </script>
+
 </body>
 </html>
