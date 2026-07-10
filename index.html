@@ -59,13 +59,13 @@
         }
         
         .sticky-banner img {
-            width: 80px;  /* FOTO MAIOR E MAIS VISÍVEL */
-            height: 80px; /* FOTO MAIOR E MAIS VISÍVEL */
+            width: 80px;  
+            height: 80px; 
             border-radius: 50%;
             border: 3px solid #FFDF00;
             object-fit: cover;
             margin-right: 18px;
-            box-shadow: 0 0 20px rgba(255,215,0,0.4); /* BRILHO MAIOR */
+            box-shadow: 0 0 20px rgba(255,215,0,0.4); 
             background: #000;
         }
         
@@ -79,21 +79,22 @@
         }
         
         #stickyNomeLider {
-            font-size: 16px;
+            font-size: 20px; /* Aumentado para preencher de canto a canto */
             font-weight: bold;
             color: #fff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
+            letter-spacing: 0.5px; /* Ajuda a dar mais corpo ao texto */
         }
         
         #stickyValorLider {
-            font-size: 28px;
+            font-size: 34px; /* Aumentado para equilibrar o destaque com o nome */
             font-weight: 900;
             color: #FFDF00;
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
         }
 
         /* =========================================
@@ -134,7 +135,7 @@
             box-shadow: 0 0 0 #9E7B15, 0 5px 5px rgba(0,0,0,0.4); 
         }
 
-        /* PARTÍCULAS FLUTUANTES (BUG CORRIGIDO) */
+        /* PARTÍCULAS FLUTUANTES */
         .particula {
             position: fixed; width: 4px; height: 4px; background: gold;
             border-radius: 50%; opacity: 0.6; z-index: 1; top: 0;
@@ -490,7 +491,7 @@
       "Aí sim! R$ {v} é uma participação super especial! 🎉",
       "Com R$ {v} a comemoração ganha outro nível! ✨",
       "Incrível! Esse presente de R$ {v} faz toda a diferença! 🚀",
-      "R$ {v} é um presentaço! Gratidão total pelo apoio! 🙏",
+      "R$ {v} é um apresentaço! Gratidão total pelo apoio! 🙏",
       "Que massa! R$ {v} já mostra que você fecha comigo! 🔥"
   ];
   const templates100mais = [
