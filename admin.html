@@ -3,146 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin VIP - Projeto 18</title>
+
+    <!-- Sistema Anti-Cache -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>Painel Admin</title>
+    
     <style>
-        body {
-            background: #0a0a0a; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; padding: 20px; text-align: center;
+        /* Estilos baseados no seu design escuro */
+        body { 
+            background-color: #111; 
+            color: #fff; 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            padding: 20px; 
         }
-        .container { max-width: 600px; margin: auto; background: #111; padding: 30px; border-radius: 16px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        h1 { color: #FFDF00; text-transform: uppercase; margin-bottom: 5px; }
-        p { color: #aaa; margin-bottom: 30px; }
         
-        .rank-group {
-            background: #181818; border: 1px solid #222; border-radius: 12px; padding: 15px;
-            margin-bottom: 15px; text-align: left; transition: 0.3s;
+        h1 { color: #facc15; }
+        
+        /* Tela de Bloqueio (Senha) */
+        #loginScreen { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: #111; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000;
         }
-        .rank-group.lider { border-color: #FFDF00; background: linear-gradient(145deg, #2a1f00, #0a0800); }
-        .rank-group h3 { margin-top: 0; margin-bottom: 15px; color: #fff; font-size: 16px; }
-        .rank-group.lider h3 { color: #FFDF00; }
-        
-        .input-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        input {
-            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #050505;
-            color: #fff; font-size: 14px; outline: none; transition: 0.3s;
+
+        .card { 
+            background: #1a1a1a; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-bottom: 15px; 
+            text-align: left; 
         }
-        input:focus { border-color: #FFDF00; box-shadow: 0 0 8px rgba(255,223,0,0.3); }
-        input::placeholder { color: #666; }
         
-        .btn-salvar {
-            background: linear-gradient(180deg, #FFDF00 0%, #DAA520 100%); width: 100%;
-            color: #000; border: none; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 900;
-            text-transform: uppercase; cursor: pointer; margin-top: 20px; box-shadow: 0 5px 0 #9E7B15;
-            transition: 0.2s;
+        .gold-border { 
+            border: 1px solid #facc15; 
         }
-        .btn-salvar:active { transform: translateY(4px); box-shadow: 0 0 0 #9E7B15; }
         
-        #msg-sucesso { display: none; background: rgba(0,255,100,0.2); color: #0f0; padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: bold; border: 1px solid #0f0; }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input { 
+            background: #000; 
+            color: #fff; 
+            border: 1px solid #333; 
+            padding: 12px; 
+            border-radius: 8px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            font-size: 16px;
+        }
+
+        /* Estilo específico para o botão de arquivo (Galeria) */
+        input[type="file"] { 
+            padding: 10px;
+            background: #222;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        button { 
+            background: #facc15; 
+            color: #000; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 16px;
+            cursor: pointer; 
+            width: 100%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>👑 Painel Admin</h1>
-    <p>Atualize o pódio em tempo real.</p>
-
-    <!-- 1º Lugar -->
-    <div class="rank-group lider">
-        <h3>🥇 1º Lugar (Eternizado com Foto)</h3>
-        <div class="input-row">
-            <input type="text" id="liderNome" placeholder="Nome do Líder">
-            <input type="text" id="liderValor" placeholder="Ex: R$ 150,00">
+    <!-- Tela de Autenticação -->
+    <div id="loginScreen">
+        <h2>Acesso Restrito</h2>
+        <div style="width: 80%; max-width: 300px;">
+            <input type="password" id="senhaInput" placeholder="Digite a senha">
+            <button onclick="verificarSenha()">Entrar no Painel</button>
         </div>
-        <input type="text" id="liderFoto" placeholder="URL da Foto do Líder (Link direto da imagem)">
     </div>
 
-    <!-- 2 ao 10 Lugar gerados dinamicamente no HTML para não poluir visualmente -->
-    <div id="outros-ranks"></div>
+    <!-- Painel Principal (Oculto até a senha estar certa) -->
+    <div id="adminPanel" style="display: none;">
+        <h1>👑 PAINEL ADMIN</h1>
+        <p>Atualize o pódio em tempo real.</p>
 
-    <button class="btn-salvar" id="btnSalvar">Salvar Alterações no Site</button>
-    <div id="msg-sucesso">✅ Ranking atualizado com sucesso no site!</div>
-</div>
+        <div class="card gold-border">
+            <h3>🥇 1º Lugar (Eternizado com Foto)</h3>
+            <div class="input-group">
+                <input type="text" id="nome1" placeholder="Nome" value="Verinha">
+                <input type="text" id="valor1" placeholder="R$ 100,00" value="R$ 100,00">
+            </div>
+            
+            <!-- Aqui volta a ser o botão de escolher da galeria -->
+            <input type="file" id="fotoLider" accept="image/*" onchange="converterParaBase64(this)">
+            
+            <!-- Input invisível que guarda o código Base64 gigante gerado pela foto -->
+            <input type="hidden" id="fotoBase64Oculta"> 
+        </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCLl0PxicnE9Hdio-dREwtiN-06YfKalPA",
-    authDomain: "projeto-18-14723.firebaseapp.com",
-    databaseURL: "https://projeto-18-14723-default-rtdb.firebaseio.com",
-    projectId: "projeto-18-14723",
-    storageBucket: "projeto-18-14723.firebasestorage.app",
-    messagingSenderId: "159188137463",
-    appId: "1:159188137463:web:4787318803107e001f2af2"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const rankingRef = ref(db, 'ranking');
-
-  const keys = ['segundo', 'terceiro', 'quarto', 'quinto', 'sexto', 'setimo', 'oitavo', 'nono', 'decimo'];
-  const divOutros = document.getElementById('outros-ranks');
-
-  // Gera os campos do 2 ao 10
-  keys.forEach((key, i) => {
-      let position = i + 2;
-      let icon = position === 2 ? '🥈' : (position === 3 ? '🥉' : '🎖️');
-      divOutros.innerHTML += `
-        <div class="rank-group">
-            <h3>${icon} ${position}º Lugar</h3>
-            <div class="input-row">
-                <input type="text" id="${key}Nome" placeholder="Nome da pessoa">
-                <input type="text" id="${key}Valor" placeholder="Ex: R$ 50,00">
+        <div class="card">
+            <h3>🥈 2º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome2" value="Verônica">
+                <input type="text" id="valor2" value="R$ 100,00">
             </div>
         </div>
-      `;
-  });
 
-  // Carrega dados atuais
-  get(rankingRef).then((snapshot) => {
-      if (snapshot.exists()) {
-          const data = snapshot.val();
-          if(data.lider) {
-              document.getElementById('liderNome').value = data.lider.nome || "";
-              document.getElementById('liderValor').value = data.lider.valor || "";
-              document.getElementById('liderFoto').value = data.lider.foto || "";
-          }
-          keys.forEach(key => {
-              if(data[key]) {
-                  document.getElementById(`${key}Nome`).value = data[key].nome || "";
-                  document.getElementById(`${key}Valor`).value = data[key].valor || "";
-              }
-          });
-      }
-  });
+        <div class="card">
+            <h3>🥉 3º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome3" value="Paula Lacerda">
+                <input type="text" id="valor3" value="R$ 50,00">
+            </div>
+        </div>
 
-  // Salva no banco
-  document.getElementById('btnSalvar').addEventListener('click', () => {
-      const btn = document.getElementById('btnSalvar');
-      btn.textContent = "Salvando...";
-      
-      const payload = {
-          lider: {
-              nome: document.getElementById('liderNome').value,
-              valor: document.getElementById('liderValor').value,
-              foto: document.getElementById('liderFoto').value
-          }
-      };
+        <button onclick="salvarAlteracoes()">Atualizar Ranking</button>
+    </div>
 
-      keys.forEach(key => {
-          payload[key] = {
-              nome: document.getElementById(`${key}Nome`).value,
-              valor: document.getElementById(`${key}Valor`).value
-          };
-      });
+    <script>
+        // 1. Função da Senha
+        function verificarSenha() {
+            const senhaDigitada = document.getElementById('senhaInput').value;
+            const senhaCorreta = '1234'; // Mude isso para a sua senha real
+            
+            if(senhaDigitada === senhaCorreta) { 
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            } else {
+                alert('Senha incorreta! Tente novamente.');
+            }
+        }
 
-      set(rankingRef, payload).then(() => {
-          btn.textContent = "Salvar Alterações no Site";
-          document.getElementById('msg-sucesso').style.display = 'block';
-          setTimeout(() => { document.getElementById('msg-sucesso').style.display = 'none'; }, 4000);
-      });
-  });
-</script>
+        // 2. Função que converte a foto da galeria para o código Base64 invisível
+        function converterParaBase64(inputElement) {
+            const arquivo = inputElement.files[0];
+            if (arquivo) {
+                const leitor = new FileReader();
+                leitor.onload = function(evento) {
+                    // Joga o código gigante para o input oculto, mantendo o visual limpo
+                    document.getElementById('fotoBase64Oculta').value = evento.target.result;
+                };
+                leitor.readAsDataURL(arquivo);
+            }
+        }
+
+        // 3. Função para salvar
+        function salvarAlteracoes() {
+            // Pegar os valores para salvar (nome, valor, e a imagem convertida)
+            const fotoSalvaBase64 = document.getElementById('fotoBase64Oculta').value;
+            
+            // Aqui você integra com a lógica que já usava para enviar pro servidor/banco
+            alert('Dados prontos para atualizar!');
+        }
+    </script>
 </body>
 </html>
