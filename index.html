@@ -386,7 +386,7 @@
               alertaLideranca = `<div class="alerta-status alerta-yellow">⚠️ <strong>EMPATOU COM O LÍDER!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Adicione pelo menos mais R$ 1,00 para desbancar o topo e garantir a sua foto! 🚀</span></div>`;
           } else {
               let diff = (valorLiderNumerico - valorAtual) + 1;
-              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong>ALVO: 1º LUGAR!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Faltam exatamente <strong style="color: #FFDF00;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para roubar a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
+              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong>ALVO: 1º LUGAR!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Faltam exatamente <strong style="color: #FFDF00;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para assumir a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
           }
       }
       incentivoText.innerHTML = alertaLideranca;
