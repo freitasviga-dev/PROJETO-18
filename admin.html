@@ -1,242 +1,72 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-
-<title>Painel Admin Ranking</title>
-
-<style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#000;
-  color:#fff;
-  overflow-x:hidden;
-}
-
-/* LOGIN */
-#loginScreen{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:radial-gradient(circle at top, #111, #000);
-  z-index:9999;
-}
-
-.loginBox{
-  width:90%;
-  max-width:320px;
-  text-align:center;
-  padding:25px;
-  background:rgba(0,0,0,0.85);
-  border:2px solid gold;
-  border-radius:15px;
-  box-shadow:0 0 30px gold;
-}
-
-.loginBox h2{ color:gold; }
-
-.senhaBox{
-  position:relative;
-  margin-bottom: 15px;
-}
-
-.senhaBox input{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  text-align:center;
-  box-sizing: border-box;
-}
-
-.senhaBox span{
-  position:absolute;
-  right:10px;
-  top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-  color: #000;
-}
-
-.loginBox button {
-  background: gold;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
-}
-
-/* PAINEL */
-#painel{
-  display:none;
-  padding:20px;
-  max-width:700px;
-  margin:auto;
-}
-
-h2{
-  text-align:center;
-  color:gold;
-}
-
-.section{
-  background:#111;
-  border:1px solid gold;
-  padding:15px;
-  border-radius:10px;
-  margin:15px auto;
-  max-width:500px;
-}
-
-.section h3{
-  text-align:center;
-}
-
-input{
-  width:100%;
-  padding:10px;
-  margin-top:6px;
-  border-radius:6px;
-  border:none;
-  box-sizing: border-box;
-}
-
-.section button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 12px;
-  background: gold;
-  color: black;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* BOTÃO SAIR */
-#logout{
-  position:fixed;
-  top:10px;
-  right:10px;
-  width:55px;
-  height:28px;
-  font-size:11px;
-  background:red;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  z-index:9999;
-}
-
-/* CONTAINER DA FOTO CENTRALIZADO */
-.preview{
-  margin-top:15px;
-  display: block;
-  position: relative;
-  width: 170px;  
-  height: 170px; 
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.preview img{
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid gold;
-  box-shadow: 0 0 25px gold;
-  display: block;
-}
-
-/* BOTÃO X: MENOR, MAIS PARA A DIREITA E COM BORDA BRANCA */
-.removeBtn{
-  position: absolute;
-  top: -5px;       /* Joga o botão um pouco para cima da foto */
-  right: -10px;    /* Desloca o botão mais para a direita para fora do círculo */
-  width: 26px;     /* Tamanho ligeiramente menor e mais discreto */
-  height: 26px;
-  background: #cc0000; /* Vermelho vivo */
-  color: #ffffff;    /* X Branco */
-  font-weight: bold;
-  font-size: 13px;
-  font-family: Arial, sans-serif;
-  border: 1.5px solid #ffffff; /* Bordinha branca fina idêntica ao exemplo */
-  border-radius: 50%;     /* Círculo perfeito */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-  z-index: 999;    /* Fica por cima de qualquer elemento */
-  padding: 0;
-  margin: 0;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin VIP - Projeto 18</title>
+    <style>
+        body {
+            background: #0a0a0a; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 20px; text-align: center;
+        }
+        .container { max-width: 600px; margin: auto; background: #111; padding: 30px; border-radius: 16px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        h1 { color: #FFDF00; text-transform: uppercase; margin-bottom: 5px; }
+        p { color: #aaa; margin-bottom: 30px; }
+        
+        .rank-group {
+            background: #181818; border: 1px solid #222; border-radius: 12px; padding: 15px;
+            margin-bottom: 15px; text-align: left; transition: 0.3s;
+        }
+        .rank-group.lider { border-color: #FFDF00; background: linear-gradient(145deg, #2a1f00, #0a0800); }
+        .rank-group h3 { margin-top: 0; margin-bottom: 15px; color: #fff; font-size: 16px; }
+        .rank-group.lider h3 { color: #FFDF00; }
+        
+        .input-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        input {
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #050505;
+            color: #fff; font-size: 14px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: #FFDF00; box-shadow: 0 0 8px rgba(255,223,0,0.3); }
+        input::placeholder { color: #666; }
+        
+        .btn-salvar {
+            background: linear-gradient(180deg, #FFDF00 0%, #DAA520 100%); width: 100%;
+            color: #000; border: none; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 900;
+            text-transform: uppercase; cursor: pointer; margin-top: 20px; box-shadow: 0 5px 0 #9E7B15;
+            transition: 0.2s;
+        }
+        .btn-salvar:active { transform: translateY(4px); box-shadow: 0 0 0 #9E7B15; }
+        
+        #msg-sucesso { display: none; background: rgba(0,255,100,0.2); color: #0f0; padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: bold; border: 1px solid #0f0; }
+    </style>
 </head>
-
 <body>
 
-<div id="loginScreen">
-  <div class="loginBox">
-    <h2>⚙️ PAINEL ADMIN</h2>
+<div class="container">
+    <h1>👑 Painel Admin</h1>
+    <p>Atualize o pódio em tempo real.</p>
 
-    <div class="senhaBox">
-      <input type="password" id="senha" placeholder="Senha">
-      <span onclick="toggleSenha()">👁️</span>
+    <!-- 1º Lugar -->
+    <div class="rank-group lider">
+        <h3>🥇 1º Lugar (Eternizado com Foto)</h3>
+        <div class="input-row">
+            <input type="text" id="liderNome" placeholder="Nome do Líder">
+            <input type="text" id="liderValor" placeholder="Ex: R$ 150,00">
+        </div>
+        <input type="text" id="liderFoto" placeholder="URL da Foto do Líder (Link direto da imagem)">
     </div>
 
-    <button onclick="entrar()">Entrar</button>
-  </div>
-</div>
+    <!-- 2 ao 10 Lugar gerados dinamicamente no HTML para não poluir visualmente -->
+    <div id="outros-ranks"></div>
 
-<div id="painel">
-
-<button id="logout" onclick="sair()">Sair</button>
-
-<h2>⚙️ Painel Ranking</h2>
-
-<div class="section">
-<h3>🥇 Líder</h3>
-<input id="l_nome" placeholder="Nome">
-<input id="l_valor" placeholder="Valor">
-<input type="file" id="l_foto" style="color: white; margin-top: 10px;">
-<div class="preview" id="prev"></div>
-<button onclick="salvarLider()">Salvar Líder</button>
-</div>
-
-<div class="section">
-<h3>🥈 Segundo</h3>
-<input id="s_nome" placeholder="Nome">
-<input id="s_valor" placeholder="Valor">
-<button onclick="salvarSegundo()">Salvar Segundo</button>
-</div>
-
-<div class="section">
-<h3>🥉 Terceiro</h3>
-<input id="t_nome" placeholder="Nome">
-<input id="t_valor" placeholder="Valor">
-<button onclick="salvarTerceiro()">Salvar Terceiro</button>
-</div>
-
+    <button class="btn-salvar" id="btnSalvar">Salvar Alterações no Site</button>
+    <div id="msg-sucesso">✅ Ranking atualizado com sucesso no site!</div>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-  // Suas credenciais do Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCLl0PxicnE9Hdio-dREwtiN-06YfKalPA",
     authDomain: "projeto-18-14723.firebaseapp.com",
@@ -247,129 +77,72 @@ input{
     appId: "1:159188137463:web:4787318803107e001f2af2"
   };
 
-  // Inicializando o Firebase
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
+  const rankingRef = ref(db, 'ranking');
 
-  let fotoBase64 = "";
+  const keys = ['segundo', 'terceiro', 'quarto', 'quinto', 'sexto', 'setimo', 'oitavo', 'nono', 'decimo'];
+  const divOutros = document.getElementById('outros-ranks');
 
-  // Carregar dados atuais do Firebase ao entrar na página
-  function carregarDadosAtuais() {
-    const rankingRef = ref(db, 'ranking');
-    onValue(rankingRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        // Preenche o Líder
-        if (data.lider) {
-          document.getElementById("l_nome").value = data.lider.nome || "";
-          document.getElementById("l_valor").value = data.lider.valor || "";
-          if (data.lider.foto) {
-            fotoBase64 = data.lider.foto;
-            document.getElementById("prev").innerHTML = `
-              <img src="${fotoBase64}">
-              <button class="removeBtn" type="button" id="btnRemoveFoto">X</button>
-            `;
-            document.getElementById("btnRemoveFoto").onclick = removerFoto;
-          }
-        }
-        // Preenche o Segundo
-        if (data.segundo) {
-          document.getElementById("s_nome").value = data.segundo.nome || "";
-          document.getElementById("s_valor").value = data.segundo.valor || "";
-        }
-        // Preenche o Terceiro
-        if (data.terceiro) {
-          document.getElementById("t_nome").value = data.terceiro.nome || "";
-          document.getElementById("t_valor").value = data.terceiro.valor || "";
-        }
-      }
-    });
-  }
-
-  // Funções de clique expostas para o HTML tradicional conseguir chamar
-  window.salvarLider = function() {
-    const nome = document.getElementById("l_nome").value;
-    const valor = document.getElementById("l_valor").value;
-
-    set(ref(db, 'ranking/lider'), {
-      nome: nome,
-      valor: valor,
-      foto: fotoBase64
-    })
-    .then(() => alert("🥇 Líder salvo com sucesso no Firebase!"))
-    .catch((error) => alert("Erro ao salvar: " + error.message));
-  }
-
-  window.salvarSegundo = function() {
-    const nome = document.getElementById("s_nome").value;
-    const valor = document.getElementById("s_valor").value;
-
-    set(ref(db, 'ranking/segundo'), {
-      nome: nome,
-      valor: valor
-    })
-    .then(() => alert("🥈 Segundo lugar salvo com sucesso no Firebase!"))
-    .catch((error) => alert("Erro ao salvar: " + error.message));
-  }
-
-  window.salvarTerceiro = function() {
-    const nome = document.getElementById("t_nome").value;
-    const valor = document.getElementById("t_valor").value;
-
-    set(ref(db, 'ranking/terceiro'), {
-      nome: nome,
-      valor: valor
-    })
-    .then(() => alert("🥉 Terceiro lugar salvo com sucesso no Firebase!"))
-    .catch((error) => alert("Erro ao salvar: " + error.message));
-  }
-
-  // Monitorar input de foto
-  document.getElementById("l_foto").addEventListener("change", e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = () => {
-      fotoBase64 = reader.result;
-      document.getElementById("prev").innerHTML = `
-        <img src="${fotoBase64}">
-        <button class="removeBtn" type="button" id="btnRemoveFoto">X</button>
+  // Gera os campos do 2 ao 10
+  keys.forEach((key, i) => {
+      let position = i + 2;
+      let icon = position === 2 ? '🥈' : (position === 3 ? '🥉' : '🎖️');
+      divOutros.innerHTML += `
+        <div class="rank-group">
+            <h3>${icon} ${position}º Lugar</h3>
+            <div class="input-row">
+                <input type="text" id="${key}Nome" placeholder="Nome da pessoa">
+                <input type="text" id="${key}Valor" placeholder="Ex: R$ 50,00">
+            </div>
+        </div>
       `;
-      document.getElementById("btnRemoveFoto").onclick = removerFoto;
-    };
-    reader.readAsDataURL(file);
   });
 
-  window.removerFoto = function() {
-    fotoBase64 = "";
-    document.getElementById("prev").innerHTML = "";
-    document.getElementById("l_foto").value = "";
-  }
+  // Carrega dados atuais
+  get(rankingRef).then((snapshot) => {
+      if (snapshot.exists()) {
+          const data = snapshot.val();
+          if(data.lider) {
+              document.getElementById('liderNome').value = data.lider.nome || "";
+              document.getElementById('liderValor').value = data.lider.valor || "";
+              document.getElementById('liderFoto').value = data.lider.foto || "";
+          }
+          keys.forEach(key => {
+              if(data[key]) {
+                  document.getElementById(`${key}Nome`).value = data[key].nome || "";
+                  document.getElementById(`${key}Valor`).value = data[key].valor || "";
+              }
+          });
+      }
+  });
 
-  // Expor a função de entrar para ativar o carregamento de dados do banco
-  window.entrar = function() {
-    if(document.getElementById("senha").value === "Vittor262200"){
-      document.getElementById("loginScreen").style.display="none";
-      document.getElementById("painel").style.display="block";
-      carregarDadosAtuais(); // Puxa os dados do banco assim que loga
-    }else{
-      alert("Senha incorreta!");
-    }
-  }
+  // Salva no banco
+  document.getElementById('btnSalvar').addEventListener('click', () => {
+      const btn = document.getElementById('btnSalvar');
+      btn.textContent = "Salvando...";
+      
+      const payload = {
+          lider: {
+              nome: document.getElementById('liderNome').value,
+              valor: document.getElementById('liderValor').value,
+              foto: document.getElementById('liderFoto').value
+          }
+      };
+
+      keys.forEach(key => {
+          payload[key] = {
+              nome: document.getElementById(`${key}Nome`).value,
+              valor: document.getElementById(`${key}Valor`).value
+          };
+      });
+
+      set(rankingRef, payload).then(() => {
+          btn.textContent = "Salvar Alterações no Site";
+          document.getElementById('msg-sucesso').style.display = 'block';
+          setTimeout(() => { document.getElementById('msg-sucesso').style.display = 'none'; }, 4000);
+      });
+  });
 </script>
-
-<script>
-/* Funções globais simples de interface */
-function toggleSenha(){
-  const i=document.getElementById("senha");
-  i.type=i.type==="password"?"text":"password";
-}
-
-function sair(){
-  location.reload();
-}
-</script>
-
 </body>
 </html>
