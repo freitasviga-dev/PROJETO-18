@@ -195,8 +195,8 @@
         <div class="card gold-border">
             <h3>🥇 1º Lugar (Eternizado com Foto)</h3>
             <div class="input-group">
-                <input type="text" id="nome1" placeholder="Nome" value="Verinha">
-                <input type="text" id="valor1" placeholder="R$ 100,00" value="R$ 100,00">
+                <input type="text" id="nome1" placeholder="Nome">
+                <input type="text" id="valor1" placeholder="R$ 100,00">
             </div>
             
             <!-- Botão de Upload Customizado -->
@@ -217,8 +217,8 @@
         <div class="card">
             <h3>🥈 2º Lugar</h3>
             <div class="input-group">
-                <input type="text" id="nome2" value="Verônica">
-                <input type="text" id="valor2" value="R$ 100,00">
+                <input type="text" id="nome2" placeholder="Nome">
+                <input type="text" id="valor2" placeholder="Valor">
             </div>
         </div>
 
@@ -226,8 +226,8 @@
         <div class="card">
             <h3>🥉 3º Lugar</h3>
             <div class="input-group">
-                <input type="text" id="nome3" value="Paula Lacerda">
-                <input type="text" id="valor3" value="R$ 50,00">
+                <input type="text" id="nome3" placeholder="Nome">
+                <input type="text" id="valor3" placeholder="Valor">
             </div>
         </div>
 
@@ -294,25 +294,74 @@
             </div>
         </div>
 
-        <button class="btn-primary" onclick="salvarAlteracoes()">Atualizar Ranking</button>
+        <button id="btnSalvar" class="btn-primary" onclick="salvarAlteracoes()">Atualizar Ranking</button>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCLl0PxicnE9Hdio-dREwtiN-06YfKalPA",
+            authDomain: "projeto-18-14723.firebaseapp.com",
+            databaseURL: "https://projeto-18-14723-default-rtdb.firebaseio.com",
+            projectId: "projeto-18-14723",
+            storageBucket: "projeto-18-14723.firebasestorage.app",
+            messagingSenderId: "159188137463",
+            appId: "1:159188137463:web:4787318803107e001f2af2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const rankingRef = ref(db, 'ranking');
+
         // Lógica da Senha (A senha atual para teste é 1234)
-        function verificarSenha() {
+        window.verificarSenha = function() {
             const senhaDigitada = document.getElementById('senhaInput').value;
             const senhaCorreta = '1234'; 
             
             if(senhaDigitada === senhaCorreta) { 
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
+                
+                // Carregar os dados atuais do Firebase ao logar
+                get(rankingRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        
+                        if(data.lider) {
+                            document.getElementById('nome1').value = data.lider.nome || "";
+                            document.getElementById('valor1').value = data.lider.valor || "";
+                            if(data.lider.foto) {
+                                document.getElementById('fotoBase64Oculta').value = data.lider.foto;
+                                const previewBox = document.getElementById('previewContainer');
+                                previewBox.style.backgroundImage = `url(${data.lider.foto})`;
+                                previewBox.style.display = 'block';
+                                document.getElementById('labelUpload').style.display = 'none';
+                            }
+                        }
+                        
+                        const maps = [
+                            { key: 'segundo', num: 2 }, { key: 'terceiro', num: 3 }, { key: 'quarto', num: 4 },
+                            { key: 'quinto', num: 5 }, { key: 'sexto', num: 6 }, { key: 'setimo', num: 7 },
+                            { key: 'oitavo', num: 8 }, { key: 'nono', num: 9 }, { key: 'decimo', num: 10 }
+                        ];
+
+                        maps.forEach(pos => {
+                            if(data[pos.key]) {
+                                document.getElementById(`nome${pos.num}`).value = data[pos.key].nome || "";
+                                document.getElementById(`valor${pos.num}`).value = data[pos.key].valor || "";
+                            }
+                        });
+                    }
+                });
             } else {
                 alert('Senha incorreta!');
             }
         }
 
         // Lógica para mostrar a imagem e esconder o botão
-        function mostrarPreview(inputElement) {
+        window.mostrarPreview = function(inputElement) {
             const arquivo = inputElement.files[0];
             if (arquivo) {
                 const leitor = new FileReader();
@@ -335,7 +384,7 @@
         }
 
         // Lógica do botão "X" vermelho
-        function removerFoto() {
+        window.removerFoto = function() {
             // Limpa os dados
             document.getElementById('fotoLider').value = '';
             document.getElementById('fotoBase64Oculta').value = '';
@@ -348,9 +397,35 @@
             document.getElementById('labelUpload').style.display = 'block';
         }
 
-        // Função de Salvar
-        function salvarAlteracoes() {
-            alert('Dados e design PRO prontos para atualizar!');
+        // Função de Salvar conectada ao Firebase
+        window.salvarAlteracoes = function() {
+            const btn = document.getElementById('btnSalvar');
+            btn.textContent = "Salvando...";
+
+            const payload = {
+                lider: {
+                    nome: document.getElementById('nome1').value,
+                    valor: document.getElementById('valor1').value,
+                    foto: document.getElementById('fotoBase64Oculta').value
+                },
+                segundo: { nome: document.getElementById('nome2').value, valor: document.getElementById('valor2').value },
+                terceiro: { nome: document.getElementById('nome3').value, valor: document.getElementById('valor3').value },
+                quarto: { nome: document.getElementById('nome4').value, valor: document.getElementById('valor4').value },
+                quinto: { nome: document.getElementById('nome5').value, valor: document.getElementById('valor5').value },
+                sexto: { nome: document.getElementById('nome6').value, valor: document.getElementById('valor6').value },
+                setimo: { nome: document.getElementById('nome7').value, valor: document.getElementById('valor7').value },
+                oitavo: { nome: document.getElementById('nome8').value, valor: document.getElementById('valor8').value },
+                nono: { nome: document.getElementById('nome9').value, valor: document.getElementById('valor9').value },
+                decimo: { nome: document.getElementById('nome10').value, valor: document.getElementById('valor10').value }
+            };
+
+            set(rankingRef, payload).then(() => {
+                btn.textContent = "Atualizado com Sucesso! ✅";
+                setTimeout(() => { btn.textContent = "Atualizar Ranking"; }, 3000);
+            }).catch((error) => {
+                alert("Erro ao salvar: " + error);
+                btn.textContent = "Atualizar Ranking";
+            });
         }
     </script>
 </body>
