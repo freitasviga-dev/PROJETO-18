@@ -28,8 +28,8 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Container com padding-top maior (120px) para acomodar o banner fixo sem cobrir o topo */
-        .container { max-width: 500px; margin: auto; padding: 120px 20px 100px; position: relative; z-index: 10; }
+        /* Container com padding-top maior (140px) para acomodar o banner fixo sem cobrir o topo */
+        .container { max-width: 500px; margin: auto; padding: 140px 20px 100px; position: relative; z-index: 10; }
 
         /* CANVAS DOS FOGOS DE ARTIFÍCIO */
         #canvasFestivo {
@@ -59,21 +59,23 @@
         }
         
         .sticky-banner img {
-            width: 65px;
-            height: 65px;
+            width: 80px;  /* FOTO MAIOR E MAIS VISÍVEL */
+            height: 80px; /* FOTO MAIOR E MAIS VISÍVEL */
             border-radius: 50%;
             border: 3px solid #FFDF00;
             object-fit: cover;
             margin-right: 18px;
-            box-shadow: 0 0 15px rgba(255,215,0,0.3);
+            box-shadow: 0 0 20px rgba(255,215,0,0.4); /* BRILHO MAIOR */
             background: #000;
         }
         
         .sticky-info {
             text-align: left;
             flex: 1;
-            /* Evita que nomes muito grandes quebrem o layout */
             overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         #stickyNomeLider {
@@ -83,7 +85,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
         
         #stickyValorLider {
@@ -132,11 +134,12 @@
             box-shadow: 0 0 0 #9E7B15, 0 5px 5px rgba(0,0,0,0.4); 
         }
 
-        /* PARTÍCULAS FLUTUANTES */
+        /* PARTÍCULAS FLUTUANTES (BUG CORRIGIDO) */
         .particula {
             position: fixed; width: 4px; height: 4px; background: gold;
-            border-radius: 50%; opacity: 0.6; animation: flutuar 12s linear infinite; z-index: 1; top: 0;
+            border-radius: 50%; opacity: 0.6; z-index: 1; top: 0;
             box-shadow: 0 0 8px gold;
+            animation: flutuar 12s linear infinite;
         }
         @keyframes flutuar {
             from { transform: translateY(105vh); }
@@ -589,7 +592,14 @@
   const botaoMusica = document.getElementById("musicToggle"); const iconeMusica = document.getElementById("musicIcon"); const musica = document.getElementById("bgMusic"); let tocando = false;
   botaoMusica.addEventListener("click", () => { if (!tocando) { musica.play().catch(e=>{}); botaoMusica.classList.add("active"); iconeMusica.innerHTML = "<i class='fa-solid fa-volume-high'></i>"; tocando = true; } else { musica.pause(); botaoMusica.classList.remove("active"); iconeMusica.textContent = "🎵"; tocando = false; } });
 
-  for(let i=0; i<25; i++){ const p = document.createElement("div"); p.className = "particula"; p.style.left = Math.random() * 100 + "vw"; p.style.animationDelay = Math.random() * 10 + "s"; p.style.top = "0"; document.body.appendChild(p); }
+  // CORREÇÃO DO BUG DAS BOLINHAS ESPERANDO NO TOPO: DELAY NEGATIVO!
+  for(let i=0; i<25; i++){ 
+      const p = document.createElement("div"); 
+      p.className = "particula"; 
+      p.style.left = Math.random() * 100 + "vw"; 
+      p.style.animationDelay = "-" + (Math.random() * 12) + "s"; // Delay negativo força o CSS a iniciar a animação já rodando espalhada.
+      document.body.appendChild(p); 
+  }
 
   const canvas = document.getElementById('canvasFestivo'); const ctx = canvas.getContext('2d');
   let fireworks = []; let particles = [];
@@ -603,7 +613,6 @@
   const aniversario = new Date("2026-07-22T00:00:00").getTime(); let fogosAtivados = false;
   setInterval(()=>{ const agora = new Date().getTime(); const d = aniversario - agora; const contador = document.getElementById("contador"); if(d <= 0){ contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; if(!fogosAtivados) { canvas.style.display = 'block'; loopFestivo(); fogosAtivados = true; } }else{ contador.innerHTML = Math.floor(d/86400000)+"d "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; } },1000);
 
-  // ESCUTADOR RANKING FIREBASE ATUALIZADO (ATUALIZA O DE BAIXO E O FIXO NO TOPO)
   const rankingRef = ref(db, 'ranking');
   onValue(rankingRef, (snapshot) => {
     const data = snapshot.val();
