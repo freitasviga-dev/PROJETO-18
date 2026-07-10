@@ -9,27 +9,36 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>Painel Admin</title>
+    <title>Painel Admin PRO</title>
     
     <style>
-        /* Estilos baseados no seu design escuro */
+        /* Fundo com gradiente suave para dar profundidade */
         body { 
-            background-color: #111; 
-            color: #fff; 
-            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+            color: #ffffff; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             text-align: center; 
             margin: 0; 
             padding: 20px; 
+            min-height: 100vh;
         }
         
-        h1 { color: #facc15; }
+        h1 { 
+            color: #facc15; 
+            text-shadow: 0 4px 10px rgba(250, 204, 21, 0.3);
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        p { color: #aaaaaa; margin-bottom: 30px; }
         
-        /* Tela de Bloqueio (Senha) */
+        /* Tela de Bloqueio (Senha) com efeito Blur */
         #loginScreen { 
             position: fixed; 
             top: 0; left: 0; 
             width: 100%; height: 100%; 
-            background: #111; 
+            background: rgba(18, 18, 18, 0.95); 
+            backdrop-filter: blur(5px);
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
@@ -37,73 +46,152 @@
             z-index: 1000;
         }
 
+        /* Efeito 3D nos Cards (Neumorphism escuro) */
         .card { 
             background: #1a1a1a; 
             padding: 20px; 
-            border-radius: 10px; 
-            margin-bottom: 15px; 
+            border-radius: 16px; 
+            margin-bottom: 20px; 
             text-align: left; 
+            box-shadow: 6px 6px 12px #0d0d0d, -6px -6px 12px #272727;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 8px 8px 16px #0d0d0d, -8px -8px 16px #272727;
         }
         
+        /* Destaque para o 1º Lugar */
         .gold-border { 
-            border: 1px solid #facc15; 
+            border: 1px solid rgba(250, 204, 21, 0.5); 
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.15), 6px 6px 12px #0d0d0d, -6px -6px 12px #272727;
         }
+
+        h3 { margin-top: 0; color: #eeeeee; font-size: 18px; }
+        .gold-border h3 { color: #facc15; }
         
         .input-group {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 15px;
         }
 
-        input { 
-            background: #000; 
+        /* Inputs com profundidade interna */
+        input[type="text"], input[type="password"] { 
+            background: #121212; 
             color: #fff; 
             border: 1px solid #333; 
-            padding: 12px; 
-            border-radius: 8px; 
+            padding: 14px; 
+            border-radius: 10px; 
             width: 100%; 
             box-sizing: border-box; 
-            font-size: 16px;
+            font-size: 15px;
+            box-shadow: inset 3px 3px 6px #070707, inset -3px -3px 6px #1d1d1d;
+            transition: border 0.3s ease;
         }
 
-        /* Estilo específico para o botão de arquivo (Galeria) */
-        input[type="file"] { 
-            padding: 10px;
-            background: #222;
-            color: #ccc;
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #facc15;
+        }
+
+        /* Estilo Profissional para o Upload de Arquivo */
+        input[type="file"] { display: none; } /* Esconde o botão feio padrão */
+
+        .custom-upload-btn {
+            display: block;
+            background: #2a2a2a;
+            color: #facc15;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px dashed #facc15;
             cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
         }
 
-        button { 
-            background: #facc15; 
+        .custom-upload-btn:hover { background: #333; }
+
+        /* Container da Imagem de Preview */
+        #previewContainer {
+            position: relative;
+            display: none; /* Escondido por padrão */
+            margin-top: 15px;
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            border: 2px solid #facc15;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Botão X Vermelho com Efeito 3D */
+        .btn-remover {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(145deg, #ff4d4d, #cc0000);
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .btn-remover:hover { transform: scale(1.1); }
+
+        /* Botão Principal com Efeito 3D Pressionável */
+        .btn-primary { 
+            background: linear-gradient(145deg, #fce04b, #dfb30b); 
             color: #000; 
             border: none; 
-            padding: 12px 20px; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            font-size: 16px;
+            padding: 16px 20px; 
+            border-radius: 12px; 
+            font-weight: 900; 
+            font-size: 18px;
             cursor: pointer; 
             width: 100%;
             margin-top: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 6px 0 #b38f00, 0 10px 15px rgba(0,0,0,0.4);
+            transition: all 0.1s ease;
         }
+
+        .btn-primary:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 #b38f00, 0 4px 6px rgba(0,0,0,0.4);
+        }
+
     </style>
 </head>
 <body>
 
     <!-- Tela de Autenticação -->
     <div id="loginScreen">
-        <h2>Acesso Restrito</h2>
-        <div style="width: 80%; max-width: 300px;">
-            <input type="password" id="senhaInput" placeholder="Digite a senha">
-            <button onclick="verificarSenha()">Entrar no Painel</button>
+        <h2 style="color: #facc15;">Acesso Restrito</h2>
+        <div style="width: 80%; max-width: 320px;">
+            <input type="password" id="senhaInput" placeholder="Digite a senha admin" style="margin-bottom: 15px;">
+            <button class="btn-primary" style="margin-bottom: 0;" onclick="verificarSenha()">ENTRAR</button>
         </div>
     </div>
 
-    <!-- Painel Principal (Oculto até a senha estar certa) -->
-    <div id="adminPanel" style="display: none;">
+    <!-- Painel Principal -->
+    <div id="adminPanel" style="display: none; max-width: 500px; margin: 0 auto;">
         <h1>👑 PAINEL ADMIN</h1>
         <p>Atualize o pódio em tempo real.</p>
 
+        <!-- 1º LUGAR -->
         <div class="card gold-border">
             <h3>🥇 1º Lugar (Eternizado com Foto)</h3>
             <div class="input-group">
@@ -111,13 +199,21 @@
                 <input type="text" id="valor1" placeholder="R$ 100,00" value="R$ 100,00">
             </div>
             
-            <!-- Aqui volta a ser o botão de escolher da galeria -->
-            <input type="file" id="fotoLider" accept="image/*" onchange="converterParaBase64(this)">
+            <!-- Botão de Upload Customizado -->
+            <label for="fotoLider" class="custom-upload-btn" id="labelUpload">
+                📷 Escolher Foto da Galeria
+            </label>
+            <input type="file" id="fotoLider" accept="image/*" onchange="mostrarPreview(this)">
             
-            <!-- Input invisível que guarda o código Base64 gigante gerado pela foto -->
+            <!-- Preview da Imagem com o X -->
+            <div id="previewContainer">
+                <button class="btn-remover" onclick="removerFoto()">X</button>
+            </div>
+            
             <input type="hidden" id="fotoBase64Oculta"> 
         </div>
 
+        <!-- 2º LUGAR -->
         <div class="card">
             <h3>🥈 2º Lugar</h3>
             <div class="input-group">
@@ -126,6 +222,7 @@
             </div>
         </div>
 
+        <!-- 3º LUGAR -->
         <div class="card">
             <h3>🥉 3º Lugar</h3>
             <div class="input-group">
@@ -134,43 +231,126 @@
             </div>
         </div>
 
-        <button onclick="salvarAlteracoes()">Atualizar Ranking</button>
+        <!-- 4º LUGAR -->
+        <div class="card">
+            <h3>🏅 4º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome4" placeholder="Nome">
+                <input type="text" id="valor4" placeholder="Valor">
+            </div>
+        </div>
+
+        <!-- 5º LUGAR -->
+        <div class="card">
+            <h3>🏅 5º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome5" placeholder="Nome">
+                <input type="text" id="valor5" placeholder="Valor">
+            </div>
+        </div>
+
+        <!-- 6º LUGAR -->
+        <div class="card">
+            <h3>🏅 6º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome6" placeholder="Nome">
+                <input type="text" id="valor6" placeholder="Valor">
+            </div>
+        </div>
+
+        <!-- 7º LUGAR -->
+        <div class="card">
+            <h3>🏅 7º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome7" placeholder="Nome">
+                <input type="text" id="valor7" placeholder="Valor">
+            </div>
+        </div>
+
+        <!-- 8º LUGAR -->
+        <div class="card">
+            <h3>🏅 8º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome8" placeholder="Nome">
+                <input type="text" id="valor8" placeholder="Valor">
+            </div>
+        </div>
+
+        <!-- 9º LUGAR -->
+        <div class="card">
+            <h3>🏅 9º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome9" placeholder="Nome">
+                <input type="text" id="valor9" placeholder="Valor">
+            </div>
+        </div>
+
+        <!-- 10º LUGAR -->
+        <div class="card">
+            <h3>🏅 10º Lugar</h3>
+            <div class="input-group">
+                <input type="text" id="nome10" placeholder="Nome">
+                <input type="text" id="valor10" placeholder="Valor">
+            </div>
+        </div>
+
+        <button class="btn-primary" onclick="salvarAlteracoes()">Atualizar Ranking</button>
     </div>
 
     <script>
-        // 1. Função da Senha
+        // Lógica da Senha (A senha atual para teste é 1234)
         function verificarSenha() {
             const senhaDigitada = document.getElementById('senhaInput').value;
-            const senhaCorreta = '1234'; // Mude isso para a sua senha real
+            const senhaCorreta = '1234'; 
             
             if(senhaDigitada === senhaCorreta) { 
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
             } else {
-                alert('Senha incorreta! Tente novamente.');
+                alert('Senha incorreta!');
             }
         }
 
-        // 2. Função que converte a foto da galeria para o código Base64 invisível
-        function converterParaBase64(inputElement) {
+        // Lógica para mostrar a imagem e esconder o botão
+        function mostrarPreview(inputElement) {
             const arquivo = inputElement.files[0];
             if (arquivo) {
                 const leitor = new FileReader();
                 leitor.onload = function(evento) {
-                    // Joga o código gigante para o input oculto, mantendo o visual limpo
-                    document.getElementById('fotoBase64Oculta').value = evento.target.result;
+                    const resultadoBase64 = evento.target.result;
+                    
+                    // Salva no input oculto
+                    document.getElementById('fotoBase64Oculta').value = resultadoBase64;
+                    
+                    // Mostra a imagem no container
+                    const previewBox = document.getElementById('previewContainer');
+                    previewBox.style.backgroundImage = `url(${resultadoBase64})`;
+                    previewBox.style.display = 'block';
+                    
+                    // Esconde o botão de upload para ficar limpo
+                    document.getElementById('labelUpload').style.display = 'none';
                 };
                 leitor.readAsDataURL(arquivo);
             }
         }
 
-        // 3. Função para salvar
-        function salvarAlteracoes() {
-            // Pegar os valores para salvar (nome, valor, e a imagem convertida)
-            const fotoSalvaBase64 = document.getElementById('fotoBase64Oculta').value;
+        // Lógica do botão "X" vermelho
+        function removerFoto() {
+            // Limpa os dados
+            document.getElementById('fotoLider').value = '';
+            document.getElementById('fotoBase64Oculta').value = '';
             
-            // Aqui você integra com a lógica que já usava para enviar pro servidor/banco
-            alert('Dados prontos para atualizar!');
+            // Esconde a imagem
+            document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('previewContainer').style.backgroundImage = 'none';
+            
+            // Traz o botão de upload de volta
+            document.getElementById('labelUpload').style.display = 'block';
+        }
+
+        // Função de Salvar
+        function salvarAlteracoes() {
+            alert('Dados e design PRO prontos para atualizar!');
         }
     </script>
 </body>
