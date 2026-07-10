@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- ANTE-CACHE NÍVEL MILITAR (CABEÇALHOS HTML) -->
+    <!-- ANTE-CACHE NÍVEL MILITAR -->
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, private">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -15,9 +15,7 @@
     <link rel="preload" href="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=button-pressed-38129.mp3" as="audio">
 
     <style>
-        /* =========================================
-           RESET E TEMA BASE PROFISSIONAL 3D
-           ========================================= */
+        /* RESET E TEMA BASE */
         * { box-sizing: border-box; }
         
         body {
@@ -28,247 +26,96 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Container com padding-top maior (140px) para acomodar o banner fixo sem cobrir o topo */
         .container { max-width: 500px; margin: auto; padding: 140px 20px 100px; position: relative; z-index: 10; }
 
-        /* CANVAS DOS FOGOS DE ARTIFÍCIO */
         #canvasFestivo {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 5; display: none;
         }
 
-        /* =========================================
-           BANNER FIXO NO TOPO (TOP APOIADOR)
-           ========================================= */
+        /* BANNER FIXO TOPO */
         .sticky-banner {
-            position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 92%;
-            max-width: 480px;
-            background: linear-gradient(145deg, #161200, #0a0800);
-            border: 2px solid #FFDF00;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            padding: 12px 18px;
-            z-index: 15000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,215,0,0.1);
+            position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
+            width: 92%; max-width: 480px; background: linear-gradient(145deg, #161200, #0a0800);
+            border: 2px solid #FFDF00; border-radius: 20px; display: flex; align-items: center;
+            padding: 12px 18px; z-index: 15000; box-shadow: 0 10px 30px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,215,0,0.1);
             backdrop-filter: blur(5px);
         }
-        
         .sticky-banner img {
-            width: 80px;  
-            height: 80px; 
-            border-radius: 50%;
-            border: 3px solid #FFDF00;
-            object-fit: cover;
-            margin-right: 18px;
-            box-shadow: 0 0 20px rgba(255,215,0,0.4); 
-            background: #000;
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid #FFDF00; object-fit: cover;
+            margin-right: 18px; box-shadow: 0 0 20px rgba(255,215,0,0.4); background: #000;
         }
-        
-        .sticky-info {
-            text-align: left;
-            flex: 1;
-            overflow: hidden; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        #stickyNomeLider {
-            font-size: 20px; /* Aumentado para preencher de canto a canto */
-            font-weight: bold;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 2px;
-            letter-spacing: 0.5px; /* Ajuda a dar mais corpo ao texto */
-        }
-        
-        #stickyValorLider {
-            font-size: 34px; /* Aumentado para equilibrar o destaque com o nome */
-            font-weight: 900;
-            color: #FFDF00;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-            letter-spacing: -1px;
-        }
+        .sticky-info { text-align: left; flex: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+        #stickyNomeLider { font-size: 20px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; letter-spacing: 0.5px; }
+        #stickyValorLider { font-size: 34px; font-weight: 900; color: #FFDF00; text-shadow: 0 2px 5px rgba(0,0,0,0.8); letter-spacing: -1px; }
 
-        /* =========================================
-           EFEITOS 3D E BOTÕES PREMIUM
-           ========================================= */
-        .btn-3d {
-            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .btn-enviar {
-            width: 100%; 
-            background: linear-gradient(180deg, #FFDF00 0%, #DAA520 100%);
-            border: 1px solid #FFF59D;
-            border-radius: 14px; 
-            padding: 16px; 
-            color: #111;
-            font-size: 17px; 
-            font-weight: 900; 
-            text-transform: uppercase; letter-spacing: 0.5px;
-            box-shadow: 0 6px 0 #9E7B15, 0 15px 25px rgba(0,0,0,0.6), inset 0 2px 2px rgba(255,255,255,0.4);
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-        }
-        .btn-enviar:active {
-            transform: translateY(6px);
-            box-shadow: 0 0px 0 #9E7B15, 0 5px 10px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.2);
-        }
+        /* BOTÕES 3D */
+        .btn-3d { transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative; }
+        .btn-enviar { width: 100%; background: linear-gradient(180deg, #FFDF00 0%, #DAA520 100%); border: 1px solid #FFF59D; border-radius: 14px; padding: 16px; color: #111; font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 6px 0 #9E7B15, 0 15px 25px rgba(0,0,0,0.6), inset 0 2px 2px rgba(255,255,255,0.4); display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-enviar:active { transform: translateY(6px); box-shadow: 0 0px 0 #9E7B15, 0 5px 10px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.2); }
+        .btn-popup { background: linear-gradient(180deg, #FFDF00 0%, #DAA520 100%); color: #000; border: none; padding: 14px 25px; border-radius: 12px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; box-shadow: 0 5px 0 #9E7B15, 0 10px 15px rgba(0,0,0,0.4); }
+        .btn-popup:active { transform: translateY(5px); box-shadow: 0 0 0 #9E7B15, 0 5px 5px rgba(0,0,0,0.4); }
 
-        .btn-popup {
-            background: linear-gradient(180deg, #FFDF00 0%, #DAA520 100%);
-            color: #000; border: none; padding: 14px 25px; border-radius: 12px; 
-            font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; 
-            box-shadow: 0 5px 0 #9E7B15, 0 10px 15px rgba(0,0,0,0.4);
-        }
-        .btn-popup:active { 
-            transform: translateY(5px); 
-            box-shadow: 0 0 0 #9E7B15, 0 5px 5px rgba(0,0,0,0.4); 
-        }
+        /* PARTÍCULAS */
+        .particula { position: fixed; width: 4px; height: 4px; background: gold; border-radius: 50%; opacity: 0.6; z-index: 1; top: 0; box-shadow: 0 0 8px gold; animation: flutuar 12s linear infinite; }
+        @keyframes flutuar { from { transform: translateY(105vh); } to { transform: translateY(-10vh); } }
 
-        /* PARTÍCULAS FLUTUANTES */
-        .particula {
-            position: fixed; width: 4px; height: 4px; background: gold;
-            border-radius: 50%; opacity: 0.6; z-index: 1; top: 0;
-            box-shadow: 0 0 8px gold;
-            animation: flutuar 12s linear infinite;
-        }
-        @keyframes flutuar {
-            from { transform: translateY(105vh); }
-            to { transform: translateY(-10vh); }
-        }
-
-        /* =========================================
-           FOTO E TÍTULO
-           ========================================= */
-        .foto-container {
-            position: relative; display: inline-block;
-            padding: 5px; background: linear-gradient(145deg, #FFD700, #8B6508);
-            border-radius: 50%; box-shadow: 0 15px 35px rgba(218, 165, 32, 0.3);
-            margin-bottom: 10px;
-        }
-        .foto {
-            width: 210px; height: 210px; border-radius: 50%; object-fit: cover;
-            border: 4px solid #111; display: block;
-        }
-
-        h1 {
-            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 36px; margin-top: 15px; font-weight: 900;
-            text-shadow: 0px 4px 15px rgba(255, 215, 0, 0.2);
-        }
-
+        /* FOTO E TÍTULO */
+        .foto-container { position: relative; display: inline-block; padding: 5px; background: linear-gradient(145deg, #FFD700, #8B6508); border-radius: 50%; box-shadow: 0 15px 35px rgba(218, 165, 32, 0.3); margin-bottom: 10px; }
+        .foto { width: 210px; height: 210px; border-radius: 50%; object-fit: cover; border: 4px solid #111; display: block; }
+        h1 { background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 36px; margin-top: 15px; font-weight: 900; text-shadow: 0px 4px 15px rgba(255, 215, 0, 0.2); }
         .texto { margin-top: 20px; line-height: 1.8; font-size: 16px; color: #ccc; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
-        /* =========================================
-           CARDS (PROFUNDIDADE E GLASSMORPHISM)
-           ========================================= */
-        .card {
-            background: linear-gradient(145deg, #151515, #0a0a0a);
-            border: 1px solid #333; border-top: 1px solid #444; 
-            border-radius: 20px; padding: 25px; margin-top: 28px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 2px 0 rgba(255,255,255,0.02);
-            position: relative; overflow: hidden;
-        }
-        .card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.5), transparent);
-        }
-
+        /* CARDS GERAIS */
+        .card { background: linear-gradient(145deg, #151515, #0a0a0a); border: 1px solid #333; border-top: 1px solid #444; border-radius: 20px; padding: 25px; margin-top: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 2px 0 rgba(255,255,255,0.02); position: relative; overflow: hidden; }
         #contador { font-size: 24px; color: #FFDF00; font-weight: 900; letter-spacing: 1px; text-shadow: 0 0 15px rgba(255,223,0,0.4); }
 
-        /* =========================================
-           PAINEL DE PAGAMENTO
-           ========================================= */
-        .pay-panel { 
-            background: #0d0d0d; border: 1px solid #333; border-radius: 20px; 
-            padding: 25px 20px; margin-top: 28px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.9), inset 0 0 20px rgba(218, 165, 32, 0.05);
+        /* CAIXA EXPLICATIVA LIDERANÇA MOVIDA PARA CIMA */
+        .box-explicacao-meio {
+            background: linear-gradient(145deg, #181818, #0a0a0a);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px; padding: 20px; margin-top: 28px; text-align: left;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 2px 10px rgba(255,215,0,0.05);
         }
-        .pay-panel h3 { color: #FFDF00; margin-top: 0; margin-bottom: 20px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .bet-input-row {
-            display: flex; background: #050505; border-radius: 16px; padding: 6px;
-            border: 1px solid #222; box-shadow: inset 0 5px 10px rgba(0,0,0,0.8);
-            align-items: center; justify-content: space-between; margin-bottom: 15px;
-        }
-        .bet-adjust {
-            background: linear-gradient(145deg, #2a2a2a, #111); border: 1px solid #444; 
-            color: #FFDF00; width: 45px; height: 45px;
-            border-radius: 12px; font-size: 20px; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 0 #000, inset 0 1px 1px rgba(255,255,255,0.1);
-        }
-        .bet-adjust:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
-        
-        .bet-display-input {
-            font-size: 28px; font-weight: 900; color: #fff; text-align: center; flex: 1;
-            background: transparent; border: none; outline: none; width: 100%;
-            letter-spacing: -0.5px; font-family: inherit; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
-        .bet-display-input::-webkit-outer-spin-button,
-        .bet-display-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .bet-display-input { -moz-appearance: textfield; }
 
+        /* PAINEL DE PAGAMENTO */
+        .pay-panel { background: #0d0d0d; border: 1px solid #333; border-radius: 20px; padding: 25px 20px; margin-top: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.9), inset 0 0 20px rgba(218, 165, 32, 0.05); }
+        .pay-panel h3 { color: #FFDF00; margin-top: 0; margin-bottom: 20px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
+        .bet-input-row { display: flex; background: #050505; border-radius: 16px; padding: 6px; border: 1px solid #222; box-shadow: inset 0 5px 10px rgba(0,0,0,0.8); align-items: center; justify-content: space-between; margin-bottom: 15px; }
+        .bet-adjust { background: linear-gradient(145deg, #2a2a2a, #111); border: 1px solid #444; color: #FFDF00; width: 45px; height: 45px; border-radius: 12px; font-size: 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 0 #000, inset 0 1px 1px rgba(255,255,255,0.1); }
+        .bet-adjust:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
+        .bet-display-input { font-size: 28px; font-weight: 900; color: #fff; text-align: center; flex: 1; background: transparent; border: none; outline: none; width: 100%; letter-spacing: -0.5px; font-family: inherit; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .bet-display-input::-webkit-outer-spin-button, .bet-display-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .bet-display-input { -moz-appearance: textfield; }
         #incentivoText { font-size: 15px; font-weight: bold; margin-bottom: 20px; min-height: 20px; line-height: 1.5; transition: all 0.3s; }
-        
-        /* ALERTS */
+
         .alerta-status { padding: 15px; border-radius: 14px; margin-top: 15px; font-size: 14px; line-height: 1.5; font-weight: bold; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); border-left: 4px solid; }
         .alerta-red { background: rgba(231, 76, 60, 0.1); border-color: #e74c3c; color: #ff6b6b; }
         .alerta-green { background: rgba(0, 230, 118, 0.1); border-color: #00e676; color: #4ae38c; }
         .alerta-yellow { background: rgba(241, 196, 15, 0.1); border-color: gold; color: #ffd700; }
 
-        /* FICHAS (CHIPS) */
         .chip-container { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
-        .chip {
-            background: linear-gradient(145deg, #1f1f1f, #111); border: 1px solid #333; color: #bbb; 
-            padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: bold; 
-            box-shadow: 0 4px 0 #000; letter-spacing: 0.5px;
-        }
+        .chip { background: linear-gradient(145deg, #1f1f1f, #111); border: 1px solid #333; color: #bbb; padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: bold; box-shadow: 0 4px 0 #000; letter-spacing: 0.5px; }
         .chip:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
         .chip[data-val="100"] { background: linear-gradient(145deg, #3a2e00, #1a1500); border-color: #886600; color: #FFDF00; }
 
-        /* =========================================
-           TABELA E RANKING
-           ========================================= */
+        /* TABELA E RANKING (AGORA ATÉ O 10º) */
         .tabela { width: 100%; border-collapse: collapse; margin-top: 18px; background: #0a0a0a; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
         .tabela th, .tabela td { border: 1px solid #222; padding: 14px; white-space: nowrap; vertical-align: middle; font-size: 15px; }
         .tabela th { background: linear-gradient(180deg, #1a1a1a, #0d0d0d); color: #FFDF00; font-weight: 900; }
-        
         .destaque { font-weight: bold; position: relative; background: rgba(218, 165, 32, 0.08); }
         .destaque td { border-color: rgba(255,215,0,0.3); }
 
-        .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; margin-top: 12px; border-radius: 16px; border: 1px solid #333; background: #111; box-shadow: 0 8px 15px rgba(0,0,0,0.4); }
-        .ouro { 
-            background: linear-gradient(145deg, #2a1f00, #0a0800); 
-            border: 1px solid #b8860b; 
-            position: relative; padding-left: 120px; min-height: 110px; 
-            box-shadow: 0 10px 30px rgba(218,165,32,0.15), inset 0 0 20px rgba(255,215,0,0.05);
-        }
-        .prata { background: linear-gradient(145deg, #1c1c1c, #0d0d0d); }
-        .bronze { background: linear-gradient(145deg, #15110d, #0a0806); }
+        .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; margin-top: 10px; border-radius: 14px; border: 1px solid #333; background: #111; box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
+        .ouro { background: linear-gradient(145deg, #2a1f00, #0a0800); border: 1px solid #b8860b; position: relative; padding-left: 120px; min-height: 110px; box-shadow: 0 10px 30px rgba(218,165,32,0.15), inset 0 0 20px rgba(255,215,0,0.05); margin-bottom: 15px;}
+        .prata { background: linear-gradient(145deg, #1c1c1c, #0d0d0d); border-color: #555; }
+        .bronze { background: linear-gradient(145deg, #15110d, #0a0806); border-color: #7b4f30; }
+        .comum { background: linear-gradient(145deg, #111, #080808); border-color: #222; padding: 12px 15px; }
 
-        .foto-lider { 
-            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
-            width: 85px; height: 85px; border-radius: 50%; object-fit: cover; 
-            border: 3px solid #FFDF00; box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 5px 15px rgba(0,0,0,0.8); 
-            background: #000; 
-        }
+        .foto-lider { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 3px solid #FFDF00; box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 5px 15px rgba(0,0,0,0.8); background: #000; }
         #valorLider { display: block; font-size: 26px; color: #FFDF00; font-weight: 900; margin-top: 5px; text-shadow: 0 2px 10px rgba(255,215,0,0.3); }
 
-        /* =========================================
-           BOTOES FLUTUANTES OVERLAYS E POPUPS
-           ========================================= */
+        /* BOTOES FLUTUANTES OVERLAYS E POPUPS */
         .float-controls { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
         .btn-float { width: 65px; height: 65px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
         .btn-music { background: linear-gradient(145deg, #c0392b, #8e44ad); }
@@ -276,36 +123,16 @@
         .btn-zap { background: linear-gradient(145deg, #25D366, #128C7E); text-decoration: none; }
 
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 20000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        .popup-box { 
-            background: #111; border: 1px solid #333; border-top: 1px solid #555;
-            border-radius: 24px; padding: 30px 25px; width: 90%; max-width: 400px; 
-            text-align: center; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.2); 
-        }
+        .popup-box { background: #111; border: 1px solid #333; border-top: 1px solid #555; border-radius: 24px; padding: 30px 25px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.2); }
         .popup-box h2 { color: #FFDF00; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; }
         .popup-box p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; color: #e0e0e0; }
-        
-        .box-explicacao {
-            background: linear-gradient(145deg, #221a00, #0a0800);
-            border: 1px solid rgba(255,215,0,0.4);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 25px;
-            text-align: left;
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.6);
-        }
-        
+        .box-explicacao { background: linear-gradient(145deg, #221a00, #0a0800); border: 1px solid rgba(255,215,0,0.4); border-radius: 16px; padding: 18px; margin-bottom: 25px; text-align: left; box-shadow: inset 0 5px 15px rgba(0,0,0,0.6); }
     </style>
 </head>
 <body>
 
-<!-- SCRIPT ANTE-CACHE JS (NÍVEL MILITAR) -->
 <script>
-    window.addEventListener('pageshow', function(event) {
-        if (event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2)) {
-            window.location.reload(true);
-        }
-    });
+    window.addEventListener('pageshow', function(event) { if (event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2)) { window.location.reload(true); } });
 </script>
 
 <canvas id="canvasFestivo"></canvas>
@@ -319,18 +146,12 @@
     </div>
 </div>
 
-<div class="overlay" id="ajuda">
+<div class="overlay" id="ajuda" style="display:none;">
   <div class="popup-box">
     <h2 style="font-size: 22px;">ℹ️ Ajuda rápida</h2>
     <div style="text-align: left; background: #0a0a0a; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #222;">
-        <p style="margin-bottom: 15px;">
-        🎵 <strong>Botão da música</strong><br>
-        <span style="font-size: 14px; color: #aaa;">Serve para ligar/desligar o som. Verde é ligada, vermelho é desligada.</span>
-        </p>
-        <p style="margin-bottom: 0;">
-        💬 <strong>Botão do WhatsApp</strong><br>
-        <span style="font-size: 14px; color: #aaa;">Serve para falar diretamente comigo e tirar qualquer dúvida!</span>
-        </p>
+        <p style="margin-bottom: 15px;">🎵 <strong>Botão da música</strong><br><span style="font-size: 14px; color: #aaa;">Serve para ligar/desligar o som.</span></p>
+        <p style="margin-bottom: 0;">💬 <strong>Botão do WhatsApp</strong><br><span style="font-size: 14px; color: #aaa;">Fale comigo diretamente!</span></p>
     </div>
     <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entendi</button>
   </div>
@@ -338,22 +159,12 @@
 
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
-    <h2>🏆 COMO FUNCIONA O PÓDIO?</h2>
-    
-    <p style="text-align: left;">
-      Para participar deste momento especial, <strong>escolha o valor</strong> do seu presente e clique em confirmar. Você será levado ao WhatsApp 💬 para enviar o <strong>comprovante do Pix</strong> e oficializar sua presença!
-    </p>
-
+    <h2>🏆 O QUADRO DO PÓDIO</h2>
+    <p style="text-align: left;">Escolha o valor do seu presente, confirme e envie o <strong>comprovante do Pix</strong> no WhatsApp!</p>
     <div class="box-explicacao">
-      <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 16px; text-transform: uppercase;">
-        <i class="fa-solid fa-crown"></i> A Disputa pelo Topo
-      </strong>
-      <span style="font-size: 14px; color: #ccc; line-height: 1.5; display: block;">
-        Quem enviar o <strong>maior valor</strong> assume o 1º Lugar do ranking.<br><br>
-        📸 <em>Atenção: Apenas o líder máximo tem o privilégio de ter a sua <strong>foto eternizada no destaque principal do site!</strong></em> Faça sua jogada e conquiste o trono!
-      </span>
+      <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 16px; text-transform: uppercase;"><i class="fa-solid fa-crown"></i> A Disputa pelo Topo</strong>
+      <span style="font-size: 14px; color: #ccc; line-height: 1.5; display: block;">Quem enviar o <strong>maior valor</strong> assume o 1º Lugar.<br><br>📸 <em>Atenção: Apenas o líder máximo tem a sua <strong>foto eternizada no site!</strong></em></span>
     </div>
-
     <button class="btn-popup btn-3d" onclick="fecharPopup()">Entrar no Site</button>
   </div>
 </div>
@@ -368,14 +179,10 @@
     
     <div class="texto">
     Mesmo que você esteja longe e não possamos comemorar juntos,
-    sua presença ainda pode fazer parte desse momento tão especial 💛
-    <br><br>
+    sua presença ainda pode fazer parte desse momento tão especial 💛<br><br>
     Este projeto representa meus 18 anos — o início de uma nova fase,
-    cheia de sonhos, responsabilidades e conquistas.
-    <br><br>
-    Cada apoio é um gesto de carinho e incentivo,
-    e faz parte dessa história que estou construindo.
-    <br><br>
+    cheia de sonhos, responsabilidades e conquistas.<br><br>
+    Cada apoio é um gesto de carinho e incentivo.<br><br>
     <strong style="color: #FFDF00;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
     </div>
 
@@ -394,9 +201,16 @@
         </table>
     </div>
 
+    <!-- CAIXA EXPLICATIVA EXATAMENTE ENTRE A TABELA E O PAGAMENTO -->
+    <div class="box-explicacao-meio">
+        <strong style="color: #FFDF00; font-size: 18px; display: block; margin-bottom: 8px;">👑 Como assumir a Liderança:</strong>
+        <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block;">
+            Para roubar o 1º lugar e ter sua foto no topo, envie um valor <strong style="color: #fff;">maior que o atual líder</strong> via Pix. O sistema será atualizado e você será eternizado com honra na nossa galeria VIP!
+        </span>
+    </div>
+
     <div class="pay-panel">
         <h3><i class="fa-solid fa-gift"></i> Escolha ou digite o valor</h3>
-        
         <div class="bet-input-row">
             <div class="bet-adjust btn-3d" id="btnMinus"><i class="fa-solid fa-minus"></i></div>
             <div style="display: flex; align-items: center; justify-content: center; flex: 1;">
@@ -421,8 +235,9 @@
     </div>
 
     <div class="card" style="margin-bottom: 30px;">
-        <h3 style="color:#FFDF00; margin-top: 0; text-transform: uppercase;">🏆 Top Apoiadores</h3>
+        <h3 style="color:#FFDF00; margin-top: 0; margin-bottom: 20px; text-transform: uppercase;">🏆 Top 10 Apoiadores</h3>
 
+        <!-- RANK 1 -->
         <div class="rank-item ouro lider">
             <img class="foto-lider" id="fotoLider" alt="Foto do líder" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><rect width='90' height='90' fill='%23111'/></svg>">
             <div style="text-align: left; width: 100%;">
@@ -431,27 +246,24 @@
             </div>
         </div>
 
-        <div class="rank-item prata">
-            <div class="nome" id="nome2" style="font-weight: bold; color: #ddd;">🥈 2º Lugar — Carregando...</div>
-            <span id="valor2" style="font-weight: bold;">...</span>
-        </div>
+        <!-- RANK 2 E 3 -->
+        <div class="rank-item prata"><div class="nome" id="nome2" style="font-weight: bold; color: #ddd;">🥈 2º Lugar — Carregando...</div><span id="valor2" style="font-weight: bold; color: #fff;">...</span></div>
+        <div class="rank-item bronze"><div class="nome" id="nome3" style="font-weight: bold; color: #d08c5c;">🥉 3º Lugar — Carregando...</div><span id="valor3" style="font-weight: bold; color: #fff;">...</span></div>
 
-        <div class="rank-item bronze">
-            <div class="nome" id="nome3" style="font-weight: bold; color: #ccc;">🥉 3º Lugar — Carregando...</div>
-            <span id="valor3" style="font-weight: bold;">...</span>
-        </div>
-
-        <div style="margin-top:25px; font-size:14px; line-height:1.6; color:#bbb; background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; border: 1px solid #333; text-align: left;">
-            👑 <strong style="color:#FFDF00;">Como assumir a Liderança:</strong><br>
-            Para roubar o 1º lugar e ter sua foto no topo, envie um valor
-            <strong>maior que o atual líder</strong> via Pix. O sistema será atualizado e você será eternizado com honra na nossa galeria VIP!
-        </div>
+        <!-- RANK 4 AO 10 -->
+        <div class="rank-item comum"><div class="nome" id="nome4" style="font-weight: bold; color: #aaa;">4º Lugar — Aguardando...</div><span id="valor4" style="color: #ccc;">-</span></div>
+        <div class="rank-item comum"><div class="nome" id="nome5" style="font-weight: bold; color: #aaa;">5º Lugar — Aguardando...</div><span id="valor5" style="color: #ccc;">-</span></div>
+        <div class="rank-item comum"><div class="nome" id="nome6" style="font-weight: bold; color: #aaa;">6º Lugar — Aguardando...</div><span id="valor6" style="color: #ccc;">-</span></div>
+        <div class="rank-item comum"><div class="nome" id="nome7" style="font-weight: bold; color: #aaa;">7º Lugar — Aguardando...</div><span id="valor7" style="color: #ccc;">-</span></div>
+        <div class="rank-item comum"><div class="nome" id="nome8" style="font-weight: bold; color: #aaa;">8º Lugar — Aguardando...</div><span id="valor8" style="color: #ccc;">-</span></div>
+        <div class="rank-item comum"><div class="nome" id="nome9" style="font-weight: bold; color: #aaa;">9º Lugar — Aguardando...</div><span id="valor9" style="color: #ccc;">-</span></div>
+        <div class="rank-item comum"><div class="nome" id="nome10" style="font-weight: bold; color: #aaa;">10º Lugar — Aguardando...</div><span id="valor10" style="color: #ccc;">-</span></div>
     </div>
 
 </div>
 
 <div class="float-controls">
-    <a href="https://wa.me/5583996469538" class="btn-float btn-zap btn-3d" id="btnZapBase"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://wa.me/5583996469538" class="btn-float btn-zap btn-3d"><i class="fa-brands fa-whatsapp"></i></a>
     <button class="btn-float btn-music btn-3d" id="musicToggle"><span id="musicIcon">🎵</span></button>
 </div>
 
@@ -480,66 +292,22 @@
   const inputValor = document.getElementById('valorPresenteInput');
   const incentivoText = document.getElementById('incentivoText');
 
-  const templates10a29 = [
-      "Com R$ {v} você já garante um presente super carinhoso! 🤍",
-      "R$ {v} na conta já salva demais! Valeu a presença! 🚀",
-      "Olha aí, R$ {v} é um apoio muito bem-vindo! ✨",
-      "R$ {v} já ajuda no incentivo dos dezoito! 🤝",
-      "Muito obrigado pelos R$ {v}, sua participação é top! 🤍"
-  ];
-  const templates30a99 = [
-      "Aí sim! R$ {v} é uma participação super especial! 🎉",
-      "Com R$ {v} a comemoração ganha outro nível! ✨",
-      "Incrível! Esse presente de R$ {v} faz toda a diferença! 🚀",
-      "R$ {v} é um apresentaço! Gratidão total pelo apoio! 🙏",
-      "Que massa! R$ {v} já mostra que você fecha comigo! 🔥"
-  ];
-  const templates100mais = [
-      "Uau! R$ {v} é presente de patrão! Você é VIP! 👑",
-      "Tá de brincadeira? R$ {v} é um apoio absurdo! 💥",
-      "Histórico! Com R$ {v} o projeto 18 decola! 🚀",
-      "Sem palavras! R$ {v} é um presente espetacular! 🏆",
-      "R$ {v}?! Você tá mandando ver demais, muito obrigado! ✨"
-  ];
-
-  function obterMensagemMatematicaUnica(val) {
-      if (val === 18) return "Dezoito reais cravados para o Projeto 18! Meta emblemática! 🎂✨";
-      let index = val % 5; 
-      if (val < 30) return templates10a29[index].replace('{v}', val);
-      if (val < 100) return templates30a99[index].replace('{v}', val);
-      if (val >= 1000) return `LENDÁRIO! R$ ${val}?! Você acabou de zerar o jogo com esse presente! 🏆`;
-      return templates100mais[index].replace('{v}', val);
-  }
-
   function atualizarIncentivo() {
       let corTexto = (valorAtual >= 50) ? "#FFDF00" : "#ccc";
-      let fraseUnica = `<span style="color: ${corTexto}; font-size: 15px; font-weight: bold;">${obterMensagemMatematicaUnica(valorAtual)}</span>`;
       let alertaLideranca = "";
 
       if (valorLiderNumerico > 0) {
           if (valorAtual > valorLiderNumerico) {
               let folga = valorAtual - valorLiderNumerico;
-              alertaLideranca = `
-                  <div class="alerta-status alerta-green">
-                      👑 <strong>VOCÊ ESTÁ ASSUMINDO O TRONO!</strong><br>
-                      <span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Sua vantagem atual é de <strong>R$ ${folga.toFixed(2).replace('.',',')}</strong>! Se cobrirem, sua foto cai. Adicione uma margem de segurança! 🛡️</span>
-                  </div>`;
+              alertaLideranca = `<div class="alerta-status alerta-green">👑 <strong>VOCÊ ESTÁ ASSUMINDO O TRONO!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Sua vantagem atual é de <strong>R$ ${folga.toFixed(2).replace('.',',')}</strong>! Se cobrirem, sua foto cai. Adicione uma margem de segurança! 🛡️</span></div>`;
           } else if (valorAtual === valorLiderNumerico) {
-              alertaLideranca = `
-                  <div class="alerta-status alerta-yellow">
-                      ⚠️ <strong>EMPATOU COM O LÍDER!</strong><br>
-                      <span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Adicione pelo menos mais R$ 1,00 para desbancar o topo e garantir a sua foto! 🚀</span>
-                  </div>`;
+              alertaLideranca = `<div class="alerta-status alerta-yellow">⚠️ <strong>EMPATOU COM O LÍDER!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Adicione pelo menos mais R$ 1,00 para desbancar o topo e garantir a sua foto! 🚀</span></div>`;
           } else {
               let diff = (valorLiderNumerico - valorAtual) + 1;
-              alertaLideranca = `
-                  <div class="alerta-status alerta-red">
-                      🎯 <strong>ALVO: 1º LUGAR!</strong><br>
-                      <span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Faltam exatamente <strong style="color: #FFDF00;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para roubar a liderança e cravar sua foto. Suba o valor! 🔥</span>
-                  </div>`;
+              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong>ALVO: 1º LUGAR!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Faltam exatamente <strong style="color: #FFDF00;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para roubar a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
           }
       }
-      incentivoText.innerHTML = fraseUnica + alertaLideranca;
+      incentivoText.innerHTML = alertaLideranca;
   }
 
   function tratarValor() {
@@ -550,57 +318,26 @@
       atualizarIncentivo();
   }
 
-  document.getElementById('btnMinus').addEventListener('click', () => { 
-      tratarValor(); if(valorAtual - 10 >= 10) { valorAtual -= 10; inputValor.value = valorAtual; atualizarIncentivo(); } 
-  });
-  document.getElementById('btnPlus').addEventListener('click', () => { 
-      tratarValor(); valorAtual += 10; inputValor.value = valorAtual; atualizarIncentivo();
-  });
-
-  inputValor.addEventListener('blur', tratarValor); 
-  inputValor.addEventListener('change', tratarValor);
-
-  document.querySelectorAll('.chip').forEach(chip => {
-      chip.addEventListener('click', function() {
-          tratarValor(); valorAtual += parseFloat(this.dataset.val);
-          inputValor.value = valorAtual; atualizarIncentivo();
-      });
-  });
+  document.getElementById('btnMinus').addEventListener('click', () => { tratarValor(); if(valorAtual - 10 >= 10) { valorAtual -= 10; inputValor.value = valorAtual; atualizarIncentivo(); } });
+  document.getElementById('btnPlus').addEventListener('click', () => { tratarValor(); valorAtual += 10; inputValor.value = valorAtual; atualizarIncentivo(); });
+  inputValor.addEventListener('blur', tratarValor); inputValor.addEventListener('change', tratarValor);
+  document.querySelectorAll('.chip').forEach(chip => { chip.addEventListener('click', function() { tratarValor(); valorAtual += parseFloat(this.dataset.val); inputValor.value = valorAtual; atualizarIncentivo(); }); });
 
   document.getElementById('btnMandar').addEventListener('click', () => {
       tratarValor();
       let msg = "";
-      if (valorLiderNumerico > 0 && valorAtual > valorLiderNumerico) {
-          msg = `Opa, Vittor! Dei uma olhada no seu site de aniversário e decidi que vou *ASSUMIR A LIDERANÇA MÁXIMA*! Quero mandar um presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para tomar o *1º LUGAR* e blindar meu trono! Já separa o espaço pra minha foto na galeria VIP! 🥇👑`;
-      } else {
-          if (valorAtual <= 25) {
-              msg = `Opa Vittor! Dei uma olhada no seu site de 18 anos e decidi mandar uma contribuição de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para marcar presença! Me passa sua chave Pix? 🤍🎂`;
-          } else if (valorAtual > 25 && valorAtual < 100) {
-              msg = `Fala Vittor! Vi seu projeto no site. Separei o presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para te dar aquela força! Me manda a chave Pix para eu enviar? 🎉⚡`;
-          } else {
-              msg = `Eae Vittor, beleza? Decidi fechar com um presente VIP de *R$ ${valorAtual.toFixed(2).replace('.',',')}*! Quero marcar minha participação com estilo! Manda a chave Pix aí! 🎁✨`;
-          }
-      }
+      if (valorLiderNumerico > 0 && valorAtual > valorLiderNumerico) { msg = `Opa, Vittor! Dei uma olhada no seu site e decidi que vou *ASSUMIR A LIDERANÇA MÁXIMA*! Quero mandar *R$ ${valorAtual.toFixed(2).replace('.',',')}* para tomar o *1º LUGAR* e eternizar minha foto! 🥇👑`; } 
+      else { msg = `Fala Vittor! Vi seu projeto no site. Separei o presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para te dar aquela força! Me manda a chave Pix para eu enviar? 🎉⚡`; }
       window.location.href = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
   });
 
-  window.fecharAjuda = function() {
-    document.getElementById("ajuda").style.display = "none";
-    setTimeout(() => { document.getElementById("popupAvisoInicial").style.display = "flex"; }, 500);
-  }
+  window.fecharAjuda = function() { document.getElementById("ajuda").style.display = "none"; }
   window.fecharPopup = function() { document.getElementById("popupAvisoInicial").style.display = "none"; }
 
   const botaoMusica = document.getElementById("musicToggle"); const iconeMusica = document.getElementById("musicIcon"); const musica = document.getElementById("bgMusic"); let tocando = false;
   botaoMusica.addEventListener("click", () => { if (!tocando) { musica.play().catch(e=>{}); botaoMusica.classList.add("active"); iconeMusica.innerHTML = "<i class='fa-solid fa-volume-high'></i>"; tocando = true; } else { musica.pause(); botaoMusica.classList.remove("active"); iconeMusica.textContent = "🎵"; tocando = false; } });
 
-  // CORREÇÃO DO BUG DAS BOLINHAS ESPERANDO NO TOPO: DELAY NEGATIVO!
-  for(let i=0; i<25; i++){ 
-      const p = document.createElement("div"); 
-      p.className = "particula"; 
-      p.style.left = Math.random() * 100 + "vw"; 
-      p.style.animationDelay = "-" + (Math.random() * 12) + "s"; // Delay negativo força o CSS a iniciar a animação já rodando espalhada.
-      document.body.appendChild(p); 
-  }
+  for(let i=0; i<25; i++){ const p = document.createElement("div"); p.className = "particula"; p.style.left = Math.random() * 100 + "vw"; p.style.animationDelay = "-" + (Math.random() * 12) + "s"; document.body.appendChild(p); }
 
   const canvas = document.getElementById('canvasFestivo'); const ctx = canvas.getContext('2d');
   let fireworks = []; let particles = [];
@@ -614,39 +351,41 @@
   const aniversario = new Date("2026-07-22T00:00:00").getTime(); let fogosAtivados = false;
   setInterval(()=>{ const agora = new Date().getTime(); const d = aniversario - agora; const contador = document.getElementById("contador"); if(d <= 0){ contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; if(!fogosAtivados) { canvas.style.display = 'block'; loopFestivo(); fogosAtivados = true; } }else{ contador.innerHTML = Math.floor(d/86400000)+"d "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; } },1000);
 
+  // LEITURA DO FIREBASE - TOP 10
   const rankingRef = ref(db, 'ranking');
   onValue(rankingRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
       if (data.lider) {
-        // Atualiza Lider Original (Lá embaixo)
         document.getElementById("nomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
         document.getElementById("valorLider").textContent = data.lider.valor || "R$ 0,00";
-        
-        // Atualiza Lider Banner Fixo (Lá em cima)
         document.getElementById("stickyNomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
         document.getElementById("stickyValorLider").textContent = data.lider.valor || "R$ 0,00";
         
         let textoPreco = data.lider.valor || "0";
         let apenasNumeros = textoPreco.replace(/[^\d,]/g, '').replace(',', '.');
         valorLiderNumerico = parseFloat(apenasNumeros) || 0;
-        
         atualizarIncentivo();
 
-        // Atualiza as fotos nos dois lugares ao mesmo tempo
         if (data.lider.foto) { 
             document.getElementById("fotoLider").src = data.lider.foto; 
             document.getElementById("stickyFotoLider").src = data.lider.foto; 
         }
       }
-      if (data.segundo) {
-        document.getElementById("nome2").textContent = "🥈 2º Lugar — " + (data.segundo.nome || "A definir");
-        document.getElementById("valor2").textContent = data.segundo.valor || "R$ 0,00";
-      }
-      if (data.terceiro) {
-        document.getElementById("nome3").textContent = "🥉 3º Lugar — " + (data.terceiro.nome || "A definir");
-        document.getElementById("valor3").textContent = data.terceiro.valor || "R$ 0,00";
-      }
+      
+      const posicoes = [
+          { key: 'segundo', num: 2, icon: '🥈' }, { key: 'terceiro', num: 3, icon: '🥉' },
+          { key: 'quarto', num: 4, icon: '' }, { key: 'quinto', num: 5, icon: '' },
+          { key: 'sexto', num: 6, icon: '' }, { key: 'setimo', num: 7, icon: '' },
+          { key: 'oitavo', num: 8, icon: '' }, { key: 'nono', num: 9, icon: '' }, { key: 'decimo', num: 10, icon: '' }
+      ];
+
+      posicoes.forEach(pos => {
+          if (data[pos.key]) {
+              document.getElementById(`nome${pos.num}`).textContent = `${pos.icon} ${pos.num}º Lugar — ` + (data[pos.key].nome || "A definir");
+              document.getElementById(`valor${pos.num}`).textContent = data[pos.key].valor || "R$ 0,00";
+          }
+      });
     }
   });
 </script>
