@@ -28,12 +28,70 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .container { max-width: 500px; margin: auto; padding: 35px 20px 100px; position: relative; z-index: 10; }
+        /* Container com padding-top maior (120px) para acomodar o banner fixo sem cobrir o topo */
+        .container { max-width: 500px; margin: auto; padding: 120px 20px 100px; position: relative; z-index: 10; }
 
         /* CANVAS DOS FOGOS DE ARTIFÍCIO */
         #canvasFestivo {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 5; display: none;
+        }
+
+        /* =========================================
+           BANNER FIXO NO TOPO (TOP APOIADOR)
+           ========================================= */
+        .sticky-banner {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 480px;
+            background: linear-gradient(145deg, #161200, #0a0800);
+            border: 2px solid #FFDF00;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            z-index: 15000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,215,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .sticky-banner img {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 3px solid #FFDF00;
+            object-fit: cover;
+            margin-right: 18px;
+            box-shadow: 0 0 15px rgba(255,215,0,0.3);
+            background: #000;
+        }
+        
+        .sticky-info {
+            text-align: left;
+            flex: 1;
+            /* Evita que nomes muito grandes quebrem o layout */
+            overflow: hidden; 
+        }
+        
+        #stickyNomeLider {
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+        
+        #stickyValorLider {
+            font-size: 28px;
+            font-weight: 900;
+            color: #FFDF00;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            letter-spacing: -0.5px;
         }
 
         /* =========================================
@@ -55,7 +113,6 @@
             font-size: 17px; 
             font-weight: 900; 
             text-transform: uppercase; letter-spacing: 0.5px;
-            /* Sombra 3D profissional (borda inferior simulada e brilho) */
             box-shadow: 0 6px 0 #9E7B15, 0 15px 25px rgba(0,0,0,0.6), inset 0 2px 2px rgba(255,255,255,0.4);
             display: flex; justify-content: center; align-items: center; gap: 10px;
         }
@@ -224,7 +281,6 @@
         .popup-box h2 { color: #FFDF00; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; }
         .popup-box p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; color: #e0e0e0; }
         
-        /* Estilo da caixa explicativa do pódio no popup */
         .box-explicacao {
             background: linear-gradient(145deg, #221a00, #0a0800);
             border: 1px solid rgba(255,215,0,0.4);
@@ -250,6 +306,15 @@
 
 <canvas id="canvasFestivo"></canvas>
 
+<!-- BANNER FIXO TOPO DA PÁGINA (TOP APOIADOR) -->
+<div id="stickyLider" class="sticky-banner">
+    <img id="stickyFotoLider" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><rect width='90' height='90' fill='%23111'/></svg>" alt="Top Apoiador">
+    <div class="sticky-info">
+        <div id="stickyNomeLider">🥇 1º Lugar — Carregando...</div>
+        <div id="stickyValorLider">...</div>
+    </div>
+</div>
+
 <div class="overlay" id="ajuda">
   <div class="popup-box">
     <h2 style="font-size: 22px;">ℹ️ Ajuda rápida</h2>
@@ -267,7 +332,6 @@
   </div>
 </div>
 
-<!-- POPUP REFORMULADO (Texto mais claro e gamificado baseado na imagem) -->
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
     <h2>🏆 COMO FUNCIONA O PÓDIO?</h2>
@@ -539,13 +603,19 @@
   const aniversario = new Date("2026-07-22T00:00:00").getTime(); let fogosAtivados = false;
   setInterval(()=>{ const agora = new Date().getTime(); const d = aniversario - agora; const contador = document.getElementById("contador"); if(d <= 0){ contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; if(!fogosAtivados) { canvas.style.display = 'block'; loopFestivo(); fogosAtivados = true; } }else{ contador.innerHTML = Math.floor(d/86400000)+"d "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; } },1000);
 
+  // ESCUTADOR RANKING FIREBASE ATUALIZADO (ATUALIZA O DE BAIXO E O FIXO NO TOPO)
   const rankingRef = ref(db, 'ranking');
   onValue(rankingRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
       if (data.lider) {
+        // Atualiza Lider Original (Lá embaixo)
         document.getElementById("nomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
         document.getElementById("valorLider").textContent = data.lider.valor || "R$ 0,00";
+        
+        // Atualiza Lider Banner Fixo (Lá em cima)
+        document.getElementById("stickyNomeLider").textContent = "🥇 1º Lugar — " + (data.lider.nome || "A definir");
+        document.getElementById("stickyValorLider").textContent = data.lider.valor || "R$ 0,00";
         
         let textoPreco = data.lider.valor || "0";
         let apenasNumeros = textoPreco.replace(/[^\d,]/g, '').replace(',', '.');
@@ -553,7 +623,11 @@
         
         atualizarIncentivo();
 
-        if (data.lider.foto) { document.getElementById("fotoLider").src = data.lider.foto; }
+        // Atualiza as fotos nos dois lugares ao mesmo tempo
+        if (data.lider.foto) { 
+            document.getElementById("fotoLider").src = data.lider.foto; 
+            document.getElementById("stickyFotoLider").src = data.lider.foto; 
+        }
       }
       if (data.segundo) {
         document.getElementById("nome2").textContent = "🥈 2º Lugar — " + (data.segundo.nome || "A definir");
