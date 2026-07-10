@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <!-- ANTE-CACHE NÍVEL MILITAR (CABEÇALHOS HTML) -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, private">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Projeto 18 - Maioridade</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
     <link rel="preload" href="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=button-pressed-38129.mp3" as="audio">
 
     <style>
-        /* RESET E TEMA BASE CASSINO VIP */
+        /* =========================================
+           RESET E TEMA BASE PROFISSIONAL 3D
+           ========================================= */
+        * { box-sizing: border-box; }
+        
         body {
             margin: 0; padding: 0;
-            background: radial-gradient(circle at top, #1a1a1a, #000);
-            font-family: Arial, sans-serif;
-            color: white; text-align: center; overflow-x: hidden;
+            background: #050505 radial-gradient(circle at top, #1c1a17 0%, #000000 80%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #f0f0f0; text-align: center; overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -31,212 +36,268 @@
             pointer-events: none; z-index: 5; display: none;
         }
 
-        /* BOTÕES 3D (PROFUNDIDADE) */
+        /* =========================================
+           EFEITOS 3D E BOTÕES PREMIUM
+           ========================================= */
         .btn-3d {
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            position: relative;
         }
-        .btn-3d:active {
-            transform: translateY(4px) !important;
-            box-shadow: none !important;
+        
+        .btn-enviar {
+            width: 100%; 
+            background: linear-gradient(180deg, #FFDF00 0%, #DAA520 100%);
+            border: 1px solid #FFF59D;
+            border-radius: 14px; 
+            padding: 16px; 
+            color: #111;
+            font-size: 17px; 
+            font-weight: 900; 
+            text-transform: uppercase; letter-spacing: 0.5px;
+            /* Sombra 3D profissional (borda inferior simulada e brilho) */
+            box-shadow: 0 6px 0 #9E7B15, 0 15px 25px rgba(0,0,0,0.6), inset 0 2px 2px rgba(255,255,255,0.4);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-enviar:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 #9E7B15, 0 5px 10px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.2);
+        }
+
+        .btn-popup {
+            background: linear-gradient(180deg, #FFDF00 0%, #DAA520 100%);
+            color: #000; border: none; padding: 14px 25px; border-radius: 12px; 
+            font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; 
+            box-shadow: 0 5px 0 #9E7B15, 0 10px 15px rgba(0,0,0,0.4);
+        }
+        .btn-popup:active { 
+            transform: translateY(5px); 
+            box-shadow: 0 0 0 #9E7B15, 0 5px 5px rgba(0,0,0,0.4); 
         }
 
         /* PARTÍCULAS FLUTUANTES */
         .particula {
             position: fixed; width: 4px; height: 4px; background: gold;
             border-radius: 50%; opacity: 0.6; animation: flutuar 12s linear infinite; z-index: 1; top: 0;
+            box-shadow: 0 0 8px gold;
         }
         @keyframes flutuar {
             from { transform: translateY(105vh); }
             to { transform: translateY(-10vh); }
         }
 
-        /* FOTO */
-        @keyframes glowFoto {
-            0% { box-shadow: 0 0 20px gold; }
-            50% { box-shadow: 0 0 50px gold; }
-            100% { box-shadow: 0 0 20px gold; }
+        /* =========================================
+           FOTO E TÍTULO
+           ========================================= */
+        .foto-container {
+            position: relative; display: inline-block;
+            padding: 5px; background: linear-gradient(145deg, #FFD700, #8B6508);
+            border-radius: 50%; box-shadow: 0 15px 35px rgba(218, 165, 32, 0.3);
+            margin-bottom: 10px;
         }
         .foto {
-            width: 220px; height: 220px; border-radius: 50%; object-fit: cover;
-            border: 4px solid gold; animation: glowFoto 3s infinite;
+            width: 210px; height: 210px; border-radius: 50%; object-fit: cover;
+            border: 4px solid #111; display: block;
         }
 
-        /* TÍTULO */
-        @keyframes brilhoTitulo {
-            0% { text-shadow: 0 0 5px gold; }
-            50% { text-shadow: 0 0 30px gold; }
-            100% { text-shadow: 0 0 5px gold; }
-        }
         h1 {
-            color: gold; font-size: 34px; margin-top: 25px;
-            animation: brilhoTitulo 2.5s infinite; font-weight: bold;
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 36px; margin-top: 15px; font-weight: 900;
+            text-shadow: 0px 4px 15px rgba(255, 215, 0, 0.2);
         }
 
-        /* TEXTO ORIGINAL */
-        .texto { margin-top: 20px; line-height: 1.7; font-size: 17px; color: #ddd; text-align: center; }
+        .texto { margin-top: 20px; line-height: 1.8; font-size: 16px; color: #ccc; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
-        /* CARDS */
+        /* =========================================
+           CARDS (PROFUNDIDADE E GLASSMORPHISM)
+           ========================================= */
         .card {
-            background: rgba(0,0,0,0.65); border: 2px solid gold; border-radius: 18px;
-            padding: 22px; margin-top: 28px; box-shadow: 0 0 30px rgba(255,215,0,0.2);
+            background: linear-gradient(145deg, #151515, #0a0a0a);
+            border: 1px solid #333; border-top: 1px solid #444; 
+            border-radius: 20px; padding: 25px; margin-top: 28px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 2px 0 rgba(255,255,255,0.02);
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.5), transparent);
         }
 
-        /* CONTADOR */
-        #contador { font-size: 20px; color: gold; font-weight: bold; }
+        #contador { font-size: 24px; color: #FFDF00; font-weight: 900; letter-spacing: 1px; text-shadow: 0 0 15px rgba(255,223,0,0.4); }
 
-        /* PAINEL DE SELEÇÃO INTERATIVO EDITÁVEL */
-        .pay-panel { background: #0a0a0a; border: 2px solid gold; border-radius: 16px; padding: 20px; margin-top: 28px; }
-        .pay-panel h3 { color: gold; margin-bottom: 15px; font-size: 18px; text-transform: uppercase; }
+        /* =========================================
+           PAINEL DE PAGAMENTO
+           ========================================= */
+        .pay-panel { 
+            background: #0d0d0d; border: 1px solid #333; border-radius: 20px; 
+            padding: 25px 20px; margin-top: 28px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.9), inset 0 0 20px rgba(218, 165, 32, 0.05);
+        }
+        .pay-panel h3 { color: #FFDF00; margin-top: 0; margin-bottom: 20px; font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
         
         .bet-input-row {
-            display: flex; background: rgba(255,255,255,0.05); border-radius: 50px; padding: 4px;
-            border: 1px solid gold; align-items: center; justify-content: space-between; margin-bottom: 8px;
+            display: flex; background: #050505; border-radius: 16px; padding: 6px;
+            border: 1px solid #222; box-shadow: inset 0 5px 10px rgba(0,0,0,0.8);
+            align-items: center; justify-content: space-between; margin-bottom: 15px;
         }
         .bet-adjust {
-            background: #222; border: 1px solid #444; color: gold; width: 40px; height: 40px;
-            border-radius: 50%; font-size: 20px; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 3px 0 #000;
+            background: linear-gradient(145deg, #2a2a2a, #111); border: 1px solid #444; 
+            color: #FFDF00; width: 45px; height: 45px;
+            border-radius: 12px; font-size: 20px; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 0 #000, inset 0 1px 1px rgba(255,255,255,0.1);
         }
+        .bet-adjust:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
         
-        /* INPUT DE TEXTO EDITÁVEL ESTILIZADO */
         .bet-display-input {
-            font-size: 24px; font-weight: 900; color: #fff; text-align: center; flex: 1;
+            font-size: 28px; font-weight: 900; color: #fff; text-align: center; flex: 1;
             background: transparent; border: none; outline: none; width: 100%;
-            letter-spacing: -0.5px; font-family: inherit;
+            letter-spacing: -0.5px; font-family: inherit; text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
         .bet-display-input::-webkit-outer-spin-button,
         .bet-display-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .bet-display-input { -moz-appearance: textfield; }
 
-        /* TEXTO DE INCENTIVO EM TEMPO REAL */
-        #incentivoText {
-            font-size: 15px; font-weight: bold; margin-bottom: 15px; min-height: 20px; line-height: 1.4;
-            transition: all 0.3s;
-        }
+        #incentivoText { font-size: 15px; font-weight: bold; margin-bottom: 20px; min-height: 20px; line-height: 1.5; transition: all 0.3s; }
         
-        /* CAIXAS DE ALERTA DE STATUS (ALTAMENTE VISÍVEIS) */
-        .alerta-status { padding: 14px; border-radius: 12px; margin-top: 15px; font-size: 14px; line-height: 1.5; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-        .alerta-red { background: rgba(231, 76, 60, 0.15); border: 2px solid #e74c3c; color: #ff5252; animation: lightPulseRed 1.5s infinite alternate; }
-        .alerta-green { background: rgba(0, 230, 118, 0.15); border: 2px solid #00e676; color: #00e676; animation: lightPulseGreen 1.5s infinite alternate; }
-        .alerta-yellow { background: rgba(241, 196, 15, 0.15); border: 2px solid gold; color: gold; animation: lightPulseYellow 1.5s infinite alternate; }
+        /* ALERTS */
+        .alerta-status { padding: 15px; border-radius: 14px; margin-top: 15px; font-size: 14px; line-height: 1.5; font-weight: bold; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); border-left: 4px solid; }
+        .alerta-red { background: rgba(231, 76, 60, 0.1); border-color: #e74c3c; color: #ff6b6b; }
+        .alerta-green { background: rgba(0, 230, 118, 0.1); border-color: #00e676; color: #4ae38c; }
+        .alerta-yellow { background: rgba(241, 196, 15, 0.1); border-color: gold; color: #ffd700; }
 
-        @canvas lightPulseRed { 0% { box-shadow: 0 0 5px rgba(231,76,60,0.4); } 100% { box-shadow: 0 0 20px rgba(231,76,60,0.8); } }
-        @canvas lightPulseGreen { 0% { box-shadow: 0 0 5px rgba(0,230,118,0.4); } 100% { box-shadow: 0 0 20px rgba(0,230,118,0.8); } }
-        @canvas lightPulseYellow { 0% { box-shadow: 0 0 5px rgba(241,196,15,0.4); } 100% { box-shadow: 0 0 20px rgba(241,196,15,0.8); } }
-
-        .chip-container { display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
+        /* FICHAS (CHIPS) */
+        .chip-container { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
         .chip {
-            background: #111; border: 1px solid #444; color: #aaa; padding: 6px 14px;
-            border-radius: 20px; font-size: 12px; font-weight: bold; box-shadow: 0 3px 0 #000;
+            background: linear-gradient(145deg, #1f1f1f, #111); border: 1px solid #333; color: #bbb; 
+            padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: bold; 
+            box-shadow: 0 4px 0 #000; letter-spacing: 0.5px;
         }
-        .chip:active { color: gold; border-color: gold; }
+        .chip:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
+        .chip[data-val="100"] { background: linear-gradient(145deg, #3a2e00, #1a1500); border-color: #886600; color: #FFDF00; }
 
-        .btn-enviar {
-            width: 100%; background: gold; border: none; border-radius: 12px; padding: 15px; color: #000;
-            font-size: 16px; font-weight: bold; text-transform: uppercase;
-            box-shadow: 0 5px 0 #8a6508, 0 10px 20px rgba(0,0,0,0.4);
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-        }
-
-        /* TABELA ORIGINAL DE SIGNIFICADOS */
-        .tabela { width: 100%; border-collapse: collapse; margin-top: 18px; }
-        .tabela th, .tabela td { border: 1px solid gold; padding: 12px; white-space: nowrap; vertical-align: middle; height: 55px; font-size: 16px; }
-        .tabela th { background: #111; color: gold; }
+        /* =========================================
+           TABELA E RANKING
+           ========================================= */
+        .tabela { width: 100%; border-collapse: collapse; margin-top: 18px; background: #0a0a0a; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
+        .tabela th, .tabela td { border: 1px solid #222; padding: 14px; white-space: nowrap; vertical-align: middle; font-size: 15px; }
+        .tabela th { background: linear-gradient(180deg, #1a1a1a, #0d0d0d); color: #FFDF00; font-weight: 900; }
         
-        @keyframes vip {
-            0% { background: #1a1a1a; box-shadow: 0 0 10px gold; transform: scale(1); }
-            50% { background: #2a2a2a; box-shadow: 0 0 45px gold; transform: scale(1.07); }
-            100% { background: #1a1a1a; box-shadow: 0 0 10px gold; transform: scale(1); }
-        }
-        .destaque { font-weight: bold; animation: vip 1.2s infinite; position: relative; }
-        .destaque::after { content: "🥇 TOP APOIADOR"; position: absolute; top: -12px; right: -10px; background: gold; color: black; font-size: 10px; padding: 3px 6px; border-radius: 6px; }
+        .destaque { font-weight: bold; position: relative; background: rgba(218, 165, 32, 0.08); }
+        .destaque td { border-color: rgba(255,215,0,0.3); }
 
-        /* RANKING E LIDERANÇA */
-        .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; margin-top: 10px; border-radius: 12px; border: 1px solid gold; background: #111; }
-        .ouro { background: linear-gradient(90deg,#332200,#000); position: relative; padding-left: 115px; min-height: 100px; }
-        .prata { background: #1a1a1a; }
-        .bronze { background: #1a1a1a; }
-
-        @keyframes liderGlow {
-            0% { box-shadow: 0 0 15px gold; transform: scale(1); }
-            50% { box-shadow: 0 0 60px gold; transform: scale(1.08); }
-            100% { box-shadow: 0 0 15px gold; transform: scale(1); }
+        .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; margin-top: 12px; border-radius: 16px; border: 1px solid #333; background: #111; box-shadow: 0 8px 15px rgba(0,0,0,0.4); }
+        .ouro { 
+            background: linear-gradient(145deg, #2a1f00, #0a0800); 
+            border: 1px solid #b8860b; 
+            position: relative; padding-left: 120px; min-height: 110px; 
+            box-shadow: 0 10px 30px rgba(218,165,32,0.15), inset 0 0 20px rgba(255,215,0,0.05);
         }
-        .lider { animation: liderGlow 1.3s infinite; }
-        .lider::after { content: "🔥 Líder atual"; position: absolute; top: -14px; right: -12px; background: gold; color: black; font-size: 11px; padding: 4px 8px; border-radius: 8px; font-weight: bold; }
+        .prata { background: linear-gradient(145deg, #1c1c1c, #0d0d0d); }
+        .bronze { background: linear-gradient(145deg, #15110d, #0a0806); }
+
+        .foto-lider { 
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
+            width: 85px; height: 85px; border-radius: 50%; object-fit: cover; 
+            border: 3px solid #FFDF00; box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 5px 15px rgba(0,0,0,0.8); 
+            background: #000; 
+        }
+        #valorLider { display: block; font-size: 26px; color: #FFDF00; font-weight: 900; margin-top: 5px; text-shadow: 0 2px 10px rgba(255,215,0,0.3); }
+
+        /* =========================================
+           BOTOES FLUTUANTES OVERLAYS E POPUPS
+           ========================================= */
+        .float-controls { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
+        .btn-float { width: 65px; height: 65px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
+        .btn-music { background: linear-gradient(145deg, #c0392b, #8e44ad); }
+        .btn-music.active { background: linear-gradient(145deg, #2ecc71, #27ae60); box-shadow: 0 0 30px rgba(46, 204, 113, 0.4); }
+        .btn-zap { background: linear-gradient(145deg, #25D366, #128C7E); text-decoration: none; }
+
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 20000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .popup-box { 
+            background: #111; border: 1px solid #333; border-top: 1px solid #555;
+            border-radius: 24px; padding: 30px 25px; width: 90%; max-width: 400px; 
+            text-align: center; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.2); 
+        }
+        .popup-box h2 { color: #FFDF00; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; }
+        .popup-box p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; color: #e0e0e0; }
         
-        .foto-lider { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid gold; box-shadow: 0 0 15px gold; background: #000; }
-        #valorLider { display: block; font-size: 24px; color: gold; font-weight: bold; margin-top: 5px; }
-
-        /* FLUTUANTES */
-        .float-controls { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
-        .btn-float { width: 60px; height: 60px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fff; box-shadow: 0 0 18px rgba(0,0,0,0.6); }
-        .btn-music { background: #b00000; }
-        .btn-music.active { background: #0bb300; box-shadow: 0 0 25px #0bb300; }
-        .btn-zap { background: #25D366; text-decoration: none; box-shadow: 0 0 15px rgba(37,211,102,0.8); }
-
-        /* OVERLAYS */
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 20000; backdrop-filter: blur(5px); }
-        .popup-box { background: #111; border: 2px solid gold; border-radius: 16px; padding: 25px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 0 35px rgba(241, 196, 15, 0.4); }
-        .popup-box h3 { color: gold; margin-bottom: 14px; }
-        .popup-box h2 { color: gold; margin-bottom: 15px; text-transform: uppercase; font-weight: 900; }
-        .popup-box p { font-size: 15px; line-height: 1.6; margin-bottom: 15px; color: #ccc; }
-        .btn-popup { background: gold; color: #000; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; box-shadow: 0 4px 0 #b8860b; }
-        .btn-popup:active { transform: translateY(4px); box-shadow: none; }
+        /* Estilo da caixa explicativa do pódio no popup */
+        .box-explicacao {
+            background: linear-gradient(145deg, #221a00, #0a0800);
+            border: 1px solid rgba(255,215,0,0.4);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.6);
+        }
+        
     </style>
 </head>
 <body>
 
-<canvas id="canvasFestivo"></canvas>
+<!-- SCRIPT ANTE-CACHE JS (NÍVEL MILITAR) -->
+<script>
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2)) {
+            window.location.reload(true);
+        }
+    });
+</script>
 
-<div id="aviso-explosivo" style="
-  position: fixed; bottom: 160px; right: 20px; 
-  background: linear-gradient(135deg, #FFD700, #DAA520); 
-  color: black; padding: 15px; border-radius: 20px; 
-  box-shadow: 0 0 25px gold; z-index: 20000; 
-  max-width: 220px; text-align: center; font-weight: bold; 
-  cursor: pointer; border: 3px solid #000;
-  animation: pulse 1s infinite;
-">
-  🎁 Quem estiver no pódio no dia do meu aniversário ganha um brinde proporcional ao valor!
-  <div id="contador-aviso" style="font-size: 14px; margin-top: 8px; color: #550000;">15s</div>
-</div>
+<canvas id="canvasFestivo"></canvas>
 
 <div class="overlay" id="ajuda">
   <div class="popup-box">
-    <h3>ℹ️ Ajuda rápida</h3>
-    <p>
-      🎵 <strong>Botão da música</strong><br>
-      Serve para ligar e desligar a música do site.<br>  
-      Verde = música ligada<br>  
-      Vermelho = música desligada
-    </p>
-    <p>
-      💬 <strong>Botão do WhatsApp</strong><br>
-      Serve para falar comigo diretamente e tirar dúvidas.
-    </p>
-    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entrar no Site</button>
+    <h2 style="font-size: 22px;">ℹ️ Ajuda rápida</h2>
+    <div style="text-align: left; background: #0a0a0a; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #222;">
+        <p style="margin-bottom: 15px;">
+        🎵 <strong>Botão da música</strong><br>
+        <span style="font-size: 14px; color: #aaa;">Serve para ligar/desligar o som. Verde é ligada, vermelho é desligada.</span>
+        </p>
+        <p style="margin-bottom: 0;">
+        💬 <strong>Botão do WhatsApp</strong><br>
+        <span style="font-size: 14px; color: #aaa;">Serve para falar diretamente comigo e tirar qualquer dúvida!</span>
+        </p>
+    </div>
+    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entendi</button>
   </div>
 </div>
 
+<!-- POPUP REFORMULADO (Texto mais claro e gamificado baseado na imagem) -->
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
-    <h2>⚠️ Quadro do Pódio</h2>
-    <p>
-      Após escolher o valor, clique para ir ao WhatsApp 💬 e envie o <strong>comprovante do Pix</strong> para confirmar o seu presente!<br><br>
-      <span style="font-size: 13px; color: #aaa; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 8px; display: block; border: 1px dashed #555;">
-        📸 <em>Atenção: A sua foto no destaque máximo do site é pedida <strong>apenas se você dominar o 1º LUGAR!</strong></em>
-      </span>
+    <h2>🏆 COMO FUNCIONA O PÓDIO?</h2>
+    
+    <p style="text-align: left;">
+      Para participar deste momento especial, <strong>escolha o valor</strong> do seu presente e clique em confirmar. Você será levado ao WhatsApp 💬 para enviar o <strong>comprovante do Pix</strong> e oficializar sua presença!
     </p>
+
+    <div class="box-explicacao">
+      <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 16px; text-transform: uppercase;">
+        <i class="fa-solid fa-crown"></i> A Disputa pelo Topo
+      </strong>
+      <span style="font-size: 14px; color: #ccc; line-height: 1.5; display: block;">
+        Quem enviar o <strong>maior valor</strong> assume o 1º Lugar do ranking.<br><br>
+        📸 <em>Atenção: Apenas o líder máximo tem o privilégio de ter a sua <strong>foto eternizada no destaque principal do site!</strong></em> Faça sua jogada e conquiste o trono!
+      </span>
+    </div>
+
     <button class="btn-popup btn-3d" onclick="fecharPopup()">Entrar no Site</button>
   </div>
 </div>
 
 <div class="container">
 
-    <img class="foto" src="minha-foto.jpg" alt="Foto do aniversariante">
-    <h1>PROJETO 18 –<br>MAIORIDADE</h1>
+    <div class="foto-container">
+        <img class="foto" src="minha-foto.jpg" alt="Foto do aniversariante">
+    </div>
+    
+    <h1>PROJETO 18<br>MAIORIDADE</h1>
+    
     <div class="texto">
     Mesmo que você esteja longe e não possamos comemorar juntos,
     sua presença ainda pode fazer parte desse momento tão especial 💛
@@ -247,100 +308,82 @@
     Cada apoio é um gesto de carinho e incentivo,
     e faz parte dessa história que estou construindo.
     <br><br>
-    <strong style="color:gold;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
+    <strong style="color: #FFDF00;">Obrigado por estar comigo, mesmo à distância 🙏✨</strong>
     </div>
 
     <div class="card">
-    🎂 <strong>22 de Julho de 2026</strong> 🎉
-    <br><br>
-    <div id="contador"></div>
+        <div style="font-size: 18px; margin-bottom: 15px;">🎂 <strong>22 de Julho de 2026</strong> 🎉</div>
+        <div id="contador">Carregando...</div>
     </div>
 
     <div class="card">
-        <h3 style="color:gold;">💛 Formas de participar</h3>
+        <h3 style="color:#FFDF00; margin-top: 0; text-transform: uppercase;">💛 Formas de participar</h3>
         <table class="tabela">
         <tr><th>Valor</th><th>Significado</th></tr>
         <tr><td>R$ 15 – R$ 30</td><td>Presença e carinho 🤍</td></tr>
         <tr><td>R$ 50 – R$ 100</td><td>Participação especial 🎉</td></tr>
-        <tr class="destaque"><td>R$ 100+</td><td>Apoiador VIP ✨</td></tr>
+        <tr class="destaque"><td style="color: #FFDF00;">R$ 100+</td><td style="color: #FFDF00;">Apoiador VIP 🥇</td></tr>
         </table>
     </div>
 
     <div class="pay-panel">
-        <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-gift"></i> Escolha ou digite o valor</h3>
+        <h3><i class="fa-solid fa-gift"></i> Escolha ou digite o valor</h3>
         
         <div class="bet-input-row">
             <div class="bet-adjust btn-3d" id="btnMinus"><i class="fa-solid fa-minus"></i></div>
             <div style="display: flex; align-items: center; justify-content: center; flex: 1;">
-                <span style="font-size: 22px; font-weight: 900; color: #fff; margin-right: 2px;">R$</span>
+                <span style="font-size: 24px; font-weight: 900; color: #888; margin-right: 5px;">R$</span>
                 <input type="number" class="bet-display-input" id="valorPresenteInput" value="50" min="10">
             </div>
             <div class="bet-adjust btn-3d" id="btnPlus"><i class="fa-solid fa-plus"></i></div>
         </div>
         
-        <div id="incentivoText">Carregando dados...</div>
+        <div id="incentivoText">Carregando dados do pódio...</div>
 
         <div class="chip-container">
             <div class="chip btn-3d" data-val="15">+ R$ 15</div>
             <div class="chip btn-3d" data-val="30">+ R$ 30</div>
             <div class="chip btn-3d" data-val="50">+ R$ 50</div>
-            <div class="chip btn-3d" data-val="100" style="color:gold; border-color:gold;">+ R$ 100</div>
+            <div class="chip btn-3d" data-val="100">+ R$ 100</div>
         </div>
 
         <button class="btn-enviar btn-3d" id="btnMandar">
-            <i class="fa-brands fa-whatsapp"></i> Confirmar Presente
+            <i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i> Confirmar Presente
         </button>
     </div>
 
-    <div class="card">
-    <h3 style="color:gold;">🏆 Top Apoiadores</h3>
+    <div class="card" style="margin-bottom: 30px;">
+        <h3 style="color:#FFDF00; margin-top: 0; text-transform: uppercase;">🏆 Top Apoiadores</h3>
 
-    <div class="rank-item ouro lider">
-      <img class="foto-lider" id="fotoLider" alt="Foto do líder" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><rect width='90' height='90' fill='%23111'/></svg>">
-      <div style="text-align: left; width: 100%;">
-        <div class="nome" id="nomeLider" style="font-size: 16px;">🥇 1º Lugar — Carregando...</div>
-        <div id="valorLider">...</div>
-      </div>
+        <div class="rank-item ouro lider">
+            <img class="foto-lider" id="fotoLider" alt="Foto do líder" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><rect width='90' height='90' fill='%23111'/></svg>">
+            <div style="text-align: left; width: 100%;">
+                <div class="nome" id="nomeLider" style="font-size: 16px; font-weight: bold; color: #fff;">🥇 1º Lugar — Carregando...</div>
+                <div id="valorLider">...</div>
+            </div>
+        </div>
+
+        <div class="rank-item prata">
+            <div class="nome" id="nome2" style="font-weight: bold; color: #ddd;">🥈 2º Lugar — Carregando...</div>
+            <span id="valor2" style="font-weight: bold;">...</span>
+        </div>
+
+        <div class="rank-item bronze">
+            <div class="nome" id="nome3" style="font-weight: bold; color: #ccc;">🥉 3º Lugar — Carregando...</div>
+            <span id="valor3" style="font-weight: bold;">...</span>
+        </div>
+
+        <div style="margin-top:25px; font-size:14px; line-height:1.6; color:#bbb; background:rgba(255,255,255,0.03); padding:15px; border-radius:12px; border: 1px solid #333; text-align: left;">
+            👑 <strong style="color:#FFDF00;">Como assumir a Liderança:</strong><br>
+            Para roubar o 1º lugar e ter sua foto no topo, envie um valor
+            <strong>maior que o atual líder</strong> via Pix. O sistema será atualizado e você será eternizado com honra na nossa galeria VIP!
+        </div>
     </div>
-
-    <div class="rank-item prata">
-      <div class="nome" id="nome2">🥈 2º Lugar — Carregando...</div>
-      <span id="valor2">...</span>
-    </div>
-
-    <div class="rank-item bronze">
-      <div class="nome" id="nome3">🥉 3º Lugar — Carregando...</div>
-      <span id="valor3">...</span>
-    </div>
-
-    <p style="margin-top:16px;">
-    🏆 <strong style="color:gold;">Destaque especial:</strong><br>
-    Quem enviar o <strong>maior valor</strong> será eternizado aqui
-    no <span style="color:gold;">site com honra!</span>
-    </p>
-    </div>
-
-    <p style="
-      margin-top:18px;
-      font-size:15px;
-      line-height:1.6;
-      color:#ddd;
-      background:rgba(255,215,0,0.08);
-      border:1px dashed gold;
-      padding:14px;
-      border-radius:12px;
-    ">
-    👑 <strong style="color:gold;">Como se tornar o Líder:</strong><br>
-    Para assumir o 1º lugar, basta enviar um valor
-    <strong>maior que o atual líder</strong> via Pix 💸.<br><br>
-    O novo líder terá seu nome destacado aqui 🥇 e será
-    <strong style="color:gold;">eternizado com honra em nossa galeria oficial</strong>.
-    </p>
 
 </div>
 
 <div class="float-controls">
-    <a href="https://wa.me/5583996469538" class="btn-float btn-zap btn-3d" id="btnZapBase"><span>💬</span></a>
+    <a href="https://wa.me/5583996469538" class="btn-float btn-zap btn-3d" id="btnZapBase"><i class="fa-brands fa-whatsapp"></i></a>
     <button class="btn-float btn-music btn-3d" id="musicToggle"><span id="musicIcon">🎵</span></button>
 </div>
 
@@ -401,7 +444,7 @@
   }
 
   function atualizarIncentivo() {
-      let corTexto = (valorAtual >= 50) ? "gold" : "#ccc";
+      let corTexto = (valorAtual >= 50) ? "#FFDF00" : "#ccc";
       let fraseUnica = `<span style="color: ${corTexto}; font-size: 15px; font-weight: bold;">${obterMensagemMatematicaUnica(valorAtual)}</span>`;
       let alertaLideranca = "";
 
@@ -411,20 +454,20 @@
               alertaLideranca = `
                   <div class="alerta-status alerta-green">
                       👑 <strong>VOCÊ ESTÁ ASSUMINDO O TRONO!</strong><br>
-                      <span style="font-size: 12px; color: #fff; font-weight:normal;">Sua vantagem atual é de apenas <strong>R$ ${folga.toFixed(2).replace('.',',')}</strong>! Se eles revidarem, sua foto cai. Adicione uma gordura de segurança para blindar sua liderança! 🛡️🔥</span>
+                      <span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Sua vantagem atual é de <strong>R$ ${folga.toFixed(2).replace('.',',')}</strong>! Se cobrirem, sua foto cai. Adicione uma margem de segurança! 🛡️</span>
                   </div>`;
           } else if (valorAtual === valorLiderNumerico) {
               alertaLideranca = `
                   <div class="alerta-status alerta-yellow">
                       ⚠️ <strong>EMPATOU COM O LÍDER!</strong><br>
-                      <span style="font-size: 12px; color: #fff; font-weight:normal;">Adicione pelo menos mais R$ 1,00 para desbancar o topo e garantir o destaque da sua foto! 🚀</span>
+                      <span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Adicione pelo menos mais R$ 1,00 para desbancar o topo e garantir a sua foto! 🚀</span>
                   </div>`;
           } else {
               let diff = (valorLiderNumerico - valorAtual) + 1;
               alertaLideranca = `
                   <div class="alerta-status alerta-red">
-                      🎯 <strong>ALVO EM MIRA: 1º LUGAR!</strong><br>
-                      <span style="font-size: 12px; color: #fff; font-weight:normal;">Faltam exatamente <strong style="color: gold; font-size: 14px;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para você roubar a liderança e cravar sua foto no topo! Suba a mão! 🚀</span>
+                      🎯 <strong>ALVO: 1º LUGAR!</strong><br>
+                      <span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Faltam exatamente <strong style="color: #FFDF00;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para roubar a liderança e cravar sua foto. Suba o valor! 🔥</span>
                   </div>`;
           }
       }
@@ -456,7 +499,6 @@
       });
   });
 
-  // REDIRECIONAMENTO COMPACTADO: SOLUÇÃO COMPLETA CONTRA A TELA EM BRANCO (ABOUT:BLANK)
   document.getElementById('btnMandar').addEventListener('click', () => {
       tratarValor();
       let msg = "";
@@ -474,24 +516,17 @@
       window.location.href = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
   });
 
-  // POPUPS JS NATIVO
   window.fecharAjuda = function() {
     document.getElementById("ajuda").style.display = "none";
     setTimeout(() => { document.getElementById("popupAvisoInicial").style.display = "flex"; }, 500);
   }
   window.fecharPopup = function() { document.getElementById("popupAvisoInicial").style.display = "none"; }
 
-  let tempo = 15; const aviso = document.getElementById('aviso-explosivo');
-  const timer = setInterval(() => { tempo--; document.getElementById('contador-aviso').textContent = tempo + "s"; if (tempo <= 0) { clearInterval(timer); aviso.style.display = 'none'; } }, 1000);
-  aviso.onclick = () => aviso.style.display = 'none';
-
-  // AUDIO
   const botaoMusica = document.getElementById("musicToggle"); const iconeMusica = document.getElementById("musicIcon"); const musica = document.getElementById("bgMusic"); let tocando = false;
-  botaoMusica.addEventListener("click", () => { if (!tocando) { musica.play().catch(e=>{}); botaoMusica.classList.add("active"); iconeMusica.textContent = "🔊"; tocando = true; } else { musica.pause(); botaoMusica.classList.remove("active"); iconeMusica.textContent = "🎵"; tocando = false; } });
+  botaoMusica.addEventListener("click", () => { if (!tocando) { musica.play().catch(e=>{}); botaoMusica.classList.add("active"); iconeMusica.innerHTML = "<i class='fa-solid fa-volume-high'></i>"; tocando = true; } else { musica.pause(); botaoMusica.classList.remove("active"); iconeMusica.textContent = "🎵"; tocando = false; } });
 
   for(let i=0; i<25; i++){ const p = document.createElement("div"); p.className = "particula"; p.style.left = Math.random() * 100 + "vw"; p.style.animationDelay = Math.random() * 10 + "s"; p.style.top = "0"; document.body.appendChild(p); }
 
-  // FOGOS ENGINE
   const canvas = document.getElementById('canvasFestivo'); const ctx = canvas.getContext('2d');
   let fireworks = []; let particles = [];
   function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -501,11 +536,9 @@
   class Particle { constructor(x, y, hue) { this.x = x; this.y = y; this.hue = hue; this.angle = Math.random() * Math.PI * 2; this.speed = Math.random() * 5 + 1; this.friction = 0.95; this.gravity = 0.1; this.alpha = 1; this.decay = Math.random() * 0.02 + 0.01; } update(index) { this.speed *= this.friction; this.x += Math.cos(this.angle) * this.speed; this.y += Math.sin(this.angle) * this.speed + this.gravity; this.alpha -= this.decay; if (this.alpha <= 0) particles.splice(index, 1); } draw() { ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.alpha})`; ctx.beginPath(); ctx.arc(this.x, this.y, Math.random()*3+1, 0, Math.PI * 2); ctx.fill(); } }
   function loopFestivo() { ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.globalCompositeOperation = 'lighter'; if (Math.random() < 0.05) fireworks.push(new Firework()); fireworks.forEach((f, i) => { f.update(i); f.draw(); }); particles.forEach((p, i) => { p.update(i); p.draw(); }); requestAnimationFrame(loopFestivo); }
 
-  // RECONEXÃO CRONÔMETRO
   const aniversario = new Date("2026-07-22T00:00:00").getTime(); let fogosAtivados = false;
-  setInterval(()=>{ const agora = new Date().getTime(); const d = aniversario - agora; const contador = document.getElementById("contador"); if(d <= 0){ contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; if(!fogosAtivados) { canvas.style.display = 'block'; loopFestivo(); fogosAtivados = true; } }else{ contador.innerHTML = Math.floor(d/86400000)+" dias "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; } },1000);
+  setInterval(()=>{ const agora = new Date().getTime(); const d = aniversario - agora; const contador = document.getElementById("contador"); if(d <= 0){ contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; if(!fogosAtivados) { canvas.style.display = 'block'; loopFestivo(); fogosAtivados = true; } }else{ contador.innerHTML = Math.floor(d/86400000)+"d "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; } },1000);
 
-  // ESCUTADOR RANKING FIREBASE DETALHADO
   const rankingRef = ref(db, 'ranking');
   onValue(rankingRef, (snapshot) => {
     const data = snapshot.val();
