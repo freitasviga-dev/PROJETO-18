@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Trava de zoom automático e escala (Previne o zoom ao clicar nos inputs) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
     <!-- Sistema Anti-Cache -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -19,18 +20,20 @@
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             text-align: center; 
             margin: 0; 
-            padding: 20px; 
+            padding: 15px; /* Reduzido para encaixar melhor no mobile */
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         h1 { 
             color: #facc15; 
             text-shadow: 0 4px 10px rgba(250, 204, 21, 0.3);
-            font-size: 28px;
+            font-size: 26px;
+            margin-top: 10px;
             margin-bottom: 5px;
         }
 
-        p { color: #aaaaaa; margin-bottom: 30px; }
+        p { color: #aaaaaa; margin-bottom: 25px; font-size: 15px; }
         
         /* Tela de Bloqueio (Senha) com efeito Blur */
         #loginScreen { 
@@ -49,17 +52,12 @@
         /* Efeito 3D nos Cards (Neumorphism escuro) */
         .card { 
             background: #1a1a1a; 
-            padding: 20px; 
+            padding: 20px 15px; 
             border-radius: 16px; 
             margin-bottom: 20px; 
             text-align: left; 
             box-shadow: 6px 6px 12px #0d0d0d, -6px -6px 12px #272727;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 8px 8px 16px #0d0d0d, -8px -8px 16px #272727;
         }
         
         /* Destaque para o 1º Lugar */
@@ -68,12 +66,12 @@
             box-shadow: 0 0 15px rgba(250, 204, 21, 0.15), 6px 6px 12px #0d0d0d, -6px -6px 12px #272727;
         }
 
-        h3 { margin-top: 0; color: #eeeeee; font-size: 18px; }
+        h3 { margin-top: 0; color: #eeeeee; font-size: 17px; margin-bottom: 12px; }
         .gold-border h3 { color: #facc15; }
         
         .input-group {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 15px;
         }
 
@@ -86,9 +84,10 @@
             border-radius: 10px; 
             width: 100%; 
             box-sizing: border-box; 
-            font-size: 15px;
+            font-size: 16px; /* TAMANHO 16PX É OBRIGATÓRIO PARA NÃO DAR ZOOM NO IPHONE/ANDROID */
             box-shadow: inset 3px 3px 6px #070707, inset -3px -3px 6px #1d1d1d;
             transition: border 0.3s ease;
+            -webkit-appearance: none;
         }
 
         input[type="text"]:focus, input[type="password"]:focus {
@@ -97,7 +96,7 @@
         }
 
         /* Estilo Profissional para o Upload de Arquivo */
-        input[type="file"] { display: none; } /* Esconde o botão feio padrão */
+        input[type="file"] { display: none; } 
 
         .custom-upload-btn {
             display: block;
@@ -109,6 +108,7 @@
             border: 1px dashed #facc15;
             cursor: pointer;
             font-weight: bold;
+            font-size: 15px;
             transition: all 0.3s;
         }
 
@@ -117,7 +117,7 @@
         /* Container da Imagem de Preview */
         #previewContainer {
             position: relative;
-            display: none; /* Escondido por padrão */
+            display: none; 
             margin-top: 15px;
             width: 120px;
             height: 120px;
@@ -159,13 +159,14 @@
             padding: 16px 20px; 
             border-radius: 12px; 
             font-weight: 900; 
-            font-size: 18px;
+            font-size: 17px;
             cursor: pointer; 
             width: 100%;
-            margin-top: 10px;
+            margin-top: 5px;
             margin-bottom: 40px;
             box-shadow: 0 6px 0 #b38f00, 0 10px 15px rgba(0,0,0,0.4);
             transition: all 0.1s ease;
+            text-transform: uppercase;
         }
 
         .btn-primary:active {
@@ -179,33 +180,31 @@
 
     <!-- Tela de Autenticação -->
     <div id="loginScreen">
-        <h2 style="color: #facc15;">Acesso Restrito</h2>
-        <div style="width: 80%; max-width: 320px;">
-            <input type="password" id="senhaInput" placeholder="Digite a senha admin" style="margin-bottom: 15px;">
-            <button class="btn-primary" style="margin-bottom: 0;" onclick="verificarSenha()">ENTRAR</button>
+        <h2 style="color: #facc15; margin-bottom: 20px;">ACESSO RESTRITO</h2>
+        <div style="width: 85%; max-width: 320px;">
+            <input type="password" id="senhaInput" placeholder="Digite a senha admin" style="margin-bottom: 20px; text-align: center;">
+            <button class="btn-primary" style="margin-bottom: 0;" onclick="verificarSenha()">ENTRAR NO PAINEL</button>
         </div>
     </div>
 
-    <!-- Painel Principal -->
-    <div id="adminPanel" style="display: none; max-width: 500px; margin: 0 auto;">
+    <!-- Painel Principal (Ajustado para Tela Cheia Mobile) -->
+    <div id="adminPanel" style="display: none; width: 100%; max-width: 600px; margin: 0 auto;">
         <h1>👑 PAINEL ADMIN</h1>
-        <p>Atualize o pódio em tempo real.</p>
+        <p>Edite os valores e clique fora do campo para formatar.</p>
 
         <!-- 1º LUGAR -->
         <div class="card gold-border">
             <h3>🥇 1º Lugar (Eternizado com Foto)</h3>
             <div class="input-group">
                 <input type="text" id="nome1" placeholder="Nome">
-                <input type="text" id="valor1" placeholder="R$ 100,00">
+                <input type="text" id="valor1" placeholder="R$ 0,00" class="input-valor">
             </div>
             
-            <!-- Botão de Upload Customizado -->
             <label for="fotoLider" class="custom-upload-btn" id="labelUpload">
                 📷 Escolher Foto da Galeria
             </label>
             <input type="file" id="fotoLider" accept="image/*" onchange="mostrarPreview(this)">
             
-            <!-- Preview da Imagem com o X -->
             <div id="previewContainer">
                 <button class="btn-remover" onclick="removerFoto()">X</button>
             </div>
@@ -218,7 +217,7 @@
             <h3>🥈 2º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome2" placeholder="Nome">
-                <input type="text" id="valor2" placeholder="Valor">
+                <input type="text" id="valor2" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
@@ -227,7 +226,7 @@
             <h3>🥉 3º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome3" placeholder="Nome">
-                <input type="text" id="valor3" placeholder="Valor">
+                <input type="text" id="valor3" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
@@ -236,7 +235,7 @@
             <h3>🏅 4º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome4" placeholder="Nome">
-                <input type="text" id="valor4" placeholder="Valor">
+                <input type="text" id="valor4" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
@@ -245,7 +244,7 @@
             <h3>🏅 5º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome5" placeholder="Nome">
-                <input type="text" id="valor5" placeholder="Valor">
+                <input type="text" id="valor5" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
@@ -254,7 +253,7 @@
             <h3>🏅 6º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome6" placeholder="Nome">
-                <input type="text" id="valor6" placeholder="Valor">
+                <input type="text" id="valor6" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
@@ -263,7 +262,7 @@
             <h3>🏅 7º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome7" placeholder="Nome">
-                <input type="text" id="valor7" placeholder="Valor">
+                <input type="text" id="valor7" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
@@ -272,7 +271,7 @@
             <h3>🏅 8º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome8" placeholder="Nome">
-                <input type="text" id="valor8" placeholder="Valor">
+                <input type="text" id="valor8" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
@@ -281,7 +280,7 @@
             <h3>🏅 9º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome9" placeholder="Nome">
-                <input type="text" id="valor9" placeholder="Valor">
+                <input type="text" id="valor9" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
@@ -290,13 +289,63 @@
             <h3>🏅 10º Lugar</h3>
             <div class="input-group">
                 <input type="text" id="nome10" placeholder="Nome">
-                <input type="text" id="valor10" placeholder="Valor">
+                <input type="text" id="valor10" placeholder="R$ 0,00" class="input-valor">
             </div>
         </div>
 
-        <button id="btnSalvar" class="btn-primary" onclick="salvarAlteracoes()">Atualizar Ranking</button>
+        <button id="btnSalvar" class="btn-primary" onclick="salvarAlteracoes()">Atualizar Ranking ✅</button>
     </div>
 
+    <!-- MÁSCARA INTELIGENTE DE DINHEIRO -->
+    <script>
+        window.formatarMoeda = function(input) {
+            let val = input.value.trim();
+            if (!val) return;
+            
+            // Pega apenas números, vírgula e ponto
+            let numeros = val.replace(/[^\d.,]/g, '');
+            if (numeros === '') { input.value = ''; return; }
+
+            // Se digitou só número (ex: 10), bota a vírgula
+            if (!numeros.includes(',') && !numeros.includes('.')) {
+                numeros += ',00';
+            } else if (numeros.includes('.') && !numeros.includes(',')) {
+                // Se digitou ponto (ex: 10.50), transforma em vírgula
+                numeros = numeros.replace('.', ',');
+            }
+
+            // Tira pontos excedentes (caso alguém digite ponto de milhar manual)
+            numeros = numeros.replace(/\./g, '');
+            
+            let partes = numeros.split(',');
+            let inteiro = partes[0] || '0';
+            let decimal = partes[1] || '';
+
+            // Garante 2 casas decimais exatas
+            if (decimal.length === 0) decimal = '00';
+            else if (decimal.length === 1) decimal += '0';
+            else if (decimal.length > 2) decimal = decimal.substring(0, 2);
+
+            // Adiciona ponto de milhar (Ex: 1.000,00)
+            inteiro = inteiro.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+            // Joga formatado pro input
+            input.value = `R$ ${inteiro},${decimal}`;
+        }
+
+        // Adiciona a máscara a todos os campos de valor após carregamento
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputsValor = document.querySelectorAll('.input-valor');
+            inputsValor.forEach(input => {
+                // Quando clicar fora ou mudar de campo, aplica a formatação
+                input.addEventListener('blur', function() {
+                    window.formatarMoeda(this);
+                });
+            });
+        });
+    </script>
+
+    <!-- FIREBASE E LÓGICA DO ADMIN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -315,7 +364,6 @@
         const db = getDatabase(app);
         const rankingRef = ref(db, 'ranking');
 
-        // Lógica da Senha (A senha atual para teste é 1234)
         window.verificarSenha = function() {
             const senhaDigitada = document.getElementById('senhaInput').value;
             const senhaCorreta = '1234'; 
@@ -324,7 +372,6 @@
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
                 
-                // Carregar os dados atuais do Firebase ao logar
                 get(rankingRef).then((snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.val();
@@ -360,47 +407,38 @@
             }
         }
 
-        // Lógica para mostrar a imagem e esconder o botão
         window.mostrarPreview = function(inputElement) {
             const arquivo = inputElement.files[0];
             if (arquivo) {
                 const leitor = new FileReader();
                 leitor.onload = function(evento) {
                     const resultadoBase64 = evento.target.result;
-                    
-                    // Salva no input oculto
                     document.getElementById('fotoBase64Oculta').value = resultadoBase64;
                     
-                    // Mostra a imagem no container
                     const previewBox = document.getElementById('previewContainer');
                     previewBox.style.backgroundImage = `url(${resultadoBase64})`;
                     previewBox.style.display = 'block';
-                    
-                    // Esconde o botão de upload para ficar limpo
                     document.getElementById('labelUpload').style.display = 'none';
                 };
                 leitor.readAsDataURL(arquivo);
             }
         }
 
-        // Lógica do botão "X" vermelho
         window.removerFoto = function() {
-            // Limpa os dados
             document.getElementById('fotoLider').value = '';
             document.getElementById('fotoBase64Oculta').value = '';
-            
-            // Esconde a imagem
             document.getElementById('previewContainer').style.display = 'none';
             document.getElementById('previewContainer').style.backgroundImage = 'none';
-            
-            // Traz o botão de upload de volta
             document.getElementById('labelUpload').style.display = 'block';
         }
 
-        // Função de Salvar conectada ao Firebase
         window.salvarAlteracoes = function() {
             const btn = document.getElementById('btnSalvar');
-            btn.textContent = "Salvando...";
+            btn.textContent = "Salvando... ⏳";
+
+            // Aplica a formatação final em todos os campos antes de enviar para garantir o formato correto no banco
+            const inputsValor = document.querySelectorAll('.input-valor');
+            inputsValor.forEach(input => window.formatarMoeda(input));
 
             const payload = {
                 lider: {
@@ -421,10 +459,10 @@
 
             set(rankingRef, payload).then(() => {
                 btn.textContent = "Atualizado com Sucesso! ✅";
-                setTimeout(() => { btn.textContent = "Atualizar Ranking"; }, 3000);
+                setTimeout(() => { btn.textContent = "Atualizar Ranking ✅"; }, 3000);
             }).catch((error) => {
                 alert("Erro ao salvar: " + error);
-                btn.textContent = "Atualizar Ranking";
+                btn.textContent = "Atualizar Ranking ✅";
             });
         }
     </script>
