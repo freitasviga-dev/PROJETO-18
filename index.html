@@ -122,11 +122,10 @@
         .btn-music.active { background: linear-gradient(145deg, #2ecc71, #27ae60); box-shadow: 0 0 30px rgba(46, 204, 113, 0.4); }
         .btn-zap { background: linear-gradient(145deg, #25D366, #128C7E); text-decoration: none; }
 
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 20000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        .popup-box { background: #111; border: 1px solid #333; border-top: 1px solid #555; border-radius: 24px; padding: 30px 25px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.2); }
-        .popup-box h2 { color: #FFDF00; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; }
-        .popup-box p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; color: #e0e0e0; }
-        .box-explicacao { background: linear-gradient(145deg, #221a00, #0a0800); border: 1px solid rgba(255,215,0,0.4); border-radius: 16px; padding: 18px; margin-bottom: 25px; text-align: left; box-shadow: inset 0 5px 15px rgba(0,0,0,0.6); }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 20000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .popup-box { background: #111; border: 1px solid #333; border-top: 1px solid #555; border-radius: 24px; padding: 25px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.2); }
+        .popup-box h2 { color: #FFDF00; margin-top: 0; margin-bottom: 15px; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; font-size: 22px; }
+        .box-explicacao { background: linear-gradient(145deg, #221a00, #0a0800); border: 1px solid rgba(255,215,0,0.4); border-radius: 16px; padding: 15px; margin-bottom: 20px; text-align: left; box-shadow: inset 0 5px 15px rgba(0,0,0,0.6); }
     </style>
 </head>
 <body>
@@ -146,26 +145,31 @@
     </div>
 </div>
 
-<div class="overlay" id="ajuda" style="display:none;">
-  <div class="popup-box">
-    <h2 style="font-size: 22px;">ℹ️ Ajuda rápida</h2>
-    <div style="text-align: left; background: #0a0a0a; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #222;">
-        <p style="margin-bottom: 15px;">🎵 <strong>Botão da música</strong><br><span style="font-size: 14px; color: #aaa;">Serve para ligar/desligar o som.</span></p>
-        <p style="margin-bottom: 0;">💬 <strong>Botão do WhatsApp</strong><br><span style="font-size: 14px; color: #aaa;">Fale comigo diretamente!</span></p>
-    </div>
-    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entendi</button>
-  </div>
-</div>
-
-<!-- POPUP INICIAL COM CHECKBOX PARA NÃO MOSTRAR MAIS -->
+<!-- POPUP INICIAL AMIGÁVEL E EXPLICATIVO -->
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
-    <h2>🏆 O QUADRO DO PÓDIO</h2>
-    <p style="text-align: left;">Escolha o valor do seu presente, confirme e envie o <strong>comprovante do Pix</strong> no WhatsApp!</p>
+    <h2>🎉 BEM-VINDO!</h2>
     
-    <div class="box-explicacao">
-      <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 16px; text-transform: uppercase;"><i class="fa-solid fa-crown"></i> A Disputa pelo Topo</strong>
-      <span style="font-size: 14px; color: #ccc; line-height: 1.5; display: block;">Quem enviar o <strong>maior valor</strong> assume o 1º Lugar.<br><br>📸 <em>Atenção: Apenas o líder máximo tem a sua <strong>foto eternizada no site!</strong></em></span>
+    <p style="text-align: left; font-size: 15px; margin-bottom: 15px; color: #ddd; line-height: 1.5;">
+      Este espaço foi criado com muito carinho para celebrarmos juntos meu <strong>Projeto 18</strong>! Fique à vontade para interagir, ouvir o som e deixar sua marca nessa história. 💛
+    </p>
+
+    <!-- Caixa de Controles (Zap e Música) -->
+    <div style="text-align: left; background: #0a0a0a; padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #222; font-size: 14px; color: #ccc;">
+        <p style="margin-top: 0; margin-bottom: 10px;">
+        💬 <strong>Fale comigo:</strong> Use o botão do WhatsApp ali embaixo para tirar dúvidas ou mandar mensagem direta!
+        </p>
+        <p style="margin-bottom: 0;">
+        🎵 <strong>Música:</strong> Controle o som clicando no botão de nota musical.
+        </p>
+    </div>
+
+    <!-- Caixa do Pódio -->
+    <div class="box-explicacao" style="margin-bottom: 20px;">
+      <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 15px; text-transform: uppercase;"><i class="fa-solid fa-crown"></i> O Quadro do Pódio</strong>
+      <span style="font-size: 13px; color: #ccc; line-height: 1.5; display: block;">
+        Uma brincadeira para animar nossa comemoração! Quem decidir me apoiar com o <strong>maior valor</strong> assume o 1º Lugar.<br><br>📸 <em>Atenção: Apenas o líder máximo ganha o destaque com a <strong>foto eternizada no site!</strong></em>
+      </span>
     </div>
 
     <div style="margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.4); padding: 12px 15px; border-radius: 10px; border: 1px solid #333;">
@@ -175,7 +179,7 @@
         </label>
     </div>
 
-    <button class="btn-popup btn-3d" onclick="fecharPopup()">Entrar no Site</button>
+    <button class="btn-popup btn-3d" onclick="fecharPopup()">ENTRAR NO SITE</button>
   </div>
 </div>
 
@@ -369,8 +373,6 @@
       document.getElementById("popupAvisoInicial").style.display = "none"; 
       tocarMusica();
   }
-
-  window.fecharAjuda = function() { document.getElementById("ajuda").style.display = "none"; }
 
   function atualizarIncentivo() {
       let corTexto = (valorAtual >= 50) ? "#FFDF00" : "#ccc";
