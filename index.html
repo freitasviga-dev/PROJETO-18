@@ -145,26 +145,31 @@
     </div>
 </div>
 
-<div class="overlay" id="ajuda" style="display:none;">
-  <div class="popup-box">
-    <h2 style="font-size: 22px;">ℹ️ Ajuda rápida</h2>
-    <div style="text-align: left; background: #0a0a0a; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #222;">
-        <p style="margin-bottom: 15px;">🎵 <strong>Botão da música</strong><br><span style="font-size: 14px; color: #aaa;">Serve para ligar/desligar o som.</span></p>
-        <p style="margin-bottom: 0;">💬 <strong>Botão do WhatsApp</strong><br><span style="font-size: 14px; color: #aaa;">Fale comigo diretamente!</span></p>
-    </div>
-    <button class="btn-popup btn-3d" onclick="fecharAjuda()">Entendi</button>
-  </div>
-</div>
-
-<!-- POPUP INICIAL -->
+<!-- POPUP INICIAL AMIGÁVEL E EXPLICATIVO -->
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
     <h2>🎉 BEM-VINDO!</h2>
-    <p style="text-align: left; font-size: 15px; margin-bottom: 15px; color: #ddd; line-height: 1.5;">Este espaço foi criado com muito carinho para celebrarmos juntos meu <strong>Projeto 18</strong>! Fique à vontade para interagir, ouvir o som e deixar sua marca nessa história. 💛</p>
     
-    <div class="box-explicacao">
-      <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 16px; text-transform: uppercase;"><i class="fa-solid fa-crown"></i> A Disputa pelo Topo</strong>
-      <span style="font-size: 14px; color: #ccc; line-height: 1.5; display: block;">Quem enviar o <strong>maior valor</strong> assume o 1º Lugar.<br><br>📸 <em>Atenção: Apenas o líder máximo tem a sua <strong>foto eternizada no site!</strong></em></span>
+    <p style="text-align: left; font-size: 15px; margin-bottom: 15px; color: #ddd; line-height: 1.5;">
+      Este espaço foi criado com muito carinho para celebrarmos juntos meu <strong>Projeto 18</strong>! Fique à vontade para interagir, ouvir o som e deixar sua marca nessa história. 💛
+    </p>
+
+    <!-- Caixa de Controles (Zap e Música) -->
+    <div style="text-align: left; background: #0a0a0a; padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #222; font-size: 14px; color: #ccc;">
+        <p style="margin-top: 0; margin-bottom: 10px;">
+        💬 <strong>Fale comigo:</strong> Use o botão do WhatsApp ali embaixo para tirar dúvidas ou mandar mensagem direta!
+        </p>
+        <p style="margin-bottom: 0;">
+        🎵 <strong>Música:</strong> Controle o som clicando no botão de nota musical.
+        </p>
+    </div>
+
+    <!-- Caixa do Pódio -->
+    <div class="box-explicacao" style="margin-bottom: 20px;">
+      <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 15px; text-transform: uppercase;"><i class="fa-solid fa-crown"></i> O Quadro do Pódio</strong>
+      <span style="font-size: 13px; color: #ccc; line-height: 1.5; display: block;">
+        Uma brincadeira para animar nossa comemoração! Quem decidir me apoiar com o <strong>maior valor</strong> assume o 1º Lugar.<br><br>📸 <em>Atenção: Apenas o líder máximo ganha o destaque com a <strong>foto eternizada no site!</strong></em>
+      </span>
     </div>
 
     <div style="margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.4); padding: 12px 15px; border-radius: 10px; border: 1px solid #333;">
@@ -214,7 +219,7 @@
     <div class="box-explicacao-meio">
         <strong style="color: #FFDF00; font-size: 18px; display: block; margin-bottom: 8px;">👑 Como assumir a Liderança:</strong>
         <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block;">
-            Para assumir o 1º lugar e ter sua foto no topo, envie um valor <strong style="color: #fff;">maior que o atual líder</strong> via Pix. O sistema será atualizado e você será eternizado com honra na nossa galeria VIP!
+            Para roubar o 1º lugar e ter sua foto no topo, envie um valor <strong style="color: #fff;">maior que o atual líder</strong> via Pix. O sistema será atualizado e você será eternizado com honra na nossa galeria VIP!
         </span>
     </div>
 
@@ -325,26 +330,54 @@
       pausadoPeloSistema = false;
   }
 
-  botaoMusica.addEventListener("click", () => { if (!tocando) tocarMusica(); else pausarMusica(); });
-
-  document.addEventListener("visibilitychange", () => {
-      if (document.hidden) { if (tocando) { musica.pause(); pausadoPeloSistema = true; } } 
-      else { if (pausadoPeloSistema) { const retomarAudio = () => { if (pausadoPeloSistema && tocando) { musica.play().catch(e => console.log(e)); pausadoPeloSistema = false; } window.removeEventListener('click', retomarAudio); window.removeEventListener('scroll', retomarAudio); window.removeEventListener('touchstart', retomarAudio); }; window.addEventListener('click', retomarAudio, { once: true }); window.addEventListener('scroll', retomarAudio, { once: true }); window.addEventListener('touchstart', retomarAudio, { once: true }); } }
+  botaoMusica.addEventListener("click", () => { 
+      if (!tocando) tocarMusica(); else pausarMusica(); 
   });
 
-  document.addEventListener("DOMContentLoaded", () => { if (localStorage.getItem("esconderPopup18") !== "true") { document.getElementById("popupAvisoInicial").style.display = "flex"; } });
+  // SISTEMA INTELIGENTE DE PAUSA QUANDO SAI DO NAVEGADOR
+  document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+          if (tocando) {
+              musica.pause(); 
+              pausadoPeloSistema = true;
+          }
+      } else {
+          if (pausadoPeloSistema) {
+              const retomarAudio = () => {
+                  if (pausadoPeloSistema && tocando) {
+                      musica.play().catch(e => console.log(e));
+                      pausadoPeloSistema = false;
+                  }
+                  window.removeEventListener('click', retomarAudio);
+                  window.removeEventListener('scroll', retomarAudio);
+                  window.removeEventListener('touchstart', retomarAudio);
+              };
+              window.addEventListener('click', retomarAudio, { once: true });
+              window.addEventListener('scroll', retomarAudio, { once: true });
+              window.addEventListener('touchstart', retomarAudio, { once: true });
+          }
+      }
+  });
+
+  // LÓGICA DO POPUP INICIAL COM LOCALSTORAGE
+  document.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("esconderPopup18") !== "true") {
+          document.getElementById("popupAvisoInicial").style.display = "flex";
+      }
+  });
 
   window.fecharPopup = function() { 
-      if (document.getElementById("naoMostrarPop").checked) { localStorage.setItem("esconderPopup18", "true"); }
+      if (document.getElementById("naoMostrarPop").checked) {
+          localStorage.setItem("esconderPopup18", "true");
+      }
       document.getElementById("popupAvisoInicial").style.display = "none"; 
       tocarMusica();
   }
 
-  window.fecharAjuda = function() { document.getElementById("ajuda").style.display = "none"; }
-
   function atualizarIncentivo() {
       let corTexto = (valorAtual >= 50) ? "#FFDF00" : "#ccc";
       let alertaLideranca = "";
+
       if (valorLiderNumerico > 0) {
           if (valorAtual > valorLiderNumerico) {
               let folga = valorAtual - valorLiderNumerico;
@@ -353,7 +386,7 @@
               alertaLideranca = `<div class="alerta-status alerta-yellow">⚠️ <strong>EMPATOU COM O LÍDER!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Adicione pelo menos mais R$ 1,00 para desbancar o topo e garantir a sua foto! 🚀</span></div>`;
           } else {
               let diff = (valorLiderNumerico - valorAtual) + 1;
-              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong>ALVO: 1º LUGAR!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Faltam exatamente <strong style="color: #FFDF00;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para assumir a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
+              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong>ALVO: 1º LUGAR!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Faltam exatamente <strong style="color: #FFDF00;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para roubar a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
           }
       }
       incentivoText.innerHTML = alertaLideranca;
@@ -394,6 +427,7 @@
   const aniversario = new Date("2026-07-22T00:00:00").getTime(); let fogosAtivados = false;
   setInterval(()=>{ const agora = new Date().getTime(); const d = aniversario - agora; const contador = document.getElementById("contador"); if(d <= 0){ contador.innerHTML = "🎉 18 ANOS CHEGOU! 🎂✨"; if(!fogosAtivados) { canvas.style.display = 'block'; loopFestivo(); fogosAtivados = true; } }else{ contador.innerHTML = Math.floor(d/86400000)+"d "+Math.floor((d%86400000)/3600000)+"h "+Math.floor((d%3600000)/60000)+"m "+Math.floor((d%60000)/1000)+"s"; } },1000);
 
+  // LEITURA DO FIREBASE - TOP 10
   const rankingRef = ref(db, 'ranking');
   onValue(rankingRef, (snapshot) => {
     const data = snapshot.val();
