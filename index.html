@@ -70,7 +70,7 @@
         .card { background: linear-gradient(145deg, #151515, #0a0a0a); border: 1px solid #333; border-top: 1px solid #444; border-radius: 20px; padding: 25px; margin-top: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 2px 0 rgba(255,255,255,0.02); position: relative; overflow: hidden; }
         #contador { font-size: 24px; color: #FFDF00; font-weight: 900; letter-spacing: 1px; text-shadow: 0 0 15px rgba(255,223,0,0.4); }
 
-        /* CAIXA EXPLICATIVA LIDERANÇA MOVIDA PARA CIMA */
+        /* CAIXA EXPLICATIVA LIDERANÇA */
         .box-explicacao-meio {
             background: linear-gradient(145deg, #181818, #0a0a0a);
             border: 1px solid rgba(255,255,255,0.1);
@@ -99,7 +99,7 @@
         .chip:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
         .chip[data-val="100"] { background: linear-gradient(145deg, #3a2e00, #1a1500); border-color: #886600; color: #FFDF00; }
 
-        /* TABELA E RANKING (AGORA ATÉ O 10º) */
+        /* TABELA E RANKING */
         .tabela { width: 100%; border-collapse: collapse; margin-top: 18px; background: #0a0a0a; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
         .tabela th, .tabela td { border: 1px solid #222; padding: 14px; white-space: nowrap; vertical-align: middle; font-size: 15px; }
         .tabela th { background: linear-gradient(180deg, #1a1a1a, #0d0d0d); color: #FFDF00; font-weight: 900; }
@@ -137,7 +137,7 @@
 
 <canvas id="canvasFestivo"></canvas>
 
-<!-- BANNER FIXO TOPO DA PÁGINA (TOP APOIADOR) -->
+<!-- BANNER FIXO TOPO DA PÁGINA -->
 <div id="stickyLider" class="sticky-banner">
     <img id="stickyFotoLider" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><rect width='90' height='90' fill='%23111'/></svg>" alt="Top Apoiador">
     <div class="sticky-info">
@@ -157,14 +157,24 @@
   </div>
 </div>
 
+<!-- POPUP INICIAL COM CHECKBOX PARA NÃO MOSTRAR MAIS -->
 <div class="overlay" id="popupAvisoInicial" style="display:none;">
   <div class="popup-box">
     <h2>🏆 O QUADRO DO PÓDIO</h2>
     <p style="text-align: left;">Escolha o valor do seu presente, confirme e envie o <strong>comprovante do Pix</strong> no WhatsApp!</p>
+    
     <div class="box-explicacao">
       <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 16px; text-transform: uppercase;"><i class="fa-solid fa-crown"></i> A Disputa pelo Topo</strong>
       <span style="font-size: 14px; color: #ccc; line-height: 1.5; display: block;">Quem enviar o <strong>maior valor</strong> assume o 1º Lugar.<br><br>📸 <em>Atenção: Apenas o líder máximo tem a sua <strong>foto eternizada no site!</strong></em></span>
     </div>
+
+    <div style="margin-bottom: 20px; text-align: left; background: rgba(0,0,0,0.4); padding: 12px 15px; border-radius: 10px; border: 1px solid #333;">
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 10px; color: #ccc; font-size: 14px; font-weight: bold;">
+            <input type="checkbox" id="naoMostrarPop" style="width: 18px; height: 18px; accent-color: #FFDF00;">
+            Não mostrar essa mensagem novamente
+        </label>
+    </div>
+
     <button class="btn-popup btn-3d" onclick="fecharPopup()">Entrar no Site</button>
   </div>
 </div>
@@ -292,6 +302,76 @@
   const inputValor = document.getElementById('valorPresenteInput');
   const incentivoText = document.getElementById('incentivoText');
 
+  // CONTROLES DE ÁUDIO E PAUSA INTELIGENTE
+  const botaoMusica = document.getElementById("musicToggle"); 
+  const iconeMusica = document.getElementById("musicIcon"); 
+  const musica = document.getElementById("bgMusic"); 
+  let tocando = false;
+  let pausadoPeloSistema = false;
+
+  function tocarMusica() {
+      musica.play().then(() => {
+          botaoMusica.classList.add("active"); 
+          iconeMusica.innerHTML = "<i class='fa-solid fa-volume-high'></i>"; 
+          tocando = true;
+          pausadoPeloSistema = false;
+      }).catch(e => { console.log("Áudio bloqueado pelo navegador", e); });
+  }
+
+  function pausarMusica() {
+      musica.pause(); 
+      botaoMusica.classList.remove("active"); 
+      iconeMusica.textContent = "🎵"; 
+      tocando = false;
+      pausadoPeloSistema = false;
+  }
+
+  botaoMusica.addEventListener("click", () => { 
+      if (!tocando) tocarMusica(); else pausarMusica(); 
+  });
+
+  // SISTEMA INTELIGENTE DE PAUSA QUANDO SAI DO NAVEGADOR
+  document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+          if (tocando) {
+              musica.pause(); 
+              pausadoPeloSistema = true;
+          }
+      } else {
+          if (pausadoPeloSistema) {
+              const retomarAudio = () => {
+                  if (pausadoPeloSistema && tocando) {
+                      musica.play().catch(e => console.log(e));
+                      pausadoPeloSistema = false;
+                  }
+                  window.removeEventListener('click', retomarAudio);
+                  window.removeEventListener('scroll', retomarAudio);
+                  window.removeEventListener('touchstart', retomarAudio);
+              };
+              window.addEventListener('click', retomarAudio, { once: true });
+              window.addEventListener('scroll', retomarAudio, { once: true });
+              window.addEventListener('touchstart', retomarAudio, { once: true });
+          }
+      }
+  });
+
+  // LÓGICA DO POPUP INICIAL COM LOCALSTORAGE
+  document.addEventListener("DOMContentLoaded", () => {
+      if (localStorage.getItem("esconderPopup18") !== "true") {
+          document.getElementById("popupAvisoInicial").style.display = "flex";
+      }
+  });
+
+  window.fecharPopup = function() { 
+      if (document.getElementById("naoMostrarPop").checked) {
+          localStorage.setItem("esconderPopup18", "true");
+      }
+      document.getElementById("popupAvisoInicial").style.display = "none"; 
+      tocarMusica();
+  }
+
+  window.fecharAjuda = function() { document.getElementById("ajuda").style.display = "none"; }
+
   function atualizarIncentivo() {
       let corTexto = (valorAtual >= 50) ? "#FFDF00" : "#ccc";
       let alertaLideranca = "";
@@ -330,12 +410,6 @@
       else { msg = `Fala Vittor! Vi seu projeto no site. Separei o presente de *R$ ${valorAtual.toFixed(2).replace('.',',')}* para te dar aquela força! Me manda a chave Pix para eu enviar? 🎉⚡`; }
       window.location.href = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
   });
-
-  window.fecharAjuda = function() { document.getElementById("ajuda").style.display = "none"; }
-  window.fecharPopup = function() { document.getElementById("popupAvisoInicial").style.display = "none"; }
-
-  const botaoMusica = document.getElementById("musicToggle"); const iconeMusica = document.getElementById("musicIcon"); const musica = document.getElementById("bgMusic"); let tocando = false;
-  botaoMusica.addEventListener("click", () => { if (!tocando) { musica.play().catch(e=>{}); botaoMusica.classList.add("active"); iconeMusica.innerHTML = "<i class='fa-solid fa-volume-high'></i>"; tocando = true; } else { musica.pause(); botaoMusica.classList.remove("active"); iconeMusica.textContent = "🎵"; tocando = false; } });
 
   for(let i=0; i<25; i++){ const p = document.createElement("div"); p.className = "particula"; p.style.left = Math.random() * 100 + "vw"; p.style.animationDelay = "-" + (Math.random() * 12) + "s"; document.body.appendChild(p); }
 
