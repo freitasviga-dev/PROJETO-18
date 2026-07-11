@@ -33,23 +33,25 @@
             pointer-events: none; z-index: 5; display: none;
         }
 
-        /* BANNER FIXO TOPO */
+        /* BANNER FIXO TOPO (ENQUADRAMENTO PERFEITO E CONTINUAÇÃO) */
         .sticky-banner {
             position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
             width: 92%; max-width: 480px; background: linear-gradient(145deg, #161200, #0a0800);
-            border: 2px solid #FFDF00; border-radius: 20px; display: flex; align-items: center;
-            padding: 12px 18px 12px 95px; z-index: 15000; box-shadow: 0 10px 30px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,215,0,0.1);
+            border: 2px solid #FFDF00; border-radius: 20px; 
+            display: flex; align-items: center; gap: 15px; /* Gap cria o espaçamento perfeito entre foto e texto */
+            padding: 12px 15px; z-index: 15000; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,215,0,0.1);
             backdrop-filter: blur(5px);
         }
-        /* FOTO DO LÍDER NO TOPO AGORA É QUADRADA COM CANTOS ARREDONDADOS */
         .sticky-banner img {
-            position: absolute; left: -10px; top: 50%; transform: translateY(-50%);
-            width: 95px; height: 95px; border-radius: 14px; border: 3px solid #FFDF00; object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.4); background: #000;
+            width: 75px; height: 75px; /* Tamanho exato para encaixar dentro das linhas */
+            border-radius: 12px; border: 2px solid #FFDF00; object-fit: cover;
+            box-shadow: 0 0 15px rgba(255,215,0,0.3); background: #000;
+            flex-shrink: 0; /* Impede a imagem de esmagar */
         }
         .sticky-info { text-align: left; flex: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
-        #stickyNomeLider { font-size: 20px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; letter-spacing: 0.5px; }
-        #stickyValorLider { font-size: 34px; font-weight: 900; color: #FFDF00; text-shadow: 0 2px 5px rgba(0,0,0,0.8); letter-spacing: -1px; }
+        #stickyNomeLider { font-size: 18px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+        #stickyValorLider { font-size: 32px; font-weight: 900; color: #FFDF00; text-shadow: 0 2px 5px rgba(0,0,0,0.8); letter-spacing: -1px; line-height: 1; }
 
         /* BOTÕES 3D */
         .btn-3d { transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative; }
@@ -62,9 +64,15 @@
         .particula { position: fixed; width: 4px; height: 4px; background: gold; border-radius: 50%; opacity: 0.6; z-index: 1; top: 0; box-shadow: 0 0 8px gold; animation: flutuar 12s linear infinite; }
         @keyframes flutuar { from { transform: translateY(105vh); } to { transform: translateY(-10vh); } }
 
-        /* FOTO E TÍTULO */
-        .foto-container { position: relative; display: inline-block; padding: 5px; background: linear-gradient(145deg, #FFD700, #8B6508); border-radius: 50%; box-shadow: 0 15px 35px rgba(218, 165, 32, 0.3); margin-bottom: 10px; }
-        .foto { width: 210px; height: 210px; border-radius: 50%; object-fit: cover; border: 4px solid #111; display: block; }
+        /* FOTO PRINCIPAL DO VITTOR (CORREÇÃO DO CABELO CORTADO) */
+        .foto-container { position: relative; display: inline-block; padding: 6px; background: linear-gradient(145deg, #FFD700, #8B6508); border-radius: 50%; box-shadow: 0 15px 35px rgba(218, 165, 32, 0.3); margin-bottom: 10px; }
+        .foto { 
+            width: 220px; height: 220px; border-radius: 50%; 
+            object-fit: cover; 
+            object-position: center top; /* Puxa o enquadramento pro topo, garantindo que o cabelo não corte */
+            border: 4px solid #111; display: block; 
+        }
+        
         h1 { background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 36px; margin-top: 15px; font-weight: 900; text-shadow: 0px 4px 15px rgba(255, 215, 0, 0.2); }
         .texto { margin-top: 20px; line-height: 1.8; font-size: 16px; color: #ccc; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 
@@ -109,14 +117,32 @@
         .destaque td { border-color: rgba(255,215,0,0.3); }
 
         .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; margin-top: 10px; border-radius: 14px; border: 1px solid #333; background: #111; box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
-        .ouro { background: linear-gradient(145deg, #2a1f00, #0a0800); border: 1px solid #b8860b; position: relative; padding-left: 120px; min-height: 110px; box-shadow: 0 10px 30px rgba(218,165,32,0.15), inset 0 0 20px rgba(255,215,0,0.05); margin-bottom: 15px;}
+        
+        /* 1º LUGAR DO PÓDIO (FOTO MAIOR E ESPAÇAMENTO PERFEITO) */
+        .ouro { 
+            background: linear-gradient(145deg, #2a1f00, #0a0800); 
+            border: 2px solid #b8860b; 
+            position: relative; 
+            padding: 15px 15px 15px 130px; /* Preenchimento exato para caber a foto de 100px */
+            min-height: 125px; 
+            box-shadow: 0 10px 30px rgba(218,165,32,0.15), inset 0 0 20px rgba(255,215,0,0.05); 
+            margin-bottom: 15px;
+            display: flex; align-items: center;
+        }
+        .foto-lider { 
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
+            width: 100px; height: 100px; /* Foto gigante, encorpada no card */
+            border-radius: 14px; object-fit: cover; border: 3px solid #FFDF00; 
+            box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 5px 15px rgba(0,0,0,0.8); background: #000; 
+        }
+        /* Garantir que os textos do pódio fiquem retos */
+        .info-lider { display: flex; flex-direction: column; justify-content: center; width: 100%; text-align: left; }
+        #nomeLider { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 4px; }
+        #valorLider { display: block; font-size: 32px; color: #FFDF00; font-weight: 900; line-height: 1; text-shadow: 0 2px 10px rgba(255,215,0,0.3); }
+
         .prata { background: linear-gradient(145deg, #1c1c1c, #0d0d0d); border-color: #555; }
         .bronze { background: linear-gradient(145deg, #15110d, #0a0806); border-color: #7b4f30; }
         .comum { background: linear-gradient(145deg, #111, #080808); border-color: #222; padding: 12px 15px; }
-
-        /* FOTO DO LÍDER NO RANKING INFERIOR TAMBÉM QUADRADA */
-        .foto-lider { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); width: 85px; height: 85px; border-radius: 14px; object-fit: cover; border: 3px solid #FFDF00; box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 5px 15px rgba(0,0,0,0.8); background: #000; }
-        #valorLider { display: block; font-size: 26px; color: #FFDF00; font-weight: 900; margin-top: 5px; text-shadow: 0 2px 10px rgba(255,215,0,0.3); }
 
         /* BOTOES FLUTUANTES OVERLAYS E POPUPS */
         .float-controls { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
@@ -168,7 +194,6 @@
       Este espaço foi criado com muito carinho para celebrarmos juntos meu <strong>Projeto 18</strong>! Fique à vontade para interagir, ouvir o som e deixar sua marca nessa história. 💛
     </p>
 
-    <!-- Caixa de Controles (Zap e Música) -->
     <div style="text-align: left; background: #0a0a0a; padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #222; font-size: 14px; color: #ccc;">
         <p style="margin-top: 0; margin-bottom: 10px;">
         💬 <strong>Fale comigo:</strong> Use o botão do WhatsApp ali embaixo para tirar dúvidas ou mandar mensagem direta!
@@ -178,7 +203,6 @@
         </p>
     </div>
 
-    <!-- Caixa do Pódio -->
     <div class="box-explicacao" style="margin-bottom: 20px;">
       <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 15px; text-transform: uppercase;"><i class="fa-solid fa-crown"></i> O Quadro do Pódio</strong>
       <span style="font-size: 13px; color: #ccc; line-height: 1.5; display: block;">
@@ -229,7 +253,6 @@
         </table>
     </div>
 
-    <!-- CAIXA EXPLICATIVA EXATAMENTE ENTRE A TABELA E O PAGAMENTO -->
     <div class="box-explicacao-meio">
         <strong style="color: #FFDF00; font-size: 18px; display: block; margin-bottom: 8px;">👑 Como assumir a Liderança:</strong>
         <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block;">
@@ -265,20 +288,18 @@
     <div class="card" style="margin-bottom: 30px;">
         <h3 style="color:#FFDF00; margin-top: 0; margin-bottom: 20px; text-transform: uppercase;">🏆 Top 10 Apoiadores</h3>
 
-        <!-- RANK 1 -->
+        <!-- RANK 1 (ESTRUTURA ATUALIZADA PARA ENQUADRAMENTO E ALINHAMENTO) -->
         <div class="rank-item ouro lider">
             <img class="foto-lider" id="fotoLider" alt="Foto do líder" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><rect width='90' height='90' fill='%23111'/></svg>">
-            <div style="text-align: left; width: 100%;">
-                <div class="nome" id="nomeLider" style="font-size: 16px; font-weight: bold; color: #fff;">🥇 1º Lugar — Carregando...</div>
+            <div class="info-lider">
+                <div class="nome" id="nomeLider">🥇 1º Lugar — Carregando...</div>
                 <div id="valorLider">...</div>
             </div>
         </div>
 
-        <!-- RANK 2 E 3 -->
+        <!-- RANK 2 AO 10 -->
         <div class="rank-item prata"><div class="nome" id="nome2" style="font-weight: bold; color: #ddd;">🥈 2º Lugar — Carregando...</div><span id="valor2" style="font-weight: bold; color: #fff;">...</span></div>
         <div class="rank-item bronze"><div class="nome" id="nome3" style="font-weight: bold; color: #d08c5c;">🥉 3º Lugar — Carregando...</div><span id="valor3" style="font-weight: bold; color: #fff;">...</span></div>
-
-        <!-- RANK 4 AO 10 -->
         <div class="rank-item comum"><div class="nome" id="nome4" style="font-weight: bold; color: #aaa;">4º Lugar — Aguardando...</div><span id="valor4" style="color: #ccc;">-</span></div>
         <div class="rank-item comum"><div class="nome" id="nome5" style="font-weight: bold; color: #aaa;">5º Lugar — Aguardando...</div><span id="valor5" style="color: #ccc;">-</span></div>
         <div class="rank-item comum"><div class="nome" id="nome6" style="font-weight: bold; color: #aaa;">6º Lugar — Aguardando...</div><span id="valor6" style="color: #ccc;">-</span></div>
@@ -348,7 +369,6 @@
       if (!tocando) tocarMusica(); else pausarMusica(); 
   });
 
-  // SISTEMA INTELIGENTE DE PAUSA QUANDO SAI DO NAVEGADOR
   document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
           if (tocando) {
