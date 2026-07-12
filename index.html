@@ -111,8 +111,9 @@
         .bet-display-input { -moz-appearance: textfield; }
         #incentivoText { font-size: 15px; font-weight: bold; margin-bottom: 20px; min-height: 20px; line-height: 1.5; transition: all 0.3s; }
 
-        .alerta-status { padding: 15px; border-radius: 14px; margin-top: 15px; font-size: 14px; line-height: 1.5; font-weight: bold; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); border-left: 4px solid; }
-        .alerta-red { background: rgba(231, 76, 60, 0.1); border-color: #e74c3c; color: #ff6b6b; }
+        /* ALERTA DE STATUS MODIFICADO PARA APARECER NAS DUAS LATERAIS */
+        .alerta-status { padding: 15px; border-radius: 14px; margin-top: 15px; font-size: 14px; line-height: 1.5; font-weight: bold; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); border-left: 4px solid; border-right: 4px solid; }
+        .alerta-red { background: rgba(231, 76, 60, 0.15); border-color: #ff3b3b; color: #ff6b6b; box-shadow: 0 0 15px rgba(231, 76, 60, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); }
         .alerta-green { background: rgba(0, 230, 118, 0.1); border-color: #00e676; color: #4ae38c; }
         .alerta-yellow { background: rgba(241, 196, 15, 0.1); border-color: gold; color: #ffd700; }
 
@@ -453,7 +454,6 @@
   window.fecharAjuda = function() { document.getElementById("ajuda").style.display = "none"; }
 
   function atualizarIncentivo() {
-      let corTexto = (valorAtual >= 50) ? "#FFDF00" : "#ccc";
       let alertaLideranca = "";
 
       if (valorLiderNumerico > 0) {
@@ -464,7 +464,7 @@
               alertaLideranca = `<div class="alerta-status alerta-yellow">⚠️ <strong>EMPATOU COM O LÍDER!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Adicione pelo menos mais R$ 1,00 para desbancar o topo e garantir a sua foto! 🚀</span></div>`;
           } else {
               let diff = (valorLiderNumerico - valorAtual) + 1;
-              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong>ALVO: 1º LUGAR!</strong><br><span style="font-size: 13px; color: #fff; font-weight:normal; display:block; margin-top:5px;">Faltam exatamente <strong style="color: #FFDF00;">R$ ${diff.toFixed(2).replace('.',',')}</strong> para assumir a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
+              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong>ALVO: 1º LUGAR!</strong><br><span style="font-size: 15px; color: #fff; font-weight:bold; display:block; margin-top:8px;">Faltam exatamente <strong style="color: #FFDF00; font-size: 18px; text-shadow: 0 0 10px rgba(255,223,0,0.8);">R$ ${diff.toFixed(2).replace('.',',')}</strong> para assumir a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
           }
       }
       incentivoText.innerHTML = alertaLideranca;
@@ -486,8 +486,18 @@
   document.getElementById('btnMandar').addEventListener('click', () => {
       tratarValor();
       let msg = "";
-      if (valorLiderNumerico > 0 && valorAtual > valorLiderNumerico) { msg = `Opa, Vittor! Dei uma olhada no seu projeto e decidi que vou *ASSUMIR A LIDERANÇA MÁXIMA*! Quero mandar *R$ ${valorAtual.toFixed(2).replace('.',',')}* para pegar o *1º LUGAR* e deixar minha foto em destaque no site... 🥇👑 Me manda sua chave Pix para eu enviar?`; } 
-      else { msg = `Oi,Vittor! Achei incrível seu projeto. E vou manda um presente🎁 de *R$ ${valorAtual.toFixed(2).replace('.',',')}* marcando minha presença e meu carinho! Me manda a chave Pix para eu enviar? 🎉🥳`; }
+      let valStr = valorAtual.toFixed(2).replace('.',',');
+
+      if (valorLiderNumerico > 0 && valorAtual > valorLiderNumerico) { 
+          msg = `Opa, Vittor! Dei uma olhada no seu projeto e decidi que vou *ASSUMIR A LIDERANÇA MÁXIMA*! Quero mandar *R$ ${valStr}* para pegar o *1º LUGAR* e deixar minha foto em destaque no site... 🥇👑 Me manda sua chave Pix para eu enviar?`; 
+      } else if (valorAtual > 100) {
+          msg = `Oi, Vittor! Seu projeto é sensacional! Quero entrar como *APOIADOR VIP* e te mandar um super presente 🎁 de *R$ ${valStr}*! Me manda a chave Pix para eu fazer o envio? 🚀🏆`;
+      } else if (valorAtual >= 50 && valorAtual <= 100) {
+          msg = `E aí, Vittor! Gostei demais do projeto! Vou fazer uma *PARTICIPAÇÃO ESPECIAL* e te mandar um presente 🎁 de *R$ ${valStr}*! Manda o Pix aí pra eu enviar! 🎉🔥`;
+      } else {
+          msg = `Oi,Vittor! Achei incrível seu projeto. E vou manda um presente🎁 de *R$ ${valStr}* marcando minha presença e meu carinho! Me manda a chave Pix para eu enviar? 🎉🥳`; 
+      }
+      
       window.location.href = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
   });
 
