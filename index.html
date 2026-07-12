@@ -111,6 +111,18 @@
         .bet-display-input { -moz-appearance: textfield; }
         #incentivoText { font-size: 15px; font-weight: bold; margin-bottom: 20px; min-height: 20px; line-height: 1.5; transition: all 0.3s; }
 
+        /* ANIMAÇÃO DE PISCAR O VALOR */
+        @keyframes piscarValor {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .valor-piscando {
+            display: inline-block;
+            animation: piscarValor 1.5s infinite ease-in-out;
+        }
+
         /* ALERTA DE STATUS COM SOMBRAS E BORDAS LATERAIS DESTACADAS */
         .alerta-status { padding: 15px; border-radius: 14px; margin-top: 15px; font-size: 14px; line-height: 1.5; font-weight: bold; border-left: 4px solid; border-right: 4px solid; }
         
@@ -474,12 +486,12 @@
       if (valorLiderNumerico > 0) {
           if (valorAtual > valorLiderNumerico) {
               let folga = valorAtual - valorLiderNumerico;
-              alertaLideranca = `<div class="alerta-status alerta-green">👑 <strong style="font-size: 16px;">VOCÊ ESTÁ ASSUMINDO O TRONO!</strong><br><span style="font-size: 15px; color: #fff; font-weight:bold; display:block; margin-top:8px;">Sua vantagem atual é de <strong style="color: #4ae38c; font-size: 18px; text-shadow: 0 0 10px rgba(0,230,118,0.8);">R$ ${folga.toFixed(2).replace('.',',')}</strong>! Se cobrirem, sua foto cai. Adicione uma margem de segurança! 🛡️</span></div>`;
+              alertaLideranca = `<div class="alerta-status alerta-green">👑 <strong style="font-size: 16px;">VOCÊ ESTÁ ASSUMINDO O TRONO!</strong><br><span style="font-size: 15px; color: #fff; font-weight:bold; display:block; margin-top:8px;">Sua vantagem atual é de <strong class="valor-piscando" style="color: #4ae38c; font-size: 18px; text-shadow: 0 0 10px rgba(0,230,118,0.8);">R$ ${folga.toFixed(2).replace('.',',')}</strong>! Se cobrirem, sua foto cai. Adicione uma margem de segurança! 🛡️</span></div>`;
           } else if (valorAtual === valorLiderNumerico) {
-              alertaLideranca = `<div class="alerta-status alerta-yellow">⚠️ <strong style="font-size: 16px;">EMPATOU COM O LÍDER!</strong><br><span style="font-size: 15px; color: #fff; font-weight:bold; display:block; margin-top:8px;">Adicione pelo menos mais <strong style="color: #ffd700; font-size: 18px; text-shadow: 0 0 10px rgba(255,215,0,0.8);">R$ 1,00</strong> para desbancar o topo e garantir a sua foto! 🚀</span></div>`;
+              alertaLideranca = `<div class="alerta-status alerta-yellow">⚠️ <strong style="font-size: 16px;">EMPATOU COM O LÍDER!</strong><br><span style="font-size: 15px; color: #fff; font-weight:bold; display:block; margin-top:8px;">Adicione pelo menos mais <strong class="valor-piscando" style="color: #ffd700; font-size: 18px; text-shadow: 0 0 10px rgba(255,215,0,0.8);">R$ 1,00</strong> para desbancar o topo e garantir a sua foto! 🚀</span></div>`;
           } else {
               let diff = (valorLiderNumerico - valorAtual) + 1;
-              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong style="font-size: 16px;">ALVO: 1º LUGAR!</strong><br><span style="font-size: 15px; color: #fff; font-weight:bold; display:block; margin-top:8px;">Faltam exatamente <strong style="color: #ff6b6b; font-size: 18px; text-shadow: 0 0 10px rgba(255,59,59,0.8);">R$ ${diff.toFixed(2).replace('.',',')}</strong> para assumir a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
+              alertaLideranca = `<div class="alerta-status alerta-red">🎯 <strong style="font-size: 16px;">ALVO: 1º LUGAR!</strong><br><span style="font-size: 15px; color: #fff; font-weight:bold; display:block; margin-top:8px;">Faltam exatamente <strong class="valor-piscando" style="color: #ff6b6b; font-size: 18px; text-shadow: 0 0 10px rgba(255,59,59,0.8);">R$ ${diff.toFixed(2).replace('.',',')}</strong> para assumir a liderança e cravar sua foto. Suba o valor! 🔥</span></div>`;
           }
       }
       incentivoText.innerHTML = alertaLideranca;
