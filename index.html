@@ -26,7 +26,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Container ajustado para o novo tamanho do banner topo */
         .container { max-width: 500px; margin: auto; padding: 150px 20px 100px; position: relative; z-index: 10; }
 
         #canvasFestivo {
@@ -34,18 +33,19 @@
             pointer-events: none; z-index: 5; display: none;
         }
 
-        /* BANNER FIXO TOPO (AJUSTE FOTO MAIOR E TEXTO PREENCHENDO) */
+        /* BANNER FIXO TOPO - AGORA 100% RESPONSIVO PARA NÃO CORTAR NO ANDROID */
         .sticky-banner {
             position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
             width: 92%; max-width: 480px; background: linear-gradient(145deg, #161200, #0a0800);
             border: 2px solid #FFDF00; border-radius: 20px; 
-            display: flex; align-items: center; gap: 15px; 
-            padding: 12px 15px; z-index: 15000; 
+            display: flex; align-items: center; gap: clamp(8px, 3vw, 15px); /* Ajuste de respiro inteligente */
+            padding: 10px clamp(10px, 3vw, 15px); z-index: 15000; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,215,0,0.1);
             backdrop-filter: blur(5px);
         }
         .sticky-banner img {
-            width: 85px; height: 85px; /* Foto aumentada! */
+            width: clamp(65px, 18vw, 85px); /* Foto encolhe levemente se a tela for muito fina */
+            height: clamp(65px, 18vw, 85px); 
             border-radius: 12px; border: 2px solid #FFDF00; object-fit: cover;
             box-shadow: 0 0 15px rgba(255,215,0,0.3); background: #000;
             flex-shrink: 0; 
@@ -53,13 +53,13 @@
         .sticky-info { text-align: left; flex: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
         
         #stickyNomeLider { 
-            font-size: 21px; /* Fonte maior para preencher o espaço lateral */
+            font-size: clamp(16px, 4.5vw, 21px); /* Fonte adapta-se à largura */
             font-weight: bold; color: #fff; 
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
             margin-bottom: 2px; 
         }
         #stickyValorLider { 
-            font-size: 38px; /* Fonte bem maior para não deixar sobrar vazio */
+            font-size: clamp(24px, 7vw, 36px); /* Fonte adapta-se à largura */
             font-weight: 900; color: #FFDF00; 
             text-shadow: 0 2px 5px rgba(0,0,0,0.8); 
             letter-spacing: -1px; line-height: 1; 
@@ -118,77 +118,55 @@
             100% { opacity: 1; transform: scale(1); }
         }
         
-        .valor-piscando {
-            display: inline-block;
-            animation: piscarValor 1.5s infinite ease-in-out;
-        }
+        .valor-piscando { display: inline-block; animation: piscarValor 1.5s infinite ease-in-out; }
 
-        /* ALERTA DE STATUS COM SOMBRAS E BORDAS LATERAIS DESTACADAS */
+        /* ALERTA DE STATUS */
         .alerta-status { padding: 15px; border-radius: 14px; margin-top: 15px; font-size: 14px; line-height: 1.5; font-weight: bold; border-left: 4px solid; border-right: 4px solid; }
-        
-        .alerta-red { 
-            background: rgba(231, 76, 60, 0.15); 
-            border-color: #ff3b3b; color: #ff6b6b; 
-            box-shadow: 0 0 15px rgba(231, 76, 60, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); 
-        }
-        
-        .alerta-green { 
-            background: rgba(0, 230, 118, 0.15); 
-            border-color: #00e676; color: #4ae38c; 
-            box-shadow: 0 0 15px rgba(0, 230, 118, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); 
-        }
-        
-        .alerta-yellow { 
-            background: rgba(241, 196, 15, 0.15); 
-            border-color: gold; color: #ffd700; 
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); 
-        }
+        .alerta-red { background: rgba(231, 76, 60, 0.15); border-color: #ff3b3b; color: #ff6b6b; box-shadow: 0 0 15px rgba(231, 76, 60, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); }
+        .alerta-green { background: rgba(0, 230, 118, 0.15); border-color: #00e676; color: #4ae38c; box-shadow: 0 0 15px rgba(0, 230, 118, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); }
+        .alerta-yellow { background: rgba(241, 196, 15, 0.15); border-color: gold; color: #ffd700; box-shadow: 0 0 15px rgba(241, 196, 15, 0.2), inset 0 2px 10px rgba(0,0,0,0.5); }
 
         .chip-container { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
         .chip { background: linear-gradient(145deg, #1f1f1f, #111); border: 1px solid #333; color: #bbb; padding: 10px 18px; border-radius: 12px; font-size: 13px; font-weight: bold; box-shadow: 0 4px 0 #000; letter-spacing: 0.5px; }
         .chip:active { transform: translateY(4px); box-shadow: 0 0 0 #000; }
         .chip[data-val="100"] { background: linear-gradient(145deg, #3a2e00, #1a1500); border-color: #886600; color: #FFDF00; }
 
-        /* TABELA E RANKING */
+        /* TABELA AJUSTADA PARA NÃO CORTAR AS PALAVRAS */
         .tabela { width: 100%; border-collapse: collapse; margin-top: 18px; background: #0a0a0a; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
-        .tabela th, .tabela td { border: 1px solid #222; padding: 14px; white-space: nowrap; vertical-align: middle; font-size: 15px; }
-        .tabela th { background: linear-gradient(180deg, #1a1a1a, #0d0d0d); color: #FFDF00; font-weight: 900; }
+        .tabela th { background: linear-gradient(180deg, #1a1a1a, #0d0d0d); color: #FFDF00; font-weight: 900; border: 1px solid #222; padding: 12px 8px; font-size: 14px; white-space: nowrap; }
+        .tabela td { border: 1px solid #222; padding: 12px 8px; white-space: normal; word-wrap: break-word; vertical-align: middle; font-size: 14px; line-height: 1.4; }
         .destaque { font-weight: bold; position: relative; background: rgba(218, 165, 32, 0.08); }
         .destaque td { border-color: rgba(255,215,0,0.3); }
 
         .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; margin-top: 10px; border-radius: 14px; border: 1px solid #333; background: #111; box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
         
-        /* 1º LUGAR DO PÓDIO INFERIOR (FORÇANDO TUDO A FICAR RETINHO NUMA LINHA SÓ) */
+        /* 1º LUGAR DO PÓDIO INFERIOR RESPONSIVO */
         .ouro { 
             background: linear-gradient(145deg, #2a1f00, #0a0800); 
             border: 2px solid #b8860b; 
             position: relative; 
-            padding: 15px 15px 15px 125px; /* Ajuste milimétrico para dar espaço à foto gigante */
-            min-height: 125px; 
+            padding: 15px 15px 15px clamp(95px, 28vw, 125px); /* Preenchimento adaptável */
+            min-height: clamp(100px, 28vw, 125px); 
             box-shadow: 0 10px 30px rgba(218,165,32,0.15), inset 0 0 20px rgba(255,215,0,0.05); 
             margin-bottom: 15px;
             display: flex; align-items: center;
         }
         .foto-lider { 
             position: absolute; left: 12px; top: 50%; transform: translateY(-50%); 
-            width: 100px; height: 100px; /* Foto gigante! */
+            width: clamp(75px, 22vw, 100px); /* Foto gigante que encolhe levemente se precisar */
+            height: clamp(75px, 22vw, 100px); 
             border-radius: 14px; object-fit: cover; border: 3px solid #FFDF00; 
             box-shadow: 0 0 20px rgba(255,215,0,0.4), 0 5px 15px rgba(0,0,0,0.8); background: #000; 
         }
-        
-        /* Regras vitais para o texto nunca quebrar e ficar RETINHO */
-        .info-lider { 
-            display: flex; flex-direction: column; justify-content: center; 
-            width: 100%; text-align: left; 
-            overflow: hidden; 
-        }
+        .info-lider { display: flex; flex-direction: column; justify-content: center; width: 100%; text-align: left; overflow: hidden; }
         #nomeLider { 
-            font-size: 17px; font-weight: bold; color: #fff; margin-bottom: 4px; 
-            white-space: nowrap; /* ISSO AQUI RESOLVE O SEU PROBLEMA - OBRIGA A FICAR RETO */
-            overflow: hidden; text-overflow: ellipsis; 
+            font-size: clamp(15px, 4vw, 17px); /* Fonte responsiva */
+            font-weight: bold; color: #fff; margin-bottom: 4px; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
         }
         #valorLider { 
-            display: block; font-size: 32px; color: #FFDF00; font-weight: 900; line-height: 1; 
+            display: block; font-size: clamp(24px, 6.5vw, 32px); /* Fonte responsiva */
+            color: #FFDF00; font-weight: 900; line-height: 1; 
             text-shadow: 0 2px 10px rgba(255,215,0,0.3); 
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
@@ -197,7 +175,7 @@
         .bronze { background: linear-gradient(145deg, #15110d, #0a0806); border-color: #7b4f30; }
         .comum { background: linear-gradient(145deg, #111, #080808); border-color: #222; padding: 12px 15px; }
 
-        /* BOTOES FLUTUANTES OVERLAYS E POPUPS */
+        /* BOTOES FLUTUANTES OVERLAYS E POPUPS - AGORA COM TRAVA DE ROLAGEM */
         .float-controls { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
         .btn-float { width: 65px; height: 65px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.8); }
         .btn-music { background: linear-gradient(145deg, #c0392b, #8e44ad); }
@@ -205,7 +183,19 @@
         .btn-zap { background: linear-gradient(145deg, #25D366, #128C7E); text-decoration: none; }
 
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 20000; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        .popup-box { background: #111; border: 1px solid #333; border-top: 1px solid #555; border-radius: 24px; padding: 25px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.2); }
+        
+        /* CAIXA DE POPUP COM BARRA DE ROLAGEM INTELIGENTE */
+        .popup-box { 
+            background: #111; border: 1px solid #333; border-top: 1px solid #555; 
+            border-radius: 24px; padding: 25px; width: 90%; max-width: 380px; 
+            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.2); 
+            max-height: 85vh; /* Se o celular for baixo, cria rolagem no botão */
+            overflow-y: auto; 
+        }
+        /* Embeleza a barrinha de rolagem interna do popup */
+        .popup-box::-webkit-scrollbar { width: 6px; }
+        .popup-box::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+
         .popup-box h2 { color: #FFDF00; margin-top: 0; margin-bottom: 15px; text-transform: uppercase; font-weight: 900; letter-spacing: 1px; font-size: 22px; }
         .box-explicacao { background: linear-gradient(145deg, #221a00, #0a0800); border: 1px solid rgba(255,215,0,0.4); border-radius: 16px; padding: 15px; margin-bottom: 20px; text-align: left; box-shadow: inset 0 5px 15px rgba(0,0,0,0.6); }
     </style>
@@ -247,7 +237,6 @@
       Este espaço foi criado com muito carinho para celebrarmos juntos meu <strong>Projeto 18</strong>! Fique à vontade para interagir, ouvir o som e deixar sua marca nessa história. 💛
     </p>
 
-    <!-- Caixa de Controles (Zap e Música) -->
     <div style="text-align: left; background: #0a0a0a; padding: 12px 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #222; font-size: 14px; color: #ccc;">
         <p style="margin-top: 0; margin-bottom: 10px;">
         💬 <strong>Fale comigo:</strong> Use o botão do WhatsApp ali embaixo para tirar dúvidas ou mandar mensagem direta!
@@ -257,7 +246,6 @@
         </p>
     </div>
 
-    <!-- Caixa do Pódio -->
     <div class="box-explicacao" style="margin-bottom: 20px;">
       <strong style="color: #FFDF00; display: block; margin-bottom: 8px; font-size: 15px; text-transform: uppercase;"><i class="fa-solid fa-crown"></i> O Quadro do Pódio</strong>
       <span style="font-size: 13px; color: #ccc; line-height: 1.5; display: block;">
@@ -308,24 +296,24 @@
         </table>
     </div>
 
- <!-- CAIXA EXPLICATIVA EXATAMENTE ENTRE A TABELA E O PAGAMENTO -->
-<div class="box-explicacao-meio">
-    <strong style="color: #FFDF00; font-size: 20px; display: block; margin-bottom: 12px; text-align: center; text-shadow: 0 0 12px rgba(255, 223, 0, 0.8);">🏆 A GRANDE FINAL: UM LUGAR ETERNO NO NOSSO SITE! 🏆</strong>
-    
-    <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block; margin-bottom: 12px;">
-        Gente, o nosso "jogo" oficial termina num dia muito especial para mim: no meu aniversário, dia <strong style="color: #fff; text-shadow: 0 0 6px rgba(255, 255, 255, 0.6); text-transform: uppercase;">22 DE JULHO</strong>. E eu quero dar o maior presente de todos para quem segurar o <strong style="color: #fff; text-transform: uppercase;">1º LUGAR</strong> até lá.
-    </span>
+    <!-- CAIXA EXPLICATIVA  -->
+    <div class="box-explicacao-meio">
+        <strong style="color: #FFDF00; font-size: 20px; display: block; margin-bottom: 12px; text-align: center; text-shadow: 0 0 12px rgba(255, 223, 0, 0.8);">🏆 A GRANDE FINAL: UM LUGAR ETERNO NO NOSSO SITE! 🏆</strong>
+        
+        <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block; margin-bottom: 12px;">
+            Gente, o nosso "jogo" oficial termina num dia muito especial para mim: no meu aniversário, dia <strong style="color: #fff; text-shadow: 0 0 6px rgba(255, 255, 255, 0.6); text-transform: uppercase;">22 DE JULHO</strong>. E eu quero dar o maior presente de todos para quem segurar o <strong style="color: #fff; text-transform: uppercase;">1º LUGAR</strong> até lá.
+        </span>
 
-    <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block; margin-bottom: 20px;">
-        O nosso Maior Apoiador não vai ganhar só um agradecimento. Vocês sabem o quanto esse site é importante para mim, certo? Pois bem, o campeão vai ter a sua foto <strong style="color: #FFDF00; text-shadow: 0 0 12px rgba(255, 223, 0, 0.9); text-transform: uppercase;">ETERNIZADA PARA SEMPRE AQUI DENTRO! ✨</strong> Eu fiz questão de separar um <strong style="color: #fff; text-transform: uppercase;">LUGAR DE HONRA</strong> no site só para isso. O seu rosto vai ficar gravado na nossa página oficial, para que todo mundo que acesse hoje, amanhã ou no futuro veja o tamanho da sua importância na nossa jornada. É para entrar para a nossa história com muito orgulho! 💛
-    </span>
+        <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block; margin-bottom: 20px;">
+            O nosso Maior Apoiador não vai ganhar só um agradecimento. Vocês sabem o quanto esse site é importante para mim, certo? Pois bem, o campeão vai ter a sua foto <strong style="color: #FFDF00; text-shadow: 0 0 12px rgba(255, 223, 0, 0.9); text-transform: uppercase;">ETERNIZADA PARA SEMPRE AQUI DENTRO! ✨</strong> Eu fiz questão de separar um <strong style="color: #fff; text-transform: uppercase;">LUGAR DE HONRA</strong> no site só para isso. O seu rosto vai ficar gravado na nossa página oficial, para que todo mundo que acesse hoje, amanhã ou no futuro veja o tamanho da sua importância na nossa jornada. É para entrar para a nossa história com muito orgulho! 💛
+        </span>
 
-    <strong style="color: #FFDF00; font-size: 18px; display: block; margin-bottom: 10px; text-shadow: 0 0 12px rgba(255, 223, 0, 0.8);">👑 COMO ENTRAR NA DISPUTA:</strong>
-    
-    <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block;">
-        Para assumir o <strong style="color: #fff; text-transform: uppercase;">1º LUGAR</strong> e ter sua foto no topo, envie um presente <strong style="color: #FFDF00; text-shadow: 0 0 10px rgba(255, 223, 0, 0.8); text-transform: uppercase;">MAIOR QUE O DO ATUAL LÍDER! 🚀</strong> O sistema será atualizado <strong style="color: #fff; text-transform: uppercase;">AUTOMATICAMENTE</strong> e todo mundo vai ver quem está mandando no jogo! A contagem regressiva começou. <strong style="color: #FFDF00; text-shadow: 0 0 8px rgba(255, 223, 0, 0.6); text-transform: uppercase;">QUEM VEM BUSCAR ESSE LUGAR NA NOSSA HISTÓRIA? 🔥</strong>
-    </span>
-</div>
+        <strong style="color: #FFDF00; font-size: 18px; display: block; margin-bottom: 10px; text-shadow: 0 0 12px rgba(255, 223, 0, 0.8);">👑 COMO ENTRAR NA DISPUTA:</strong>
+        
+        <span style="font-size: 15px; color: #bbb; line-height: 1.6; display: block;">
+            Para assumir o <strong style="color: #fff; text-transform: uppercase;">1º LUGAR</strong> e ter sua foto no topo, envie um presente <strong style="color: #FFDF00; text-shadow: 0 0 10px rgba(255, 223, 0, 0.8); text-transform: uppercase;">MAIOR QUE O DO ATUAL LÍDER! 🚀</strong> O sistema será atualizado <strong style="color: #fff; text-transform: uppercase;">AUTOMATICAMENTE</strong> e todo mundo vai ver quem está mandando no jogo! A contagem regressiva começou. <strong style="color: #FFDF00; text-shadow: 0 0 8px rgba(255, 223, 0, 0.6); text-transform: uppercase;">QUEM VEM BUSCAR ESSE LUGAR NA NOSSA HISTÓRIA? 🔥</strong>
+        </span>
+    </div>
 
 
     <div class="pay-panel">
@@ -356,7 +344,6 @@
     <div class="card" style="margin-bottom: 30px;">
         <h3 style="color:#FFDF00; margin-top: 0; margin-bottom: 20px; text-transform: uppercase;">🏆 Top 10 Apoiadores</h3>
 
-        <!-- RANK 1 (AGORA BLINDADO CONTRA QUEBRA DE LINHAS) -->
         <div class="rank-item ouro lider">
             <img class="foto-lider" id="fotoLider" alt="Foto do líder" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><rect width='90' height='90' fill='%23111'/></svg>">
             <div class="info-lider">
@@ -365,11 +352,9 @@
             </div>
         </div>
 
-        <!-- RANK 2 E 3 -->
+        <!-- RANK 2 AO 10 -->
         <div class="rank-item prata"><div class="nome" id="nome2" style="font-weight: bold; color: #ddd;">🥈 2º Lugar — Carregando...</div><span id="valor2" style="font-weight: bold; color: #fff;">...</span></div>
         <div class="rank-item bronze"><div class="nome" id="nome3" style="font-weight: bold; color: #d08c5c;">🥉 3º Lugar — Carregando...</div><span id="valor3" style="font-weight: bold; color: #fff;">...</span></div>
-
-        <!-- RANK 4 AO 10 -->
         <div class="rank-item comum"><div class="nome" id="nome4" style="font-weight: bold; color: #aaa;">4º Lugar — Aguardando...</div><span id="valor4" style="color: #ccc;">-</span></div>
         <div class="rank-item comum"><div class="nome" id="nome5" style="font-weight: bold; color: #aaa;">5º Lugar — Aguardando...</div><span id="valor5" style="color: #ccc;">-</span></div>
         <div class="rank-item comum"><div class="nome" id="nome6" style="font-weight: bold; color: #aaa;">6º Lugar — Aguardando...</div><span id="valor6" style="color: #ccc;">-</span></div>
@@ -463,7 +448,7 @@
       }
   });
 
-  // LÓGICA DO POPUP INICIAL COM LOCALSTORAGE
+  // LÓGICA DO POPUP INICIAL COM LOCALSTORAGE E ROLAGEM PRO TOPO
   document.addEventListener("DOMContentLoaded", () => {
       if (localStorage.getItem("esconderPopup18") !== "true") {
           document.getElementById("popupAvisoInicial").style.display = "flex";
@@ -475,6 +460,7 @@
           localStorage.setItem("esconderPopup18", "true");
       }
       document.getElementById("popupAvisoInicial").style.display = "none"; 
+      window.scrollTo(0, 0); // FORÇA A TELA A SUBIR PRO TOPO
       tocarMusica();
   }
 
